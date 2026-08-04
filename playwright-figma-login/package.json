@@ -1,0 +1,39 @@
+{
+  "name": "playwright-figma-login",
+  "version": "1.0.0",
+  "description": "Tự động đăng nhập Figma với 2FA bằng Playwright",
+  "main": "dist/bundle.js",
+  "bin": "dist/bundle.js",
+  "scripts": {
+    "login": "ts-node src/figma-login.ts",
+    "test": "playwright test",
+    "build": "esbuild src/figma-login.ts --bundle --platform=node --outfile=dist/bundle.js --external:chromium-bidi --log-level=info",
+    "package": "npm run build && npx @yao-pkg/pkg dist/bundle.js --target node20-win-x64 --output dist/figma-login.exe"
+  },
+  "pkg": {
+    "targets": [
+      "node20-win-x64"
+    ],
+    "assets": [
+      "node_modules/playwright-core/**/*"
+    ]
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "googleapis": "^173.0.0",
+    "jimp": "^1.6.1",
+    "otplib": "^12.0.1",
+    "playwright-core": "*",
+    "qrcode-reader": "^1.0.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^22.5.0",
+    "@yao-pkg/pkg": "^6.21.0",
+    "esbuild": "^0.28.1",
+    "pkg": "^5.8.1",
+    "postject": "^1.0.0-alpha.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

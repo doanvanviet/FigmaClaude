@@ -1,0 +1,22 @@
+/* ── Contract360 App — chỉ định nghĩa những gì mds-ui chưa có ── */
+/* Token :root {} KHÔNG được định nghĩa ở đây — dùng hoàn toàn từ @mds/style.css */
+
+html, body, #app { height: 100%; }
+
+/* ── Header search box (custom cho app này) ── */
+.search-box-header {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  padding: 0 12px;
+  height: 32px; width: 260px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+}
+.search-box-header input {
+  background: transparent; border: none; outline: none;
+  color: rgba(255,255,255,0.9); font-size: 13px; flex: 1;
+}
+.search-box-header input::placeholder { color: rgba(255,255,255,0.5); }
+.search-box-header .ti { color: rgba(255,255,255,0.6); }

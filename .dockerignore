@@ -1,0 +1,25 @@
+# node_modules của cả hai project
+ketoan-dashboard/node_modules
+mds-ui/node_modules
+
+# Build output (stage build sẽ tự tạo)
+ketoan-dashboard/dist
+
+# Git & editor
+.git
+.gitignore
+**/.git
+**/.DS_Store
+**/Thumbs.db
+
+# Các project khác trong thư mục Figma (không cần thiết cho build)
+congviec-app
+gravity-ketoan
+qlns-app
+spa-app
+playwright-figma-login
+ConvertAIStudio
+Claude
+.claude
+*.zip
+*.png

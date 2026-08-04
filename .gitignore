@@ -1,0 +1,34 @@
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+**/.output/
+**/.nuxt/
+
+# Environment & secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives
+*.zip
+*.tar.gz
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Playwright test results
+**/test-results/
+**/playwright-report/

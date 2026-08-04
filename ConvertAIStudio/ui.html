@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+  body { margin: 0; padding: 12px; background: #fff; font-size: 12px; color: #333; overflow: hidden; }
+  h3 { margin: 0 0 10px; font-size: 14px; }
+  textarea { width: 100%; height: 300px; font-family: monospace; font-size: 11px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+  .row { display: flex; gap: 8px; margin-top: 10px; }
+  button { padding: 10px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+  .btn-primary { background: #18a0fb; color: #fff; flex: 1; }
+  .btn-secondary { background: #e5e5e5; color: #333; }
+  
+  .screen { display: none; height: 100vh; }
+  .screen.active { display: block; }
+  
+  .control-list { max-height: 420px; overflow-y: auto; border: 1px solid #eee; border-radius: 4px; margin-top: 10px; }
+  .control-item { display: flex; align-items: center; gap: 10px; padding: 8px; border-bottom: 1px solid #f5f5f5; }
+  .control-name { flex: 0 0 100px; font-weight: bold; color: #555; overflow: hidden; text-overflow: ellipsis; }
+  
+  .dropdown-wrapper { position: relative; flex: 1; }
+  .mapping-input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 12px; }
+  .mapping-input:focus { border-color: #18a0fb; background: #f0f9ff; }
+  .mapping-input.has-value { background: #e6f7ed; border-color: #b7ebc6; }
+  
+  .results-list { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; z-index: 9999; max-height: 150px; overflow-y: auto; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .results-list.show { display: block; }
+  .result-item { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; }
+  .result-item:hover { background: #18a0fb; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="screen active" id="screen-paste">
+  <h3>Dán Code từ AI Studio</h3>
+  <textarea id="code" placeholder="Dán code vào đây..."></textarea>
+  <div class="row">
+    <button class="btn-primary" onclick="handleDetect()">Phân tích Tags</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-map">
+  <h3>Map Tag sang Figma</h3>
+  <div class="control-list" id="control-list"></div>
+  <div class="row">
+    <button class="btn-secondary" style="flex:1" onclick="backToPaste()">Quay lại</button>
+    <button class="btn-primary" style="flex:2" onclick="handleConvert()">Vẽ vào Figma</button>
+  </div>
+</div>
+
+<script>
+  let detectedControls = [];
+  let libraryComponents = [];
+  let mappings = {};
+
+  // Hàm quay lại
+  function backToPaste() {
+    document.getElementById('screen-map').classList.remove('active');
+    document.getElementById('screen-paste').classList.add('active');
+  }
+
+  // Hàm chuyển màn hình sang Map
+  function goToMap() {
+    document.getElementById('screen-paste').classList.remove('active');
+    document.getElementById('screen-map').classList.add('active');
+  }
+
+  function handleDetect() {
+    const code = document.getElementById('code').value;
+    parent.postMessage({ pluginMessage: { type: 'detect', code } }, '*');
+  }
+
+  function renderList() {
+    const list = document.getElementById('control-list');
+    list.innerHTML = '';
+    
+    detectedControls.forEach(ctrl => {
+      const item = document.createElement('div');
+      item.className = 'control-item';
+      item.innerHTML = `
+        <div class="control-name">${ctrl.name}</div>
+        <div class="dropdown-wrapper">
+          <input type="text" class="mapping-input" id="in-${ctrl.name}" 
+                 placeholder="Tìm component..." onfocus="openDrop('${ctrl.name}')"
+                 oninput="filterDrop('${ctrl.name}')">
+          <div class="results-list" id="res-${ctrl.name}"></div>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function openDrop(name) {
+    // Ẩn các cái khác
+    document.querySelectorAll('.results-list').forEach(el => el.classList.remove('show'));
+    const drop = document.getElementById('res-' + name);
+    showResults(name, libraryComponents);
+    drop.classList.add('show');
+  }
+
+  function filterDrop(name) {
+    const val = document.getElementById('in-' + name).value.toLowerCase();
+    const filtered = libraryComponents.filter(c => c.name.toLowerCase().includes(val));
+    showResults(name, filtered);
+  }
+
+  function showResults(name, comps) {
+    const drop = document.getElementById('res-' + name);
+    drop.innerHTML = comps.map(c => `
+      <div class="result-item" onclick="selectComp('${name}', '${c.key}', '${c.name}')">
+        ${c.name}
+      </div>
+    `).join('');
+  }
+
+  function selectComp(tagName, key, compName) {
+    mappings[tagName] = { key, name: compName };
+    const input = document.getElementById('in-' + tagName);
+    input.value = compName;
+    input.classList.add('has-value');
+    document.getElementById('res-' + tagName).classList.remove('show');
+  }
+
+  function handleConvert() {
+    const code = document.getElementById('code').value;
+    parent.postMessage({ pluginMessage: { type: 'convert', code, mappings } }, '*');
+  }
+
+  // Lắng nghe tin nhắn từ code.js
+  window.onmessage = (event) => {
+    const msg = event.data.pluginMessage;
+    if (msg.type === 'detected') {
+      detectedControls = msg.controls;
+      renderList();
+      goToMap();
+    } else if (msg.type === 'components-loaded') {
+      libraryComponents = msg.components;
+    }
+  };
+
+  // Click ra ngoài thì đóng dropdown
+  window.onclick = (e) => {
+    if (!e.target.className.includes('mapping-input')) {
+      document.querySelectorAll('.results-list').forEach(el => el.classList.remove('show'));
+    }
+  };
+</script>
+</body>
+</html>
