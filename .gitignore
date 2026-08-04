@@ -32,3 +32,8 @@ desktop.ini
 # Playwright test results
 **/test-results/
 **/playwright-report/
+
+# Sensitive credentials
+**/service-account.json
+**/*.key.json
+**/credentials.json

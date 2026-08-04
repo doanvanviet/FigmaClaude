@@ -2,7 +2,7 @@
   <div class="app-shell">
     <ControlHeader app-name="Nhân viên" :no-meta="true" />
     <div class="body-row">
-      <AppSidebar :items="sidebarItems" :active-id="activeId" @nav="onNav" />
+      <AppSidebar :items="sidebarItems" :active-id="activeId" :hide-quick-add="true" @nav="onNav" />
       <main class="main-content">
         <slot />
       </main>

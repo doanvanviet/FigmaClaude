@@ -68,6 +68,7 @@ import {
   // ── Task form extras ──
   IconTag, IconUser, IconRepeat, IconGitBranch, IconAlignLeft,
   IconTable,
+  IconFingerprint,
 } from '@tabler/icons-vue'
 
 const props = defineProps({
@@ -219,6 +220,7 @@ const MAP = {
   'sparkle':                IconSparkle,
   'clock':                  IconClock,
   'clock-hour-4':           IconClockHour4,
+  'fingerprint':            IconFingerprint,
   'loader-2':               IconLoader2,
   'bell':                   IconBell,
   'mood-smile':             IconMoodSmile,

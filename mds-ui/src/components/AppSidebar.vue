@@ -8,7 +8,7 @@
     <!-- Inner scrollable content -->
     <div class="sidebar-inner">
       <!-- Quick add button -->
-      <button class="btn-add-quick" @click="$emit('quick-add')">
+      <button v-if="!hideQuickAdd" class="btn-add-quick" @click="$emit('quick-add')">
         <TIcon name="plus" />
         <span class="btn-add-text">Thêm nhanh</span>
       </button>
@@ -52,6 +52,7 @@ const props = defineProps({
   items:           { type: Array,   default: () => [] },
   activeId:        { type: String,  default: '' },
   defaultExpanded: { type: Boolean, default: false },
+  hideQuickAdd:    { type: Boolean, default: false },
 })
 defineEmits(['nav', 'quick-add'])
 
