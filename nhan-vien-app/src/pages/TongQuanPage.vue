@@ -143,7 +143,10 @@
                 <div class="utility-icon" :class="`utility-icon--${u.color}`">
                   <TIcon :name="u.icon" />
                 </div>
-                <span class="utility-item__label">{{ u.label }}</span>
+                <div class="utility-item__body">
+                  <span class="utility-item__label">{{ u.label }}</span>
+                  <span class="utility-item__sub">{{ u.sub }}</span>
+                </div>
               </button>
             </div>
           </div>
@@ -197,9 +200,9 @@ const stats = [
 ]
 
 const utilities = [
-  { label:'Tạo đơn',           icon:'file-plus',    color:'orange' },
-  { label:'Kiểm tra công',     icon:'clock-hour-4', color:'blue'   },
-  { label:'Xem lịch làm việc', icon:'calendar',     color:'purple' },
+  { label:'Tạo đơn',           sub:'Tạo nhanh đơn từ mới',       icon:'file-plus',    color:'orange' },
+  { label:'Kiểm tra công',     sub:'Xem bảng chấm công của bạn', icon:'clock-hour-4', color:'blue'   },
+  { label:'Xem lịch làm việc', sub:'Lịch ca và ngày làm việc',   icon:'calendar',     color:'purple' },
 ]
 </script>
 
@@ -223,7 +226,7 @@ const utilities = [
 .ov-content {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 284px;
+  grid-template-columns: 1fr 300px;
   gap: 16px; padding: 0 16px 16px;
   align-items: stretch;
   box-sizing: border-box;
@@ -238,8 +241,7 @@ const utilities = [
   padding: 8px 16px 8px 12px;
   display: flex; align-items: center;
   gap: 8px; position: relative; overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.65);
-  box-shadow: var(--shadow-card);
+  border: 1.5px solid #fff;
   flex-shrink: 0; min-height: 0;
 }
 .welcome-banner::before {
@@ -297,7 +299,7 @@ const utilities = [
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 20px; height: 20px; padding: 0 6px;
   border-radius: var(--radius-pill);
-  font-size: 11px; font-weight: var(--fw-semibold); line-height: 1;
+  font-size: 13px; font-weight: var(--fw-semibold); line-height: 1;
 }
 .task-badge--danger  { background: var(--bg-danger-light);  color: var(--text-danger);  }
 .task-badge--warning { background: var(--bg-warning-light); color: var(--text-warning); }
@@ -307,11 +309,12 @@ const utilities = [
 .task-item + .task-item { border-top: 1px solid var(--stroke-neutral-light); }
 .task-item {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 12px; padding: 16px 4px 16px 16px;
+  gap: 12px; padding: 14px 8px 14px 16px;
+  margin: 0 -4px;
   position: relative;
   cursor: pointer; transition: background 0.13s;
 }
-.task-item:hover { background: var(--bg-neutral-light); }
+.task-item:hover { background: var(--bg-brand-light); border-radius: 6px; }
 .task-item::before {
   content: '';
   position: absolute; left: 4px;
@@ -337,7 +340,7 @@ const utilities = [
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .task-item__sub {
-  font-size: 12px; color: var(--text-secondary); line-height: 18px;
+  font-size: 13px; color: var(--text-secondary); line-height: 18px;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .task-item__assignee { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
@@ -347,7 +350,7 @@ const utilities = [
   font-size: 10px; font-weight: var(--fw-semibold);
   color: var(--text-brand); flex-shrink: 0;
 }
-.task-item__assignee span { font-size: 12px; color: var(--text-secondary); }
+.task-item__assignee span { font-size: 13px; color: var(--text-secondary); }
 
 .task-item__date {
   font-size: 11px; font-weight: var(--fw-semibold); white-space: nowrap; flex-shrink: 0;
@@ -389,12 +392,12 @@ const utilities = [
   96%  { transform: rotate(-4deg); }
 }
 .cc-icon-wrap {
-  width: 60px; height: 60px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   background: var(--bg-danger-light); color: var(--text-danger);
   display: flex; align-items: center; justify-content: center;
   animation: cc-pulse 2s ease-out infinite;
 }
-.cc-icon-wrap .ti { font-size: 30px; animation: cc-shake 4s ease-in-out infinite; }
+.cc-icon-wrap .ti { font-size: 26px; animation: cc-shake 4s ease-in-out infinite; }
 .cc-label { font-size: 13px; color: var(--text-danger); line-height: 20px; margin: 0; }
 @property --ba {
   syntax: '<angle>';
@@ -429,23 +432,23 @@ const utilities = [
 }
 .cc-stats {
   padding: 0 20px 20px;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 12px;
 }
 .stat-card {
   position: relative;
   border-radius: 8px;
-  padding: 10px 44px 10px 10px;
+  padding: 12px 48px 12px 12px;
   display: flex; flex-direction: column; gap: 4px;
 }
 .stat-card--orange { border: 1px solid #fcd9b0; }
 .stat-card--blue   { border: 1px solid #bcd7ff; }
-.stat-card__label { font-size: 12px; color: var(--text-secondary); line-height: 16px; }
+.stat-card__label { font-size: 13px; color: var(--text-secondary); line-height: 16px; }
 .stat-card__value {
   font-size: 18px; font-weight: 700; color: var(--text-primary); line-height: 1.2;
   font-feature-settings: 'lnum' 1, 'tnum' 1;
 }
 .stat-card__icon {
-  position: absolute; top: 10px; right: 10px;
+  position: absolute; top: 12px; right: 12px;
   width: 30px; height: 30px; border-radius: 8px;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -479,7 +482,9 @@ const utilities = [
   transition: background 0.12s;
 }
 .utility-item:hover { background: var(--bg-brand-light); }
+.utility-item__body { display: flex; flex-direction: column; gap: 4px; }
 .utility-item__label { font-size: 13px; color: var(--text-primary); font-weight: var(--fw-medium); }
+.utility-item__sub { font-size: 13px; color: var(--text-secondary); line-height: 16px; }
 .utility-icon {
   width: 36px; height: 36px; border-radius: 10px;
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;

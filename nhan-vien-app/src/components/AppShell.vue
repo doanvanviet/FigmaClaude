@@ -1,6 +1,10 @@
 <template>
   <div class="app-shell">
-    <ControlHeader app-name="Nhân viên" :no-meta="true" />
+    <ControlHeader app-name="AMIS Nhân viên" :no-meta="true">
+      <template #logo-icon>
+        <img :src="currentMode === 'light' ? logoColor : logoWhite" width="32" height="32" alt="AMIS Nhân viên" style="flex-shrink:0" />
+      </template>
+    </ControlHeader>
     <div class="body-row">
       <AppSidebar :items="sidebarItems" :active-id="activeId" :hide-quick-add="true" @nav="onNav" />
       <main class="main-content">
@@ -15,6 +19,9 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AppSidebar    from '@mds/components/AppSidebar.vue'
 import ControlHeader from '@mds/components/ControlHeader.vue'
+import { currentMode } from '@mds/theme.js'
+import logoColor from '@mds/assets/icon-amis-nhan-vien.svg'
+import logoWhite from '@mds/assets/icon-amis-nhan-vien-white.svg'
 
 const router = useRouter()
 const route  = useRoute()
