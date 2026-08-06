@@ -43,18 +43,14 @@
       </template>
     </div>
 
-    <!-- Center -->
-    <div class="header-center">
+    <!-- Right — search + actions — thứ tự chuẩn: Search → Settings → MISA AI → AMIS Chat → Bell → Help → More -->
+    <div class="header-right">
       <slot name="header-search">
         <div class="search-box-header">
           <TIcon name="search" />
           <input type="text" placeholder="Tìm kiếm..." />
         </div>
       </slot>
-    </div>
-
-    <!-- Right — thứ tự chuẩn: Settings → MISA AI → AMIS Chat → Bell → Help → More -->
-    <div class="header-right">
       <slot name="header-actions" />
       <div class="header-toolbar">
         <button class="btn-icon-white" title="Thiết lập màu sắc và hiển thị" @click="openSettings">

@@ -35,6 +35,13 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* ── TEXT NEUTRAL — chỉ 3 loại, không tự sinh hex ──────────────────────────
+     primary   → heading, nội dung chính, label, title, body text
+     secondary → mô tả phụ, metadata, ngày tháng, lượt xem, caption
+     hint      → placeholder trong input, watermark
+     ⛔ NGHIÊM CẤM dùng token màu khác (brand/accent/...) cho text trung tính
+     ⛔ NGHIÊM CẤM hardcode hex từ ảnh/Figma vào color text
+  ────────────────────────────────────────────────────────────────────────── */
   --text-primary:         #10141b;
   --text-secondary:       #6b707a;
   --text-hint:            #9da2ac;
@@ -329,7 +336,7 @@ body {
   background: var(--bg-white); display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.app-logo-box .ti { font-size: 18px; color: var(--bg-brand); }
+.app-logo-box .ti { font-size: 24px; color: var(--bg-brand); }
 .app-name-header {
   font-size: 20px; font-weight: var(--fw-semibold);
   color: var(--text-white); white-space: nowrap;
@@ -485,10 +492,10 @@ body {
 }
 
 /* Nav list */
-.sidebar-nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .sidebar-item {
   display: flex; align-items: center; gap: 8px; justify-content: center;
-  height: calc(var(--btn-height) + 4px); padding: 0;
+  height: 36px; padding: 0;
   border-radius: var(--radius-default);
   font-size: 13px; font-weight: var(--fw-medium);
   color: var(--text-primary);
@@ -538,8 +545,15 @@ body {
   flex-shrink: 0; gap: 0;
   justify-content: space-between;
 }
+.sub-nav__scroll {
+  display: flex; align-items: flex-end;
+  flex: 1; min-width: 0;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none;
+}
+.sub-nav__scroll::-webkit-scrollbar { display: none; }
 .sub-nav-left { display: flex; align-items: flex-end; gap: 0; }
-.sub-nav-right { display: flex; align-items: center; gap: 8px; padding-bottom: 6px; }
+.sub-nav-right { display: flex; align-items: center; gap: 8px; align-self: center; flex-shrink: 0; }
 .sub-nav-tab {
   display: flex; align-items: center; gap: 6px;
   height: 48px; padding: 0 14px;

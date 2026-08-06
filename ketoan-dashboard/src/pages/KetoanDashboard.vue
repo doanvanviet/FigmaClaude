@@ -32,89 +32,136 @@
             </button>
           </div>
           <div class="sub-nav-right">
-            <button class="btn btn--ghost btn--sm" style="gap:6px;color:var(--text-success)">
+            <button class="btn btn--ghost btn--sm" style="gap:6px;color:var(--text-brand)">
               <TIcon name="player-play" style="font-size:11px" />
               Bắt đầu sử dụng
             </button>
           </div>
         </div>
 
-        <!-- ── Tab: Tính năng mới ── -->
+        <!-- ── Tab: Tính năng mới (Editorial/Blog style) ── -->
         <div v-if="activeSubTab === 'tinhnangmoi'" class="tnm-wrapper">
           <div class="tnm-inner">
 
-            <!-- Nổi bật: 3-col large cards -->
-            <div class="tnm-section-label">Nổi bật</div>
-            <div class="tnm-grid tnm-grid--featured">
-              <div v-for="f in featuredFeatures" :key="f.id" class="tnm-card tnm-card--lg">
-                <div class="tnm-thumb tnm-thumb--lg">
-                  <div class="tnm-mock"
-                       :style="{ '--mc': colorMap[f.color], '--mb': colorBgMap[f.color] }">
-                    <div class="tnm-mock__head">
-                      <span class="tnm-mock__ico"><TIcon :name="f.icon" /></span>
-                      <div class="tnm-mock__lines">
-                        <div class="tnm-mock__ln" style="width:72px;background:#9ca3af" />
-                        <div class="tnm-mock__ln" style="width:48px;margin-top:4px" />
-                      </div>
-                      <div class="tnm-mock__close"><span/><span/><span/></div>
-                    </div>
-                    <div class="tnm-mock__sep" />
-                    <div class="tnm-mock__row tnm-mock__row--active">
-                      <div class="tnm-mock__ln tnm-mock__ln--accent" style="width:90px" />
-                    </div>
-                    <div class="tnm-mock__row">
-                      <div class="tnm-mock__ln" style="width:120px" />
-                    </div>
-                    <div class="tnm-mock__row">
-                      <div class="tnm-mock__ln" style="width:100px" />
-                    </div>
-                    <div class="tnm-mock__row">
-                      <div class="tnm-mock__ln" style="width:140px" />
-                    </div>
-                  </div>
+            <!-- Page header -->
+            <div class="tnm-page-hd">
+              <div class="tnm-page-hd__text">
+                <div class="tnm-page-hd__title">Tính năng mới AMIS Kế toán</div>
+                <div class="tnm-page-hd__sub">Khám phá các cập nhật và tính năng mới nhất giúp nâng cao hiệu quả kế toán</div>
+              </div>
+              <button class="btn btn--outline btn--sm" style="flex-shrink:0;white-space:nowrap;display:inline-flex;align-items:center;gap:6px">
+                Xem nhật ký phát hành
+                <TIcon name="external-link" style="font-size:13px" />
+              </button>
+            </div>
+
+            <!-- Hero: text left, visual right -->
+            <div class="tnm-hero">
+              <div class="tnm-hero__body">
+                <span class="tnm-tag" :style="{ background: colorBgMap['warning'], color: colorMap['warning'] }">
+                  <TIcon name="flame-filled" style="font-size:11px;margin-right:3px" />Nổi bật
+                </span>
+                <div class="tnm-hero__title">{{ featuredFeatures[0].title }}</div>
+                <div class="tnm-hero__meta">
+                  <TIcon name="calendar" style="font-size:13px" /><span>{{ featuredFeatures[0].date }}</span>
+                  <span class="tnm-dot">·</span>
+                  <TIcon name="eye" style="font-size:13px" /><span>{{ featuredFeatures[0].views }} lượt xem</span>
                 </div>
-                <div class="tnm-body">
-                  <div class="tnm-date">{{ f.date }}</div>
-                  <div class="tnm-title">{{ f.title }}</div>
-                  <div class="tnm-desc">{{ f.desc }}</div>
-                  <a class="tnm-link" :style="{ color: colorMap[f.color] }">Tìm hiểu thêm →</a>
+                <div class="tnm-hero__desc">{{ featuredFeatures[0].desc }}</div>
+                <div class="tnm-hero__actions">
+                  <button class="btn btn--primary" style="gap:6px">Dùng ngay <TIcon name="arrow-up-right" style="font-size:14px" /></button>
+                  <button class="tnm-link" style="gap:6px">
+                    Xem chi tiết
+                    <TIcon name="arrow-right" style="font-size:12px" />
+                  </button>
+                </div>
+              </div>
+              <div class="tnm-hero__thumb" :style="{ background: colorBgMap[featuredFeatures[0].color] }">
+                <div class="tnm-ss" style="--ac:#245fdf">
+                  <div class="tnm-ss__tb"></div>
+                  <div class="tnm-ss__tr tnm-ss__tr--hd"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                  <div class="tnm-ss__tr"><span></span><span></span><span></span><span></span></div>
+                </div>
+                <button v-if="featuredFeatures[0].video" class="tnm-play-btn" @click.stop title="Xem video">
+                  <TIcon name="player-play-filled" />
+                </button>
+              </div>
+            </div>
+
+            <!-- 3-col grid: Tính năng nổi bật -->
+            <div class="tnm-sec-hd">
+              <span class="tnm-sec-hd__label">Tính năng nổi bật</span>
+            </div>
+            <div class="tnm-grid3">
+              <div v-for="f in gridFeatures" :key="f.id" class="tnm-grid3-card">
+                <div class="tnm-grid3-card__thumb" :style="{ background: colorBgMap[f.color] }">
+                  <div class="tnm-ss" :style="{ '--ac': colorMap[f.color] }">
+                    <div class="tnm-ss__tb"></div>
+                    <div class="tnm-ss__tr tnm-ss__tr--hd"><span></span><span></span><span></span></div>
+                    <div class="tnm-ss__tr" v-for="n in 4" :key="n"><span></span><span></span><span></span></div>
+                  </div>
+                  <button v-if="f.video" class="tnm-play-btn" @click.stop title="Xem video">
+                    <TIcon name="player-play-filled" />
+                  </button>
+                </div>
+                <div class="tnm-grid3-card__body">
+                  <div class="tnm-grid3-card__title">{{ f.title }}</div>
+                  <div class="tnm-grid3-card__meta">
+                    <TIcon name="calendar" style="font-size:12px" />{{ f.date }}
+                    <span class="tnm-dot">·</span>
+                    <TIcon name="eye" style="font-size:12px" />{{ f.views }} lượt xem
+                  </div>
+                  <div class="tnm-grid3-card__desc">{{ f.desc }}</div>
+                  <button class="tnm-link" style="gap:5px">Xem chi tiết <TIcon name="arrow-right" style="font-size:12px" /></button>
                 </div>
               </div>
             </div>
 
-            <!-- Cập nhật khác: 3-col grid -->
-            <div class="tnm-section-label" style="margin-top:4px">Cập nhật khác</div>
-            <div class="tnm-grid">
-              <div v-for="f in otherFeatures" :key="f.id" class="tnm-card">
-                <div class="tnm-thumb">
-                  <div class="tnm-mock"
-                       :style="{ '--mc': colorMap[f.color], '--mb': colorBgMap[f.color] }">
-                    <div class="tnm-mock__head">
-                      <span class="tnm-mock__ico"><TIcon :name="f.icon" /></span>
-                      <div class="tnm-mock__lines">
-                        <div class="tnm-mock__ln" style="width:60px;background:#9ca3af" />
-                        <div class="tnm-mock__ln" style="width:40px;margin-top:3px" />
-                      </div>
-                    </div>
-                    <div class="tnm-mock__sep" />
-                    <div class="tnm-mock__row tnm-mock__row--active">
-                      <div class="tnm-mock__ln tnm-mock__ln--accent" style="width:80px" />
-                    </div>
-                    <div class="tnm-mock__row">
-                      <div class="tnm-mock__ln" style="width:110px" />
-                    </div>
-                    <div class="tnm-mock__row">
-                      <div class="tnm-mock__ln" style="width:90px" />
-                    </div>
+            <!-- Alternating rows: Các tính năng mới khác -->
+            <div class="tnm-sec-hd">
+              <span class="tnm-sec-hd__label">Các tính năng mới khác</span>
+            </div>
+            <div class="tnm-alt-list">
+              <div v-for="(f, idx) in altFeatures" :key="f.id"
+                   class="tnm-alt-row" :class="{ 'tnm-alt-row--rev': idx % 2 === 1 }">
+                <div class="tnm-alt-row__thumb" :style="{ background: colorBgMap[f.color] }">
+                  <div class="tnm-ss" :style="{ '--ac': colorMap[f.color] }">
+                    <div class="tnm-ss__tb"></div>
+                    <div class="tnm-ss__tr tnm-ss__tr--hd"><span></span><span></span><span></span><span></span></div>
+                    <div class="tnm-ss__tr" v-for="n in 6" :key="n"><span></span><span></span><span></span><span></span></div>
+                  </div>
+                  <button v-if="f.video" class="tnm-play-btn" @click.stop title="Xem video">
+                    <TIcon name="player-play-filled" />
+                  </button>
+                </div>
+                <div class="tnm-alt-row__body">
+                  <span class="tnm-tag" :style="{ background: colorBgMap[tagMap[f.tag]], color: colorMap[tagMap[f.tag]] }">{{ f.tag }}</span>
+                  <div class="tnm-alt-row__title">{{ f.title }}</div>
+                  <div class="tnm-alt-row__meta">
+                    <TIcon name="calendar" style="font-size:13px" />{{ f.date }}
+                    <span class="tnm-dot">·</span>
+                    <TIcon name="eye" style="font-size:13px" />{{ f.views }} lượt xem
+                  </div>
+                  <div class="tnm-alt-row__desc">{{ f.desc }}</div>
+                  <div class="tnm-alt-row__actions">
+                    <button v-if="f.usable" class="btn btn--primary" style="gap:6px">Dùng ngay <TIcon name="arrow-up-right" style="font-size:14px" /></button>
+                    <button class="tnm-link" style="gap:6px">
+                      Xem chi tiết
+                      <TIcon name="arrow-right" style="font-size:12px" />
+                    </button>
                   </div>
                 </div>
-                <div class="tnm-body">
-                  <div class="tnm-date">{{ f.date }}</div>
-                  <div class="tnm-title tnm-title--sm">{{ f.title }}</div>
-                  <div class="tnm-desc tnm-desc--sm">{{ f.desc }}</div>
-                  <a class="tnm-link" :style="{ color: colorMap[f.color] }">Tìm hiểu thêm →</a>
-                </div>
               </div>
+            </div>
+
+            <!-- Xem thêm -->
+            <div class="tnm-loadmore">
+              <button class="btn btn--outline" style="gap:6px">Xem thêm <TIcon name="chevron-down" style="font-size:14px" /></button>
             </div>
 
           </div>
@@ -458,25 +505,41 @@ function onNav(id) {
 
 /* ── Tính năng mới ── */
 const featuredFeatures = [
-  { id: 1, icon: 'wand',          color: 'brand',   date: '29/05/2026', title: 'Tự động hạch toán giao dịch ngân hàng với AVA Kế toán',       desc: 'AVA Kế toán tự động lập chứng từ hạch toán các giao dịch ngân hàng dựa trên lịch sử giao dịch tương đồng trước đó.' },
-  { id: 2, icon: 'file-invoice',  color: 'brand',   date: '26/05/2026', title: 'Tự động hạch toán hóa đơn dịch vụ đầu vào với AVA Kế toán',    desc: 'Hỗ trợ tự động nhận diện nhà cung cấp và xác định loại dịch vụ trên hóa đơn khi đồng bộ hóa đơn đầu vào.' },
-  { id: 3, icon: 'brain',         color: 'accent',  date: '11/07/2025', title: 'Tích hợp chuyên gia kế toán AI trên AMIS Kế toán',             desc: 'Chuyên gia kế toán AI tích hợp trực tiếp trên phần mềm để hỗ trợ công tác kế toán tại đơn vị 24/7.' },
+  { id: 1, icon: 'sparkles',      color: 'brand',   date: '29/05/2026', views: '2.847', video: true,  title: 'Tự động hạch toán giao dịch ngân hàng với AVA Kế toán',       desc: 'AVA Kế toán tự động lập chứng từ hạch toán các giao dịch ngân hàng dựa trên lịch sử giao dịch tương đồng trước đó.' },
+  { id: 2, icon: 'file-invoice',  color: 'brand',   date: '26/05/2026', views: '1.523',              title: 'Tự động hạch toán hóa đơn dịch vụ đầu vào với AVA Kế toán',    desc: 'Hỗ trợ tự động nhận diện nhà cung cấp và xác định loại dịch vụ trên hóa đơn khi đồng bộ hóa đơn đầu vào.' },
+  { id: 3, icon: 'cpu',           color: 'accent',  date: '11/07/2025', views: '3.102', video: true,  title: 'Tích hợp chuyên gia kế toán AI trên AMIS Kế toán',             desc: 'Chuyên gia kế toán AI tích hợp trực tiếp trên phần mềm để hỗ trợ công tác kế toán tại đơn vị 24/7.' },
 ]
 const otherFeatures = [
-  { id: 4,  icon: 'file-check',    color: 'warning',  date: '20/06/2025', title: 'Đáp ứng Nghị định 70/2025/NĐ-CP về hóa đơn điện tử',            desc: 'AMIS Kế toán đáp ứng các thay đổi quản lý và phát hành hóa đơn theo Nghị định mới về hóa đơn điện tử.' },
-  { id: 5,  icon: 'scale',         color: 'warning',  date: '12/12/2025', title: 'Đáp ứng Thông tư 99/2025/TT-BTC',                               desc: 'Phần mềm đáp ứng Thông tư 99/2025 quy định về chế độ kế toán doanh nghiệp, hiệu lực từ 01/01/2026.' },
-  { id: 6,  icon: 'chart-bar',     color: 'accent',   date: '21/08/2025', title: 'Phân tích tài chính nâng cao với Trợ lý số MISA AVA',            desc: 'Trợ lý MISA AVA hỗ trợ phân tích tài chính chuyên sâu dựa trên số liệu cập nhật tức thời.' },
-  { id: 7,  icon: 'file-search',   color: 'brand',    date: '12/03/2025', title: 'Gợi ý bộ hồ sơ hợp lệ đi kèm chứng từ với AI-AVA',             desc: 'Tích hợp với Trợ lý MISA AVA để hướng dẫn kiểm tra, đối chiếu hồ sơ chứng từ theo nghiệp vụ.' },
-  { id: 8,  icon: 'arrows-exchange', color: 'success', date: '12/03/2025', title: 'Tự động đối chiếu công nợ nhà cung cấp với MISA AVA',           desc: 'AMIS Kế toán tích hợp AVA để tự động đọc và đối chiếu dữ liệu báo cáo công nợ nhà cung cấp.' },
-  { id: 9,  icon: 'pen',           color: 'success',  date: '12/03/2025', title: 'Kết nối AMIS WeSign để tự động ký chứng từ',                    desc: 'Kết nối với AMIS WeSign để thực hiện ký số trên các chứng từ kế toán ở bất kỳ đâu.' },
-  { id: 10, icon: 'shopping-bag',  color: 'info',     date: '23/12/2024', title: 'Kết nối với sàn thương mại điện tử TikTok',                     desc: 'Kết nối TikTok để đồng bộ đơn hàng và tự động sinh chứng từ hạch toán.' },
-  { id: 11, icon: 'qrcode',        color: 'info',     date: '05/12/2024', title: 'Hiển thị mã QR thanh toán trên chứng từ gửi khách hàng',        desc: 'Hiển thị mã QR thanh toán trên chứng từ để khách hàng thực hiện thanh toán nhanh chóng.' },
-  { id: 12, icon: 'building-bank', color: 'success',  date: '28/11/2024', title: 'Tự động đối chiếu sao kê ngân hàng với MISA AVA',               desc: 'Hỗ trợ tự động đối chiếu sao kê ngân hàng khi kết nối với hệ thống ngân hàng điện tử.' },
+  { id: 4,  icon: 'file-check',       color: 'warning', date: '20/06/2025', views: '987',   title: 'Đáp ứng Nghị định 70/2025/NĐ-CP về hóa đơn điện tử',       desc: 'AMIS Kế toán đáp ứng các thay đổi quản lý và phát hành hóa đơn theo Nghị định mới về hóa đơn điện tử.' },
+  { id: 5,  icon: 'scale',            color: 'warning', date: '12/12/2025', views: '1.234', usable: false, tag: 'Pháp lý',   title: 'Đáp ứng Thông tư 99/2025/TT-BTC',                          desc: 'Phần mềm đáp ứng Thông tư 99/2025 quy định về chế độ kế toán doanh nghiệp, hiệu lực từ 01/01/2026.' },
+  { id: 6,  icon: 'chart-bar',        color: 'accent',  date: '21/08/2025', views: '2.156', usable: true, video: true, tag: 'Tiện ích',   title: 'Phân tích tài chính nâng cao với Trợ lý số MISA AVA',       desc: 'Trợ lý MISA AVA hỗ trợ phân tích tài chính chuyên sâu dựa trên số liệu cập nhật tức thời.' },
+  { id: 7,  icon: 'file-analytics',   color: 'brand',   date: '12/03/2025', views: '876',   usable: true,              tag: 'Tiện ích',   title: 'Gợi ý bộ hồ sơ hợp lệ đi kèm chứng từ với AI-AVA',        desc: 'Tích hợp với Trợ lý MISA AVA để hướng dẫn kiểm tra, đối chiếu hồ sơ chứng từ theo nghiệp vụ.' },
+  { id: 8,  icon: 'arrows-left-right',color: 'success', date: '12/03/2025', views: '743',   usable: false,             tag: 'Thu tiền',   title: 'Tự động đối chiếu công nợ nhà cung cấp với MISA AVA',       desc: 'AMIS Kế toán tích hợp AVA để tự động đọc và đối chiếu dữ liệu báo cáo công nợ nhà cung cấp.' },
+  { id: 9,  icon: 'pencil',           color: 'success', date: '12/03/2025', views: '654',   title: 'Kết nối AMIS WeSign để tự động ký chứng từ',               desc: 'Kết nối với AMIS WeSign để thực hiện ký số trên các chứng từ kế toán ở bất kỳ đâu.' },
+  { id: 10, icon: 'shopping-cart',    color: 'info',    date: '23/12/2024', views: '1.021', title: 'Kết nối với sàn thương mại điện tử TikTok',                desc: 'Kết nối TikTok để đồng bộ đơn hàng và tự động sinh chứng từ hạch toán.' },
+  { id: 11, icon: 'link',             color: 'info',    date: '05/12/2024', views: '892',   title: 'Hiển thị mã QR thanh toán trên chứng từ gửi khách hàng',   desc: 'Hiển thị mã QR thanh toán trên chứng từ để khách hàng thực hiện thanh toán nhanh chóng.' },
+  { id: 12, icon: 'building-bank',    color: 'success', date: '28/11/2024', views: '1.345', title: 'Tự động đối chiếu sao kê ngân hàng với MISA AVA',          desc: 'Hỗ trợ tự động đối chiếu sao kê ngân hàng khi kết nối với hệ thống ngân hàng điện tử.' },
 ]
+const gridFeatures = computed(() => [...featuredFeatures.slice(1), otherFeatures[0]])
+const altFeatures  = computed(() => otherFeatures.slice(1, 5))
 
 /* ── Color maps for feature cards ── */
-const colorMap   = { brand:'#245fdf', accent:'#7a5af8', warning:'#f79009', success:'#12b76a', info:'#0ba5ec' }
-const colorBgMap = { brand:'#eff6ff', accent:'#f5f3ff', warning:'#fffbeb', success:'#f0fdf4', info:'#f0f9ff' }
+const colorMap     = { brand:'#245fdf', accent:'#7a5af8', warning:'#f79009', success:'#12b76a', info:'#0ba5ec', danger:'#f04438' }
+const colorBgMap   = { brand:'#eff6ff', accent:'#f5f3ff', warning:'#fffbeb', success:'#f0fdf4', info:'#f0f9ff', danger:'#fef3f2' }
+const tagMap = {
+  'Pháp lý':  'warning',
+  'Tiện ích': 'accent',
+  'Thu tiền': 'success',
+  'Chi tiền': 'danger',
+  'Ngân hàng':'info',
+}
+const colorGradMap = {
+  brand:   'linear-gradient(135deg,#1a4fc4 0%,#3b7de8 100%)',
+  accent:  'linear-gradient(135deg,#5b3fc0 0%,#9c6bf5 100%)',
+  warning: 'linear-gradient(135deg,#c97000 0%,#f6a623 100%)',
+  success: 'linear-gradient(135deg,#05874a 0%,#2dd07c 100%)',
+  info:    'linear-gradient(135deg,#0777a8 0%,#29b6f6 100%)',
+}
 
 /* ── Sub-nav tabs ── */
 const subTabs = [
@@ -805,7 +868,7 @@ watch(currentTheme, () => initCharts())
 .cost-legend__item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
 
 /* ══════════════════════════════════════════════
-   Tính năng mới  — clean card style
+   Tính năng mới — Editorial / Blog style
 ══════════════════════════════════════════════ */
 .tnm-wrapper {
   flex: 1; overflow-y: auto;
@@ -813,110 +876,245 @@ watch(currentTheme, () => initCharts())
   display: flex; justify-content: center;
 }
 .tnm-inner {
-  width: 100%; max-width: 1100px;
-  display: flex; flex-direction: column; gap: 24px;
+  width: 100%; max-width: 960px;
+  display: flex; flex-direction: column; gap: 16px;
 }
-.tnm-section-label {
+
+/* ── Shared atoms ── */
+.tnm-tag {
+  display: inline-flex; align-items: center; align-self: flex-start;
+  height: 24px;
+  font-size: var(--text-sm); font-weight: var(--fw-medium);
+  padding: 0 8px; border-radius: var(--radius-inner);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  white-space: nowrap;
+}
+.tnm-dot { color: var(--text-secondary); }
+
+/* ── Video play button overlay ── */
+.tnm-play-btn {
+  position: absolute; bottom: 18px; right: 18px; z-index: 3;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bg-success);
+  color: var(--text-white);
+  border: 5px solid #ffffff;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(18,183,106,0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: tnm-play-pulse 2.2s ease-out infinite;
+}
+.tnm-play-btn .ti { font-size: 16px; margin-left: 1px; }
+.tnm-play-btn:hover {
+  transform: scale(1.12);
+  animation-play-state: paused;
+  box-shadow: 0 6px 20px rgba(18,183,106,0.55);
+}
+@keyframes tnm-play-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(18,183,106,0.5), 0 4px 14px rgba(18,183,106,0.35); }
+  65%  { box-shadow: 0 0 0 14px rgba(18,183,106,0), 0 4px 14px rgba(18,183,106,0.35); }
+  100% { box-shadow: 0 0 0 0 rgba(18,183,106,0),   0 4px 14px rgba(18,183,106,0.35); }
+}
+.tnm-link {
+  display: inline-flex; align-items: center;
+  font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  color: var(--text-brand); background: none; border: none;
+  cursor: pointer; padding: 0; font-family: var(--font-family);
+  margin-top: 4px;
+}
+.tnm-link:hover { text-decoration: underline; }
+
+/* ── Page header ── */
+.tnm-page-hd {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding-bottom: 4px;
+}
+.tnm-page-hd__text { display: flex; flex-direction: column; gap: 4px; }
+.tnm-page-hd__title {
+  font-size: var(--text-h2); font-weight: var(--fw-bold);
+  line-height: var(--text-h2-lh); color: var(--text-primary);
+}
+.tnm-page-hd__sub { font-size: var(--text-body); color: var(--text-secondary); }
+
+/* ── Section heading ── */
+.tnm-sec-hd { display: flex; align-items: center; margin-top: 8px; }
+.tnm-sec-hd__label {
   font-size: var(--text-h3); font-weight: var(--fw-semibold);
   line-height: var(--text-h3-lh); color: var(--text-primary);
 }
 
-/* ── Grids ── */
-.tnm-grid {
+/* ════ Hero card: text LEFT, visual RIGHT ════ */
+.tnm-hero {
+  display: flex; min-height: 280px;
+  border-radius: var(--radius-dialog); overflow: hidden;
+  background: var(--bg-white);
+  box-shadow: var(--shadow-card);
+  cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+}
+.tnm-hero:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.tnm-hero__body {
+  flex: 1; padding: 36px 40px;
+  display: flex; flex-direction: column; gap: 12px; justify-content: center;
+  min-width: 0;
+}
+.tnm-hero__title {
+  font-size: var(--text-h2); font-weight: var(--fw-bold);
+  line-height: var(--text-h2-lh); color: var(--text-primary);
+}
+.tnm-hero__meta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: var(--text-sm); color: var(--text-secondary);
+  margin-top: -8px;
+}
+.tnm-hero__desc {
+  font-size: var(--text-body-md); color: var(--text-primary);
+  line-height: var(--text-body-md-lh);
+}
+.tnm-hero__actions { display: flex; gap: 12px; margin-top: 4px; align-items: center; }
+
+/* Hero thumbnail (right side) */
+.tnm-hero__thumb {
+  width: 44%; flex-shrink: 0;
+  position: relative; padding: 20px;
+}
+.tnm-hero__ico {
+  position: absolute; bottom: 20px; right: 24px;
+  width: 64px; height: 64px; border-radius: 18px;
+  background: rgba(255,255,255,0.20);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* CSS fake-UI mock inside hero thumb */
+.tnm-mock-ui {
+  position: absolute; inset: 16px 16px 50px 16px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 8px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+}
+.tnm-mock-bar { height: 26px; background: rgba(255,255,255,0.22); flex-shrink: 0; }
+.tnm-mock-content { flex: 1; display: flex; }
+.tnm-mock-sidebar { width: 52px; background: rgba(255,255,255,0.10); flex-shrink: 0; }
+.tnm-mock-main { flex: 1; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.tnm-mock-row { height: 8px; background: rgba(255,255,255,0.30); border-radius: 4px; }
+.tnm-mock-row--sm { width: 58%; opacity: 0.7; }
+
+/* ════ 3-col grid: Tính năng nổi bật ════ */
+.tnm-grid3 {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-.tnm-grid--featured { gap: 20px; }
-
-/* ── Card ── */
-.tnm-card {
+.tnm-grid3-card {
   display: flex; flex-direction: column;
-  background: var(--bg-white);
   border-radius: var(--radius-dialog);
-  border: 1px solid var(--stroke-neutral-light);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden; cursor: pointer;
-  transition: box-shadow 0.15s, transform 0.15s;
+  background: var(--bg-white); overflow: hidden;
+  box-shadow: var(--shadow-card);
+  cursor: pointer; transition: box-shadow 0.15s, transform 0.15s;
 }
-.tnm-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tnm-grid3-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-/* ── Thumbnail area ── */
-.tnm-thumb {
-  background: #f3f5f8;
-  height: 160px;
+.tnm-grid3-card__thumb {
+  height: 200px; flex-shrink: 0;
+  position: relative; padding: 16px;
+}
+.tnm-thumb-ico {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: rgba(255,255,255,0.22);
   display: flex; align-items: center; justify-content: center;
-  padding: 20px; flex-shrink: 0;
-}
-.tnm-thumb--lg { height: 196px; }
-
-/* ── CSS UI Mockup ── */
-.tnm-mock {
-  background: var(--bg-white);
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(16,24,40,0.10), 0 1px 4px rgba(16,24,40,0.06);
-  width: 200px;
-  overflow: hidden;
-  flex-shrink: 0;
+  font-size: 28px; color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-.tnm-mock__head {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 12px;
-}
-.tnm-mock__ico {
-  width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  background: var(--mb); color: var(--mc);
-}
-.tnm-mock__lines { flex: 1; display: flex; flex-direction: column; }
-.tnm-mock__close { display: flex; gap: 4px; margin-left: auto; }
-.tnm-mock__close span { width: 8px; height: 8px; border-radius: 50%; background: #e5e7eb; }
-
-.tnm-mock__sep { height: 1px; background: #f0f2f4; }
-
-.tnm-mock__row {
-  padding: 7px 12px;
-  border-left: 2px solid transparent;
-}
-.tnm-mock__row--active {
-  border-left-color: var(--mc);
-  background: var(--mb);
-}
-
-.tnm-mock__ln {
-  height: 6px; border-radius: 3px;
-  background: #e5e7eb;
-}
-.tnm-mock__ln--accent { background: var(--mc); opacity: 0.55; }
-
-/* ── Card body ── */
-.tnm-body {
-  flex: 1; padding: 14px 16px 18px;
+.tnm-grid3-card__body {
+  flex: 1; padding: 16px;
   display: flex; flex-direction: column; gap: 6px;
 }
-
-.tnm-date { font-size: var(--text-sm); color: var(--text-hint); }
-
-.tnm-title {
+.tnm-grid3-card__title {
   font-size: var(--text-body-md); font-weight: var(--fw-semibold);
-  line-height: 22px; color: var(--text-primary);
+  color: var(--text-primary); line-height: 20px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.tnm-title--sm {
-  font-size: var(--text-body); line-height: var(--text-body-lh);
+.tnm-grid3-card__meta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: var(--text-sm); color: var(--text-secondary);
 }
-
-.tnm-desc {
-  font-size: var(--text-body); color: var(--text-secondary);
+.tnm-grid3-card__desc {
+  font-size: var(--text-body); color: var(--text-primary);
   line-height: var(--text-body-lh); flex: 1;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.tnm-desc--sm { font-size: var(--text-sm); line-height: var(--text-sm-lh); }
 
-.tnm-link {
-  font-size: var(--text-sm); font-weight: var(--fw-medium);
-  text-decoration: none; cursor: pointer; margin-top: 2px;
-  display: inline-flex; align-items: center; gap: 3px;
+/* ════ Alternating rows: Các tính năng mới khác ════ */
+.tnm-alt-list { display: flex; flex-direction: column; gap: 16px; }
+.tnm-alt-row {
+  display: flex; gap: 0;
+  border-radius: var(--radius-dialog); overflow: hidden;
+  background: var(--bg-white);
+  box-shadow: var(--shadow-card);
+  min-height: 260px;
+  cursor: pointer; transition: box-shadow 0.15s, transform 0.15s;
 }
-.tnm-link:hover { text-decoration: underline; }
+.tnm-alt-row:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tnm-alt-row--rev { flex-direction: row-reverse; }
+
+.tnm-alt-row__thumb {
+  width: 36%; flex-shrink: 0;
+  position: relative; padding: 20px;
+}
+.tnm-alt-row__body {
+  flex: 1; padding: 28px 32px;
+  display: flex; flex-direction: column; gap: 10px; justify-content: center;
+}
+.tnm-alt-row__title {
+  font-size: var(--text-h3); font-weight: var(--fw-semibold);
+  color: var(--text-primary); line-height: var(--text-h3-lh);
+}
+.tnm-alt-row__meta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: var(--text-sm); color: var(--text-secondary);
+}
+.tnm-alt-row__actions { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
+.tnm-alt-row__actions .tnm-link,
+.tnm-hero__actions .tnm-link { margin-top: 0; align-self: center; }
+.tnm-grid3-card__body .tnm-link { margin-top: 18px; }
+.tnm-alt-row__desc {
+  font-size: var(--text-body-md); color: var(--text-primary);
+  line-height: var(--text-body-md-lh);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ── Software screenshot mockup ── */
+.tnm-ss {
+  width: 100%; height: 100%; overflow: hidden;
+  background: white; display: flex; flex-direction: column;
+  border-radius: var(--radius-inner);
+  box-shadow: var(--shadow-md);
+}
+.tnm-ss__tb { display: none; }
+.tnm-ss__tr {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 14px; height: 32px; flex-shrink: 0;
+  border-bottom: 1px solid #f0f2f4;
+}
+.tnm-ss__tr--hd { background: #f5f5f5; }
+.tnm-ss__tr span { height: 7px; border-radius: 3px; background: #e9eaeb; }
+.tnm-ss__tr span:nth-child(1) { width: 14px; flex-shrink: 0; }
+.tnm-ss__tr span:nth-child(2) { flex: 2.5; }
+.tnm-ss__tr span:nth-child(3) { flex: 1.5; }
+.tnm-ss__tr span:nth-child(4) { flex: 1; }
+.tnm-ss__tr--hd span { background: #d5d7da; }
+/* accent color on first data cell of non-header rows */
+.tnm-ss__tr:not(.tnm-ss__tr--hd) span:nth-child(1) { background: var(--ac, var(--bg-brand)); opacity: 0.35; }
+
+/* ── Arrow icon slides right on card hover ── */
+.tnm-link .ti { transition: transform 0.2s ease; display: inline-flex; }
+.tnm-hero:hover .tnm-link .ti,
+.tnm-grid3-card:hover .tnm-link .ti,
+.tnm-alt-row:hover .tnm-link .ti,
+.tnm-link:hover .ti { transform: translateX(5px); }
+
+/* ── Load more ── */
+.tnm-loadmore { display: flex; justify-content: center; padding: 8px 0; }
 </style>

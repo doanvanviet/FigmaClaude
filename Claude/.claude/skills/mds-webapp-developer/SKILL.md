@@ -73,9 +73,13 @@ Skill build UI **Vue.js + HTML/CSS** theo chuẩn design system **MDS Web Compon
 6. Sau khi viết xong: đối chiếu lại checklist cuối file trước khi trả kết quả.
 
 7. CARD/PANEL trắng trên nền --bg-page: PHẢI dùng box-shadow: var(--shadow-card).
-   NGHIÊM CẤM dùng border để tạo viền cho card trên nền xám — đây là shadow neutral all 2.
-   TIÊU ĐỀ CARD (.card__title): PHẢI dùng style H3 — font-size: var(--text-h3); font-weight: var(--fw-semibold); line-height: var(--text-h3-lh); color: var(--text-primary).
-   NGHIÊM CẤM dùng font-size 13px hay color: var(--text-secondary) cho tiêu đề card.
+   ⛔ NGHIÊM CẤM TUYỆT ĐỐI dùng border để tạo viền cho card/panel nền trắng đặt trên nền xám (--bg-page).
+   Áp dụng với MỌI loại card: .card, .tnm-hero, .tnm-grid3-card, .tnm-alt-row, stat card, KPI card, và bất kỳ block nền trắng nào trên nền xám.
+   PRE-SUBMIT SCAN: trước khi trả code, bắt buộc grep toàn bộ style block — nếu thấy bất kỳ selector nào vừa có background: var(--bg-white) vừa có border: ... → XÓA border đó ngay.
+   TIÊU ĐỀ CARD — phân biệt theo loại card:
+   • Scorecard / KPI card (nhỏ, chỉ hiện 1 chỉ số): tiêu đề font-size: var(--text-body) 13px; font-weight: var(--fw-semibold); color: var(--text-secondary). Số value: font-size: var(--text-h2) 20px; font-weight: var(--fw-bold); color: var(--text-primary).
+   • Card lớn (biểu đồ, danh sách, bảng, nội dung phong phú): tiêu đề PHẢI dùng H3 — font-size: var(--text-h3) 16px; font-weight: var(--fw-semibold); line-height: var(--text-h3-lh); color: var(--text-primary).
+   NGHIÊM CẤM nhầm lẫn giữa hai loại: Scorecard KHÔNG dùng H3 cho title, Card lớn KHÔNG dùng 13px cho title.
 
 8. FONT CHỮ: LUÔN LUÔN CHỈ dùng Inter Variable (InterVariable) — NGHIÊM CẤM TUYỆT ĐỐI dùng bất kỳ font nào khác.
    ⛔ NGHIÊM CẤM: Arial, Helvetica, system-ui, Segoe UI, Roboto, Google Fonts, hay bất kỳ font nào ngoài Inter.
@@ -108,7 +112,16 @@ Skill build UI **Vue.js + HTML/CSS** theo chuẩn design system **MDS Web Compon
     NGHIÊM CẤM tự thi công control mới khi chưa được phép — dù ảnh mockup hay Figma mô tả khác đi.
     Thiếu control → bỏ trống, báo user. Xem đầy đủ tại: references/vue-controls.md
 
-11. ⛔ FORBIDDEN PATTERNS — CẤM TUYỆT ĐỐI VIẾT CÁC PATTERN SAU TRONG CODE NGƯỜI DÙNG:
+11. MÀU TEXT TRUNG TÍNH — chỉ có 3 loại, KHÔNG ĐƯỢC tự sinh mã hex từ bất kỳ nguồn nào:
+    • Text Primary   = var(--text-primary)   → heading, nội dung chính, label, title, body text
+    • Text Secondary = var(--text-secondary) → mô tả phụ, metadata, ngày tháng, lượt xem, caption
+    • Text Hint      = var(--text-hint)      → placeholder trong input, watermark
+    NGHIÊM CẤM đọc màu từ ảnh/Figma/screenshot rồi hardcode hex vào color text.
+    NGHIÊM CẤM dùng token màu khác (brand, accent, success, warning...) cho text trung tính.
+    NGHIÊM CẤM tự ý sinh màu trung tính thứ 4 ngoài 3 loại trên.
+    Ngoại lệ DUY NHẤT: user cung cấp đúng hex và yêu cầu rõ ràng → mới được dùng hex đó.
+
+12. ⛔ FORBIDDEN PATTERNS — CẤM TUYỆT ĐỐI VIẾT CÁC PATTERN SAU TRONG CODE NGƯỜI DÙNG:
 
     Bảng "nếu mày nghĩ X → phải dùng Y":
 
@@ -2118,8 +2131,9 @@ CODE QUALITY
 □ Icon dùng đúng Tabler Icons class?
 □ Không hardcode hex nào ngoài CSS variables?
 □ Code chạy được ngay, không có TODO hay ...?
-□ Card/panel trắng trên nền xám dùng box-shadow: var(--shadow-card)?
-□ Tiêu đề card (.card__title) dùng H3: font-size var(--text-h3) 16px, fw-semibold, color var(--text-primary)?
+□ Card/panel trắng trên nền xám dùng box-shadow: var(--shadow-card)? KHÔNG có border nào?
+□ Scorecard/KPI: title 13px semibold text-secondary, value 20px bold text-primary?
+□ Card lớn (chart/list/table): title dùng H3 — 16px semibold text-primary?
 
 CHART (nếu có biểu đồ)
 □ Dùng ECharts 5 (CDN), KHÔNG dùng Chart.js hay thư viện khác?

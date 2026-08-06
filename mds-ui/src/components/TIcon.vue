@@ -9,7 +9,8 @@ import { computed } from 'vue'
 import {
   IconGridDots, IconCalculator, IconChevronDown, IconSearch, IconSettings,
   IconMoodSmile, IconBell, IconCircleCheck, IconClockHour4, IconCheck, IconHelpCircle,
-  IconPlayerPlay, IconLayoutDashboard, IconTool, IconX, IconPlus,
+  IconPlayerPlay, IconPlayerPlayFilled, IconFlameFilled,
+  IconLayoutDashboard, IconTool, IconX, IconPlus,
   IconCpu, IconSparkles, IconTrendingUp, IconTrendingDown, IconLink,
   IconShoppingCart, IconPackage, IconBuildingWarehouse, IconBuildingBank,
   IconCash, IconBuilding, IconUsers, IconFileInvoice, IconChartBar, IconBook,
@@ -225,6 +226,8 @@ const MAP = {
   'bell':                   IconBell,
   'mood-smile':             IconMoodSmile,
   'player-play':            IconPlayerPlay,
+  'player-play-filled':     IconPlayerPlayFilled,
+  'flame-filled':           IconFlameFilled,
   'tool':                   IconTool,
   'cpu':                    IconCpu,
   'sparkles':               IconSparkles,
