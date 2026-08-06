@@ -557,7 +557,7 @@ body {
 .sub-nav-tab {
   display: flex; align-items: center; gap: 6px;
   height: 48px; padding: 0 14px;
-  font-size: 13px; font-weight: var(--fw-medium);
+  font-size: 13px; font-weight: var(--fw-regular);
   color: var(--text-primary);
   border: none; background: transparent; cursor: pointer;
   border-bottom: 2px solid transparent;
@@ -565,7 +565,7 @@ body {
   white-space: nowrap;
 }
 .sub-nav-tab:hover  { color: var(--text-primary); }
-.sub-nav-tab.active { color: var(--text-brand); border-bottom-color: var(--stroke-brand); font-weight: var(--fw-semibold); }
+.sub-nav-tab.active { color: var(--text-brand); border-bottom-color: var(--stroke-brand); font-weight: var(--fw-bold); }
 .sub-nav-tab .ti    { font-size: 15px; }
 .badge-new {
   background: var(--bg-brand-light); color: var(--text-brand);
@@ -991,8 +991,8 @@ body {
 }
 .dt-cell-inner--right  { justify-content: flex-end; }
 .dt-cell-inner--center { justify-content: center; }
-.dt-cell--header .dt-cell-inner { font-size: 13px; font-weight: var(--fw-semibold); color: var(--text-primary); white-space: nowrap; padding-right: 20px; }
-.dt-cell--footer .dt-cell-inner { font-size: 13px; color: var(--text-primary); font-weight: var(--fw-semibold); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+.dt-cell--header .dt-cell-inner { font-size: 13px; font-weight: var(--fw-bold); color: var(--text-primary); white-space: nowrap; padding-right: 20px; }
+.dt-cell--footer .dt-cell-inner { font-size: 13px; color: var(--text-primary); font-weight: var(--fw-bold); font-feature-settings: 'lnum' 1, 'tnum' 1; }
 .dt-cell--header:not(:last-child) { border-right: 1px solid var(--stroke-neutral); }
 .dt-row--body .dt-cell:not(:last-child) { border-right: 1px dotted var(--stroke-neutral); }
 .dt-col-divider {

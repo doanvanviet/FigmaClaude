@@ -8,8 +8,8 @@
   --text-disabled:        #cecfd2;
   --text-white:           #ffffff;
   --text-white-disabled:  rgba(255,255,255,0.70);
-  --text-brand:           #0499e4;
-  --text-link:            #0499e4;
+  --text-brand:           #245fdf;
+  --text-link:            #245fdf;
   --text-danger:          #f04438;
   --text-warning:         #f79009;
   --text-success:         #12b76a;
@@ -18,7 +18,7 @@
 
   --icon-neutral:         #6b707a;
   --icon-neutral-disabled:#d5d7da;
-  --icon-brand:           #0499e4;
+  --icon-brand:           #245fdf;
   --icon-white:           #ffffff;
   --icon-danger:          #f04438;
   --icon-success:         #12b76a;
@@ -26,7 +26,7 @@
 
   --bg-page:              #ECEDEF;
   --bg-white:             #ffffff;
-  --bg-brand:             #0499e4;
+  --bg-brand:             #245fdf;
   --bg-brand-light:       #f0f6fe;
   --bg-brand-hover:       #c8eefb;
   --bg-brand-pressed:     #026fa8;
@@ -46,7 +46,7 @@
   --stroke-neutral-light: #e9eaeb;
   --stroke-divider:       #e9eaeb;
   --stroke-white:         #ffffff;
-  --stroke-brand:         #0499e4;
+  --stroke-brand:         #245fdf;
   --stroke-brand-light:   #7dd3f8;
   --stroke-danger:        #f04438;
   --stroke-success:       #12b76a;
