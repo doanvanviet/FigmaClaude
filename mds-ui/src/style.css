@@ -711,12 +711,12 @@ body {
 .btn--outline-danger:hover  { background: var(--bg-danger-light); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 /* AI color variants — gradient #1482ff → #cf11ff */
-.btn--ai {
+.btn.btn--ai {
   background: linear-gradient(110deg, #1482ff 0%, #cf11ff 100%);
   border: none;
   color: var(--text-white);
 }
-.btn--ai:hover { filter: brightness(0.9); }
+.btn.btn--ai:hover { filter: brightness(0.9); }
 .btn--ai-outline {
   position: relative; border: none; isolation: isolate;
   background:
