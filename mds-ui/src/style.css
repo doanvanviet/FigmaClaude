@@ -249,9 +249,10 @@
 /* ── Density Overrides ── */
 /* Compact: chiều cao control 28px */
 :root[data-density="compact"] {
-  --input-height:  28px;
-  --btn-height:    28px;
-  --dt-row-height: 32px;
+  --input-height:   28px;
+  --btn-height:     28px;
+  --dt-row-height:  32px;
+  --radius-default: 6px;
 }
 /* Comfortable: chiều cao control 36px */
 :root[data-density="comfortable"] {

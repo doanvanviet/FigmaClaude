@@ -85,10 +85,10 @@ defineEmits(['update:modelValue', 'refresh', 'export', 'col-settings', 'open-fil
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 8px 16px;
   background: var(--bg-white);
   flex-shrink: 0;
-  min-height: 56px;
+  min-height: 48px;
 }
 
 /* ── Normal mode ── */

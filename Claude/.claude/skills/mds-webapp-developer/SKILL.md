@@ -108,7 +108,26 @@ Skill build UI **Vue.js + HTML/CSS** theo chuẩn design system **MDS Web Compon
    Nếu biến cần chưa có trong THEMES.md → hỏi user bổ sung, KHÔNG tự bịa.
    → Xem toàn bộ 10 theme và CSS override template tại: THEMES.md (cùng thư mục)
 
-10. CONTROLS & LAYOUT: CHỈ dùng components và patterns đã được duyệt trong vue-controls.md.
+10. BORDER-RADIUS THEO DENSITY MODE:
+    • Compact  (data-density="compact"):              border-radius: var(--radius-inner)   = 6px
+    • Medium   (mặc định, không có data-density):    border-radius: var(--radius-default) = 8px
+    • Comfortable (data-density="comfortable"):       border-radius: var(--radius-default) = 8px
+    Áp dụng cho MỌI control: input, button, card, combobox, datebox, tag, badge, dropdown, panel...
+    CSS override chuẩn cho compact:
+    ```css
+    :root[data-density="compact"] .ibox,
+    :root[data-density="compact"] .btn,
+    :root[data-density="compact"] .card { border-radius: var(--radius-inner) !important; }
+    ```
+    NGHIÊM CẤM hardcode 6px hay 8px — luôn dùng token --radius-inner / --radius-default.
+
+11. MÀU TEXT TRUNG TÍNH — chỉ có 3 loại, KHÔNG ĐƯỢC tự sinh mã hex từ bất kỳ nguồn nào:
+    • Text Primary   = var(--text-primary)   → heading, nội dung chính, label, title, body text
+    • Text Secondary = var(--text-secondary) → mô tả phụ, metadata, ngày tháng, lượt xem, caption
+    • Text Hint      = var(--text-hint)      → placeholder trong input, watermark
+    NGHIÊM CẤM đọc màu từ ảnh/Figma/screenshot rồi hardcode hex vào color text.
+
+12. CONTROLS & LAYOUT: CHỈ dùng components và patterns đã được duyệt trong vue-controls.md.
     NGHIÊM CẤM tự thi công control mới khi chưa được phép — dù ảnh mockup hay Figma mô tả khác đi.
     Thiếu control → bỏ trống, báo user. Xem đầy đủ tại: references/vue-controls.md
 
@@ -2122,7 +2141,8 @@ DESIGN TOKENS
 □ Global Header height 48px?
 □ Sidebar width 200px (expanded) / 64px (collapsed)?
 □ Modal border-radius 12px? Shadow dùng --shadow-dialog?
-□ Card/Panel border-radius 8px?
+□ Card/Panel border-radius: compact=6px (--radius-inner), medium/comfortable=8px (--radius-default)?
+□ Control (input, button, tag...): compact dùng --radius-inner, còn lại dùng --radius-default?
 □ Form grid: 2 cột, gap 32px horizontal / 16px vertical?
 
 CODE QUALITY
