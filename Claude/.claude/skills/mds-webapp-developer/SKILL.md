@@ -202,7 +202,7 @@ Skill build UI **Vue.js + HTML/CSS** theo chuẩn design system **MDS Web Compon
   --text-link:             #245fdf;
   /* Semantic */
   --text-danger:           #f04438;
-  --text-warning:          #f79009;
+  --text-warning:          #DC6803;
   --text-success:          #12b76a;
   --text-info:             #0ba5ec;
   --text-accent:           #7a5af8;
