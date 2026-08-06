@@ -11,7 +11,6 @@ export const COLORS = [
   { id: 'pink',      label: 'Hồng',        main: '#c64691', light: '#fcf3f9' },
   { id: 'red',       label: 'Đỏ',          main: '#c34266', light: '#fbf4f7' },
   { id: 'orange',    label: 'Cam',         main: '#ea580c', light: '#fff7ed' },
-  { id: 'gradient',  label: 'Gradient',    main: '#245fdf', light: '#f0f6fe', gradient: 'linear-gradient(90deg, #245FDF 0%, #0FBF79 100%)' },
 ]
 
 const _saved = localStorage.getItem('mds-theme') || 'green'

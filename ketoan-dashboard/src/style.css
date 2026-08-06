@@ -171,16 +171,6 @@
   --bg-brand-pressed: #b54209; --bg-brand-disable: #f4aa86;
 }
 
-:root[data-theme="gradient"] {
-  --bg-brand: #245fdf;
-  --bg-brand-light: #f0f6fe;
-  --text-brand: #245fdf; --text-link: #245fdf;
-  --icon-brand: #245fdf; --stroke-brand: #245fdf;
-  --bg-brand-pressed: #1a44a8; --bg-brand-disable: #b2dff5;
-}
-:root[data-theme="gradient"] .global-header:not(.global-header--white) {
-  background: linear-gradient(90deg, #245FDF 0%, #0FBF79 100%);
-}
 
 /* ──────────────────────────────────────────────────────────────────
    VIEWPORT MIN-WIDTH + HORIZONTAL SCROLL — PATTERN CHUẨN
