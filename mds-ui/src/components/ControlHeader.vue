@@ -107,18 +107,6 @@
               <template v-if="activeTab === 'color'">
                 <p class="settings-section-title">Lựa chọn màu sắc bạn muốn hiển thị trên phần mềm</p>
 
-                <!-- Giao diện radio -->
-                <div class="settings-row">
-                  <span class="settings-row__label">Giao diện</span>
-                  <div class="radio-group">
-                    <label v-for="m in modes" :key="m.value" class="radio-item">
-                      <input type="radio" :value="m.value" v-model="draftMode" />
-                      <span class="radio-circle" :class="{ 'radio-circle--checked': draftMode === m.value }"></span>
-                      <span>{{ m.label }}</span>
-                    </label>
-                  </div>
-                </div>
-
                 <!-- Color swatches -->
                 <div class="color-swatches">
                   <div
@@ -140,6 +128,30 @@
                       <div class="color-swatch__block-right" :style="{ background: c.gradient || c.main }"></div>
                     </div>
                     <span class="color-swatch__label">{{ c.label }}</span>
+                  </div>
+                </div>
+
+                <!-- Tiêu đề + Nền — cùng hàng -->
+                <div class="settings-options-row">
+                  <div class="settings-row">
+                    <span class="settings-row__label">Tiêu đề</span>
+                    <div class="radio-group">
+                      <label v-for="m in modes" :key="m.value" class="radio-item">
+                        <input type="radio" :value="m.value" v-model="draftMode" />
+                        <span class="radio-circle" :class="{ 'radio-circle--checked': draftMode === m.value }"></span>
+                        <span>{{ m.label }}</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="settings-row">
+                    <span class="settings-row__label">Nền</span>
+                    <div class="radio-group">
+                      <label v-for="t in bgTints" :key="t.value" class="radio-item">
+                        <input type="radio" :value="t.value" v-model="draftBgTint" />
+                        <span class="radio-circle" :class="{ 'radio-circle--checked': draftBgTint === t.value }"></span>
+                        <span>{{ t.label }}</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
 
@@ -177,7 +189,7 @@
                         </div>
                       </div>
                       <!-- Mini Body -->
-                      <div class="mini-body">
+                      <div class="mini-body" :style="{ background: draftBgTint === 'color' ? previewColor.light : '#f0f2f4' }">
                         <!-- Mini Sidebar -->
                         <div class="mini-sidebar">
                           <div style="padding:6px 4px 4px">
@@ -367,7 +379,7 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
-import { COLORS, currentTheme, applyTheme, currentMode, applyMode, DENSITIES, currentDensity, applyDensity, WALLPAPERS, currentWallpaper, applyWallpaper } from '../theme.js'
+import { COLORS, currentTheme, applyTheme, currentMode, applyMode, currentBgTint, applyBgTint, DENSITIES, currentDensity, applyDensity, WALLPAPERS, currentWallpaper, applyWallpaper } from '../theme.js'
 import TIcon        from './TIcon.vue'
 import IconMisaAI   from './IconMisaAI.vue'
 import IconAmisChat from './IconAmisChat.vue'
@@ -383,6 +395,7 @@ const showSettings = ref(false)
 const activeTab    = ref('color')
 const draftColor     = ref(currentTheme.value)
 const draftMode      = ref(currentMode.value)
+const draftBgTint    = ref(currentBgTint.value)
 const draftDensity   = ref(currentDensity.value)
 const draftWallpaper = ref(currentWallpaper.value)
 
@@ -392,8 +405,12 @@ const dialogTabs = [
   { id: 'wallpaper',  label: 'Hình nền' },
 ]
 const modes = [
-  { value: 'color', label: 'Màu sắc' },
-  { value: 'light', label: 'Sáng' },
+  { value: 'color', label: 'Màu đang chọn' },
+  { value: 'light', label: 'Màu trắng' },
+]
+const bgTints = [
+  { value: 'color', label: 'Màu đang chọn' },
+  { value: 'gray',  label: 'Màu xám' },
 ]
 const sidebarItems = Array(14).fill(0)
 const activeNav    = ref(1)
@@ -409,6 +426,7 @@ const miniHeaderStyle = computed(() =>
 function openSettings() {
   draftColor.value     = currentTheme.value
   draftMode.value      = currentMode.value
+  draftBgTint.value    = currentBgTint.value
   draftDensity.value   = currentDensity.value
   draftWallpaper.value = currentWallpaper.value
   showSettings.value   = true
@@ -418,6 +436,7 @@ function cancelSettings() { showSettings.value = false }
 function saveSettings() {
   applyTheme(draftColor.value)
   applyMode(draftMode.value)
+  applyBgTint(draftBgTint.value)
   applyDensity(draftDensity.value)
   applyWallpaper(draftWallpaper.value)
   showSettings.value = false
@@ -499,10 +518,12 @@ watch(activeTab,    (v) => { if (v === 'color') nextTick(scalePreview) })
   text-align: center; line-height: var(--text-h2-lh);
 }
 
-/* Giao diện row */
+/* Settings rows */
+.settings-options-row {
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+}
 .settings-row {
-  display: flex; align-items: center; gap: 24px;
-  justify-content: center;
+  display: flex; align-items: center; gap: 12px;
 }
 .settings-row__label {
   font-size: 13px; font-weight: var(--fw-medium); color: var(--text-primary);

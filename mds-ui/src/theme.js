@@ -63,6 +63,20 @@ export function applyMode(mode) {
   localStorage.setItem('mds-header-mode', mode)
 }
 
+/* ── Background tint (color = brand-light tint, gray = neutral default) ── */
+const _savedBgTint = localStorage.getItem('mds-bg-tint') || 'gray'
+export const currentBgTint = ref(_savedBgTint)
+
+export function applyBgTint(tint) {
+  currentBgTint.value = tint
+  if (tint === 'color') {
+    document.documentElement.setAttribute('data-bg-tint', 'color')
+  } else {
+    document.documentElement.removeAttribute('data-bg-tint')
+  }
+  localStorage.setItem('mds-bg-tint', tint)
+}
+
 /* ── Wallpaper ── */
 // type: 'image' → url là path file; type: 'gradient' → url là CSS gradient string trực tiếp
 const _UP = 'https://images.unsplash.com/photo-'

@@ -643,8 +643,8 @@ const detailRows = [
 
 /* KPI */
 .kpi-row { display: flex; gap: 12px; flex-shrink: 0; }
-.kpi-cep { display: flex; justify-content: center; flex-shrink: 0; margin-bottom: 4px; }
-.kpi-cep--pinned { position: absolute; top: 0; left: 0; right: 0; margin-bottom: 0; z-index: 10; }
+.kpi-cep { display: flex; justify-content: center; flex-shrink: 0; margin-top: -1px; margin-bottom: 0; }
+.kpi-cep--pinned { position: absolute; top: 0; left: 0; right: 0; margin-top: 0; margin-bottom: 0; z-index: 10; }
 .kpi-card { position: relative; flex: 1; display: flex; flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; background: var(--bg-white); border-radius: 8px; }
 .kpi-card__reload { position: absolute; top: 6px; right: 8px; opacity: 0; transition: opacity 0.15s; }
 .kpi-card:hover .kpi-card__reload { opacity: 1; }

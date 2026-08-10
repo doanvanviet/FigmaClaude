@@ -67,8 +67,10 @@
   --icon-success:         #12b76a;
   --icon-warning:         #f79009;
 
-  --bg-page:              #ecedef;
+  --bg-page:              #E0E2E6;
   --bg-white:             #ffffff;
+  --dt-header-bg:         #E4E6EA;
+  --dt-footer-bg:         #EAECEF;
   --bg-brand:             #245fdf;
   --bg-brand-light:       #f0f6fe;
   --bg-brand-hover:       #c8eefb;
@@ -237,6 +239,14 @@
 
 
 /* ── Density Overrides ── */
+/* Background tint mode — dùng --bg-brand (màu chính, độ bão hòa nhất quán) ở tỷ lệ nhỏ
+   Quy tắc: brand × 6% + base xám nhạt → tất cả theme cho độ sáng đồng đều, chỉ hue thay đổi */
+:root[data-bg-tint="color"] {
+  --bg-page:      color-mix(in srgb, var(--bg-brand) 3%, #EDEEF2);
+  --dt-header-bg: color-mix(in srgb, var(--bg-brand) 4%, #E8EAEE);
+  --dt-footer-bg: color-mix(in srgb, var(--bg-brand) 3%, #EBECF0);
+}
+
 /* Compact: chiều cao control 28px */
 :root[data-density="compact"] {
   --input-height:   28px;
@@ -266,12 +276,10 @@ body {
   color: var(--text-primary);
   background: var(--bg-page);
   font-optical-sizing: auto;
-  font-feature-settings:
-    'liga' 1, 'calt' 1,
-    'tnum' 1, 'lnum' 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 18px;
+  font-feature-settings: 'liga' 1, 'calt' 1, 'tnum' 1, 'lnum' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }
 
 .h1 { font-size: var(--text-h1); font-weight: var(--fw-semibold); line-height: var(--text-h1-lh); }
@@ -979,9 +987,12 @@ body {
 .dt-cell-inner {
   display: flex; align-items: center;
   width: 100%; height: calc(var(--dt-row-height) - 4px); padding: 0 12px; overflow: hidden; gap: 8px;
+  font-variant-numeric: tabular-nums;
 }
 .dt-cell-inner--right  { justify-content: flex-end; }
 .dt-cell-inner--center { justify-content: center; }
+.dt-cell--header { background: var(--dt-header-bg); }
+.dt-cell--footer { background: var(--dt-footer-bg); }
 .dt-cell--header .dt-cell-inner { font-size: 13px; font-weight: var(--fw-bold); color: var(--text-primary); white-space: nowrap; padding-right: 20px; }
 .dt-cell--footer .dt-cell-inner { font-size: 13px; color: var(--text-primary); font-weight: var(--fw-bold); font-feature-settings: 'lnum' 1, 'tnum' 1; }
 .dt-cell--header:not(:last-child) { border-right: 1px solid var(--stroke-neutral); }
