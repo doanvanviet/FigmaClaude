@@ -664,10 +664,10 @@ body {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .btn--primary {
-  background: var(--bg-brand); border: none; color: var(--text-white);
+  background: var(--bg-brand); border-color: var(--bg-brand); color: var(--text-white);
 }
-.btn--primary:hover    { background: var(--bg-brand-pressed); }
-.btn--primary:disabled { background: var(--bg-brand-disable); cursor: not-allowed; }
+.btn--primary:hover   { background: var(--bg-brand-pressed); border-color: var(--bg-brand-pressed); }
+.btn--primary:disabled { background: var(--bg-brand-disable); border-color: var(--bg-brand-disable); cursor: not-allowed; }
 .btn--outline {
   background: var(--bg-white); border-color: var(--stroke-brand); color: var(--text-brand);
 }
@@ -693,16 +693,16 @@ body {
 .btn--icon-only.btn--sm { width: calc(var(--btn-height) - 4px); }
 .btn--icon-only.btn--lg { width: calc(var(--btn-height) + 8px); }
 .btn--loading { pointer-events: none; opacity: 0.75; }
-.btn--success       { background: var(--bg-success); border: none; color: var(--text-white); }
-.btn--success:hover { background: var(--bg-success-pressed, #039855); }
-.btn--warning       { background: var(--bg-warning); border: none; color: var(--text-white); }
-.btn--warning:hover { background: var(--bg-warning-pressed, #dc6803); }
-.btn--danger        { background: var(--bg-danger);  border: none; color: var(--text-white); }
-.btn--danger:hover  { background: var(--bg-danger-pressed, #d92d20); }
-.btn--black         { background: #101828; border: none; color: #fff; }
-.btn--black:hover   { background: #1d2939; }
-.btn--white         { background: #fff; border: none; color: var(--text-primary); }
-.btn--white:hover   { background: #f5f5f5; }
+.btn--success  { background: var(--bg-success); border-color: var(--bg-success); color: var(--text-white); }
+.btn--success:hover  { background: var(--bg-success-pressed,#039855); border-color: var(--bg-success-pressed,#039855); }
+.btn--warning  { background: var(--bg-warning); border-color: var(--bg-warning); color: var(--text-white); }
+.btn--warning:hover  { background: var(--bg-warning-pressed,#dc6803); border-color: var(--bg-warning-pressed,#dc6803); }
+.btn--danger   { background: var(--bg-danger);  border-color: var(--bg-danger);  color: var(--text-white); }
+.btn--danger:hover   { background: var(--bg-danger-pressed,#d92d20);  border-color: var(--bg-danger-pressed,#d92d20);  }
+.btn--black    { background: #101828; border-color: #101828; color: #fff; }
+.btn--black:hover    { background: #1d2939; border-color: #1d2939; }
+.btn--white    { background: #fff; border-color: #fff; color: var(--text-primary); }
+.btn--white:hover    { background: #f5f5f5; }
 .btn--outline-success { background: var(--bg-white); border-color: var(--stroke-success); color: var(--text-success); }
 .btn--outline-success:hover { background: var(--bg-success-light,#ecfdf3); }
 .btn--outline-warning { background: var(--bg-white); border-color: var(--stroke-warning); color: var(--text-warning); }

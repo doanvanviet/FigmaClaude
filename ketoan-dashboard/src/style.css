@@ -548,10 +548,10 @@ body {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .btn--primary {
-  background: var(--bg-brand); border: none; color: var(--text-white);
+  background: var(--bg-brand); border-color: var(--bg-brand); color: var(--text-white);
 }
-.btn--primary:hover    { background: var(--bg-brand-pressed); }
-.btn--primary:disabled { background: var(--bg-brand-disable); cursor: not-allowed; }
+.btn--primary:hover   { background: var(--bg-brand-pressed); border-color: var(--bg-brand-pressed); }
+.btn--primary:disabled { background: var(--bg-brand-disable); border-color: var(--bg-brand-disable); cursor: not-allowed; }
 .btn--outline {
   background: var(--bg-white); border-color: var(--stroke-brand); color: var(--text-brand);
 }
