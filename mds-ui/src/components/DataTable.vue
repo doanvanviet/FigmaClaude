@@ -53,6 +53,8 @@
           @mouseleave="onDividerLeave"
         />
       </div>
+      <!-- Placeholder to match dt-cell--actions in data rows so :not(:last-child) border works consistently -->
+      <div v-if="rowActions.length" class="dt-cell dt-cell--header dt-cell--actions-ph" />
     </div>
 
     <!-- ── Column header context menu ── -->
@@ -471,6 +473,7 @@
           <span class="dt-footer-text">{{ col.footerText ?? '' }}</span>
         </div>
       </div>
+      <div v-if="rowActions.length" class="dt-cell dt-cell--footer dt-cell--actions-ph" />
     </div>
 
     <!-- Pagination -->

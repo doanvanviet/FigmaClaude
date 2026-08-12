@@ -2,37 +2,40 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --text-primary:         #101828;
-  --text-secondary:       #717680;
-  --text-hint:            #a4a7ae;
-  --text-disabled:        #cecfd2;
+  --text-primary:         #10141b;
+  --text-secondary:       #6b707a;
+  --text-hint:            #9da2ac;
+  --text-disabled:        #9da2ac;
   --text-white:           #ffffff;
   --text-white-disabled:  rgba(255,255,255,0.70);
   --text-brand:           #245fdf;
   --text-link:            #245fdf;
   --text-danger:          #f04438;
   --text-warning:         #DC6803;
-  --text-success:         #12b76a;
+  --text-success:         #039855;
   --text-info:            #0ba5ec;
   --text-accent:          #7a5af8;
+  --text-ai:              #1482ff;
 
   --icon-neutral:         #6b707a;
-  --icon-neutral-disabled:#d5d7da;
+  --icon-neutral-disabled:#ced1d6;
   --icon-brand:           #245fdf;
   --icon-white:           #ffffff;
   --icon-danger:          #f04438;
   --icon-success:         #12b76a;
   --icon-warning:         #f79009;
 
-  --bg-page:              #E0E2E6;
+  --bg-page:              #ECEDEF;
   --bg-white:             #ffffff;
+  --dt-header-bg:         #ECEDEF;
+  --dt-footer-bg:         #F2F2F4;
   --bg-brand:             #245fdf;
   --bg-brand-light:       #f0f6fe;
   --bg-brand-hover:       #c8eefb;
   --bg-brand-pressed:     #026fa8;
   --bg-brand-disable:     #b2dff5;
-  --bg-neutral-light:     #f5f5f5;
-  --bg-neutral-hover:     #f0f2f4;
+  --bg-neutral-light:     #f2f2f4;
+  --bg-neutral-hover:     #ecedef;
   --bg-danger:            #f04438;
   --bg-danger-light:      #fef3f2;
   --bg-success:           #12b76a;
@@ -42,26 +45,35 @@
   --bg-info-light:        #f0f9ff;
   --bg-accent-light:      #f4f3ff;
 
-  --stroke-neutral:       #d5d7da;
-  --stroke-neutral-light: #e9eaeb;
-  --stroke-divider:       #e9eaeb;
-  --stroke-white:         #ffffff;
-  --stroke-brand:         #245fdf;
-  --stroke-brand-light:   #7dd3f8;
-  --stroke-danger:        #f04438;
-  --stroke-success:       #12b76a;
-  --stroke-warning:       #f79009;
+  --stroke-neutral:        #ced1d6;
+  --stroke-neutral-light:  #e9eaeb;
+  --stroke-neutral-disable:#ecedef;
+  --stroke-divider:        #e9eaeb;
+  --stroke-white:          #ffffff;
+  --stroke-brand:          #245fdf;
+  --stroke-brand-light:    #7dd3f8;
+  --stroke-danger:         #f04438;
+  --stroke-danger-light:   #fda29b;
+  --stroke-success:        #12b76a;
+  --stroke-success-light:  #a6f4c5;
+  --stroke-warning:        #f79009;
+  --stroke-warning-light:  #fec84b;
+  --stroke-ai:             #1482ff;
 
-  --neutral-50:  #fafafa;
-  --neutral-100: #f5f5f5;
-  --neutral-200: #e9eaeb;
-  --neutral-300: #d5d7da;
-  --neutral-400: #a4a7ae;
-  --neutral-500: #717680;
-  --neutral-600: #535760;
-  --neutral-700: #383c40;
-  --neutral-800: #22262a;
-  --neutral-900: #101828;
+  --neutral-50:  #fbfbfc;
+  --neutral-100: #f7f7f8;
+  --neutral-150: #f2f2f4;
+  --neutral-200: #ecedef;
+  --neutral-250: #e6e7ea;
+  --neutral-300: #e9eaeb;
+  --neutral-350: #d7dade;
+  --neutral-400: #ced1d6;
+  --neutral-500: #9da2ac;
+  --neutral-600: #8f949d;
+  --neutral-700: #6b707a;
+  --neutral-800: #484e59;
+  --neutral-900: #303642;
+  --neutral-950: #10141b;
 
   --radius-sm:      4px;
   --radius-inner:   6px;
@@ -69,7 +81,7 @@
   --radius-dialog:  12px;
   --radius-pill:    9999px;
 
-  --btn-height:     32px;
+  --btn-height:     36px;
   --btn-min-width:  80px;
   --btn-px:         12px;
   --btn-gap:        8px;
@@ -476,6 +488,51 @@ body {
 }
 .btn-collapse:hover { background: var(--bg-neutral-hover); }
 .btn-collapse .ti { font-size: 20px; }
+
+/* ── Sidebar dark mode — khi Tiêu đề = Màu trắng ── */
+:root[data-sidebar="dark"] .sidebar {
+  background: #1c1e26;
+  border-right-color: rgba(255,255,255,0.07);
+}
+:root[data-sidebar="dark"] .sidebar .btn-add-quick {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.82);
+}
+:root[data-sidebar="dark"] .sidebar .btn-add-quick:hover {
+  background: rgba(255,255,255,0.13);
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item {
+  color: rgba(255,255,255,0.72);
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item .ti {
+  color: rgba(255,255,255,0.55);
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.92);
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item:hover .ti {
+  color: rgba(255,255,255,0.82);
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item.active {
+  background: var(--bg-brand);
+  color: #fff;
+}
+:root[data-sidebar="dark"] .sidebar .sidebar-item.active .ti {
+  color: #fff;
+}
+:root[data-sidebar="dark"] .btn-collapse {
+  background: rgba(255,255,255,0.05);
+  border-top-color: rgba(255,255,255,0.1);
+  border-left-color: rgba(255,255,255,0.1);
+  border-right-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+}
+:root[data-sidebar="dark"] .btn-collapse:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+}
 
 /* ── Sub-nav tabs ── */
 .sub-nav {

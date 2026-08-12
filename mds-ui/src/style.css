@@ -67,10 +67,10 @@
   --icon-success:         #12b76a;
   --icon-warning:         #f79009;
 
-  --bg-page:              #E0E2E6;
+  --bg-page:              #ECEDEF;
   --bg-white:             #ffffff;
-  --dt-header-bg:         #E4E6EA;
-  --dt-footer-bg:         #EAECEF;
+  --dt-header-bg:         #ECEDEF;
+  --dt-footer-bg:         #F2F2F4;
   --bg-brand:             #245fdf;
   --bg-brand-light:       #f0f6fe;
   --bg-brand-hover:       #c8eefb;
@@ -122,7 +122,7 @@
   --radius-dialog:  12px;
   --radius-pill:    9999px;
 
-  --btn-height:     32px;
+  --btn-height:     36px;
   --btn-min-width:  80px;
   --btn-px:         12px;
   --btn-gap:        8px;
@@ -254,10 +254,10 @@
   --dt-row-height:  32px;
   --radius-default: 6px;
 }
-/* Comfortable: chiều cao control 36px */
+/* Comfortable: chiều cao control 40px */
 :root[data-density="comfortable"] {
   --input-height:  40px;
-  --btn-height:    36px;
+  --btn-height:    40px;
   --btn-px:        14px;
   --dt-row-height: 40px;
 }
@@ -965,7 +965,7 @@ body {
 .datatable { display: flex; flex-direction: column; width: 100%; overflow: hidden; background: var(--bg-white); }
 .dt-row { display: flex; align-items: stretch; min-width: 100%; flex-shrink: 0; }
 .dt-row--header {
-  background: var(--neutral-200);
+  background: var(--dt-header-bg);
   border-top: 1px solid var(--stroke-neutral);
   border-bottom: 1px solid var(--stroke-neutral);
   position: sticky; top: 0; z-index: 3;
@@ -975,7 +975,7 @@ body {
 .dt-row--selected { background: var(--bg-brand-light) !important; }
 .dt-row--active   { background: var(--bg-brand-light) !important; }
 .dt-row--footer {
-  background: var(--neutral-150);
+  background: var(--dt-footer-bg);
   border-top: 1px solid var(--stroke-neutral);
   z-index: 1;
 }
@@ -1119,6 +1119,9 @@ body {
   background: var(--stroke-neutral-light);
   pointer-events: none; z-index: 1;
 }
+
+/* Header/footer placeholder matching dt-cell--actions position — makes :not(:last-child) border consistent */
+.dt-cell--actions-ph { width: 0; flex-shrink: 0; padding: 0; border: none !important; }
 
 /* Sticky overlay action column — zero-width sticky anchor, row-actions floats absolutely */
 .dt-cell--actions {

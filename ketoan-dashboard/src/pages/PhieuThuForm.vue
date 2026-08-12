@@ -215,7 +215,7 @@ const showTK = ref(true)
               <input class="ht-input" type="text" v-model="row.tenDoiTuong" />
             </div>
             <div class="ht-cell ht-cell--del">
-              <button class="btn-icon btn-icon--sm btn-icon--danger" type="button" @click="deleteRow(i)">
+              <button class="btn-icon btn-icon--danger" type="button" @click="deleteRow(i)">
                 <TIcon name="trash" />
               </button>
             </div>
@@ -351,7 +351,7 @@ const showTK = ref(true)
   display: block;
   font-size: var(--text-body);
   font-weight: var(--fw-medium);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: var(--text-body-lh);
   margin-bottom: 4px;
 }
@@ -372,7 +372,7 @@ const showTK = ref(true)
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 28px;
+  min-height: var(--input-height);
 }
 
 /* Column widths — consistent across rows */
@@ -465,7 +465,7 @@ const showTK = ref(true)
   display: flex;
   align-items: center;
   padding: 0 8px;
-  height: 36px;
+  height: var(--input-height);
   border-right: 1px solid var(--stroke-neutral-light);
   flex-shrink: 0;
   overflow: hidden;
@@ -500,7 +500,7 @@ const showTK = ref(true)
 /* Inline inputs */
 .ht-input {
   width: 100%;
-  height: 28px;
+  height: var(--input-height);
   padding: 0 4px;
   font-family: var(--font-family);
   font-size: 13px;

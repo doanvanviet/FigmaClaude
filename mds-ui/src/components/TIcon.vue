@@ -70,6 +70,8 @@ import {
   IconTag, IconUser, IconRepeat, IconGitBranch, IconAlignLeft,
   IconTable,
   IconFingerprint,
+  IconWorld,
+  IconHistory,
 } from '@tabler/icons-vue'
 
 const props = defineProps({
@@ -263,6 +265,8 @@ const MAP = {
   'git-branch':             IconGitBranch,
   'align-left':             IconAlignLeft,
   'table':                  IconTable,
+  'world':                  IconWorld,
+  'history':                IconHistory,
 }
 
 const iconComp = computed(() => {

@@ -54,7 +54,7 @@
                   </DropdownMenu>
                 </template>
                 <template #main-buttons>
-                  <button class="btn btn--primary" @click="showAddForm = true"><TIcon name="plus" />Thêm</button>
+                  <button class="btn btn--primary" @click="showForm = true"><TIcon name="plus" />Thêm</button>
                   <button class="btn btn--ai-outline"><TIcon name="wand" />Thêm bằng AI</button>
                   <DropdownMenu :items="moreItems" placement="bottom-end" :min-width="200">
                     <template #trigger="{ toggle }">
@@ -686,6 +686,8 @@
       </div>
     </div>
   </Teleport>
+
+  <BanHangForm v-if="showForm" @close="showForm = false" />
 </template>
 
 <script setup>
@@ -699,6 +701,7 @@ import DropdownMenu        from '@mds/components/DropdownMenu.vue'
 import AppCheckbox         from '@mds/components/AppCheckbox.vue'
 import CollapseExpandPanel from '@mds/components/CollapseExpandPanel.vue'
 import TablePaging         from '@mds/components/TablePaging.vue'
+import BanHangForm         from '../components/BanHangForm.vue'
 
 const router = useRouter()
 
@@ -950,6 +953,7 @@ const filteredRows = computed(() => {
 
 /* ── Add form state ── */
 const showAddForm = ref(false)
+const showForm    = ref(false)
 const formTab     = ref('thu-chi-tien')
 const formTabs    = [
   { id: 'quy-trinh',        label: 'Quy trình' },
@@ -1168,9 +1172,9 @@ const detailRows = [
   border-bottom: 1px solid var(--stroke-neutral-light);
 }
 .form-opts__group    { display: flex; align-items: center; gap: 6px; }
-.fopt-label          { font-size: var(--text-body); color: var(--text-secondary); white-space: nowrap; }
+.fopt-label          { font-size: var(--text-body); color: var(--text-primary); white-space: nowrap; }
 .fopt-select {
-  height: 28px; padding: 0 8px;
+  height: var(--input-height); padding: 0 8px;
   border: 1px solid var(--stroke-neutral); border-radius: var(--radius-inner);
   font-size: var(--text-body); font-family: var(--font-family); color: var(--text-primary);
   background: var(--bg-white); outline: none; cursor: pointer; min-width: 120px;
@@ -1196,7 +1200,7 @@ const detailRows = [
 .fgrid        { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
 .ff           { display: flex; flex-direction: column; gap: 4px; }
 .ff--span2    { grid-column: span 2; }
-.ff-lbl       { font-size: var(--text-body); font-weight: var(--fw-medium); color: var(--text-secondary); }
+.ff-lbl       { font-size: var(--text-body); font-weight: var(--fw-medium); color: var(--text-primary); }
 .ff-input {
   height: var(--input-height); padding: 0 var(--input-px);
   overflow-clip-margin: 6px !important;
@@ -1229,7 +1233,7 @@ const detailRows = [
 /* Inline editable controls — text at rest, MDS input on focus */
 .dt-inline-input,
 .dt-inline-select {
-  width: 100%; height: 28px;
+  width: 100%; height: var(--input-height);
   border: 1px solid transparent; border-radius: var(--radius-inner);
   outline: none; background: transparent;
   padding: 0 6px;

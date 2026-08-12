@@ -32,7 +32,7 @@
             </button>
           </div>
           <div class="sub-nav-right">
-            <button class="btn btn--ghost btn--sm" style="gap:6px;color:var(--text-brand)">
+            <button class="btn btn--ghost" style="gap:6px;color:var(--text-brand)">
               <TIcon name="player-play" style="font-size:11px" />
               Bắt đầu sử dụng
             </button>
@@ -49,7 +49,7 @@
                 <div class="tnm-page-hd__title">Tính năng mới AMIS Kế toán</div>
                 <div class="tnm-page-hd__sub">Khám phá các cập nhật và tính năng mới nhất giúp nâng cao hiệu quả kế toán</div>
               </div>
-              <button class="btn btn--outline btn--sm" style="flex-shrink:0;white-space:nowrap;display:inline-flex;align-items:center;gap:6px">
+              <button class="btn btn--outline btn--neutral" style="flex-shrink:0;white-space:nowrap;gap:6px">
                 Xem nhật ký phát hành
                 <TIcon name="external-link" style="font-size:13px" />
               </button>
@@ -847,12 +847,12 @@ watch(currentTheme, () => initCharts())
 /* ── Dashboard tables ── */
 .dash-tbl { width: 100%; border-collapse: collapse; }
 .dash-tbl th {
-  height: 32px; padding: 0 8px;
+  height: var(--dt-row-height); padding: 0 8px;
   font-size: 12px; font-weight: var(--fw-semibold); color: var(--text-secondary);
   text-align: left; border-bottom: 1px solid var(--stroke-neutral-light);
 }
 .dash-tbl td {
-  height: 32px; padding: 0 8px;
+  height: var(--dt-row-height); padding: 0 8px;
   font-size: 12px; color: var(--text-primary);
   border-bottom: 1px solid var(--stroke-neutral-light);
 }

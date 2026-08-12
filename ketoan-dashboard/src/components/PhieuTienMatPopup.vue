@@ -12,7 +12,7 @@
               <span class="ptm-hd__no">{{ form.soPhieu }}</span>
             </div>
             <div class="ptm-hd__right">
-              <button class="btn btn--ghost btn--sm" type="button" style="gap:6px">
+              <button class="btn btn--ghost" type="button" style="gap:6px">
                 <TIcon name="help-circle" style="font-size:14px;color:var(--text-success)" />
                 Hướng dẫn sử dụng
                 <TIcon name="chevron-down" style="font-size:12px;color:var(--text-secondary)" />
@@ -153,7 +153,7 @@
                       <div class="ht-cell ht-cell--st"><input class="ht-input ht-input--right" type="number" v-model="row.soTien" /></div>
                       <div class="ht-cell ht-cell--dt"><input class="ht-input" type="text" v-model="row.doiTuong" /></div>
                       <div class="ht-cell ht-cell--del">
-                        <button class="btn-icon btn-icon--sm btn-icon--danger" type="button" @click="hachToanRows.splice(i, 1)">
+                        <button class="btn-icon btn-icon--danger" type="button" @click="hachToanRows.splice(i, 1)">
                           <TIcon name="trash" />
                         </button>
                       </div>
@@ -196,11 +196,16 @@
           <!-- ── Footer ── -->
           <div class="ptm-ft">
             <div class="ptm-ft__left">
-              <span class="caption text-secondary">F3 - Tìm nhanh &nbsp;·&nbsp; F9 - Thêm nhanh</span>
+              <label class="ptm-ft__toggle" @click="showTK = !showTK">
+                <div class="toggle-sw" :class="{ 'toggle-sw--on': showTK }"></div>
+                <span>Hiển thị tài khoản</span>
+              </label>
+            </div>
+            <div class="ptm-ft__center">
+              <button class="btn ptm-ft__btn-ghost" type="button" @click="$emit('close')">Hủy</button>
             </div>
             <div class="ptm-ft__right">
-              <button class="btn btn--outline btn--neutral" type="button" @click="$emit('close')">Hủy</button>
-              <button class="btn btn--outline btn--neutral" type="button">Cất</button>
+              <button class="btn ptm-ft__btn-ghost" type="button">Cất</button>
               <div class="btn-split">
                 <button class="btn btn--primary" type="button">Cất và In</button>
                 <button class="btn btn--primary btn-split__arrow" type="button"><TIcon name="chevron-down" /></button>
@@ -227,6 +232,7 @@ const props = defineProps({
 defineEmits(['close'])
 
 const activeTab = ref('hachtoan')
+const showTK    = ref(true)
 
 const voucherTypeOptions = ['1. Thu nợ', '2. Thu tạm ứng', '3. Thu tiền bán hàng', '4. Thu nội bộ', '5. Thu khác']
 const voucherType = ref(props.type === 'thu' ? '5. Thu khác' : '5. Chi khác')
@@ -326,7 +332,7 @@ const totalDisplay = computed(() =>
   display: block;
   font-size: var(--text-body);
   font-weight: var(--fw-medium);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: var(--text-body-lh);
   margin-bottom: 4px;
 }
@@ -365,7 +371,7 @@ const totalDisplay = computed(() =>
 }
 
 .ibox-sep   { width: 1px; height: 16px; background: var(--stroke-neutral-light); flex-shrink: 0; }
-.ibox-label { font-size: 13px; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; cursor: default; }
+.ibox-label { font-size: 13px; color: var(--text-primary); white-space: nowrap; flex-shrink: 0; cursor: default; }
 
 /* ── Section: tabs + table ── */
 .ptm-sec--table {
@@ -411,7 +417,7 @@ const totalDisplay = computed(() =>
 
 .ht-cell {
   display: flex; align-items: center; padding: 0 8px;
-  height: 36px; border-right: 1px solid var(--stroke-neutral-light);
+  height: var(--input-height); border-right: 1px solid var(--stroke-neutral-light);
   flex-shrink: 0; overflow: hidden;
 }
 .ht-cell:last-child { border-right: none; }
@@ -426,7 +432,7 @@ const totalDisplay = computed(() =>
 .ht-cell--total { font-weight: var(--fw-semibold); color: var(--text-primary); font-feature-settings: 'lnum' 1, 'tnum' 1; }
 
 .ht-input {
-  width: 100%; height: 28px; padding: 0 4px;
+  width: 100%; height: var(--input-height); padding: 0 4px;
   font-family: var(--font-family); font-size: 13px; color: var(--text-primary);
   background: transparent; border: 1px solid transparent;
   border-radius: var(--radius-sm); outline: none;
@@ -451,16 +457,54 @@ const totalDisplay = computed(() =>
   padding: 40px; color: var(--text-hint);
 }
 
-/* ── Footer ── */
+/* ── Footer (dark) ── */
 .ptm-ft {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 56px; padding: 0 16px; flex-shrink: 0;
-  background: var(--bg-white);
-  border-top: 1px solid var(--stroke-neutral-light);
+  display: flex; align-items: center;
+  height: 52px; padding: 0 16px; flex-shrink: 0;
+  background: var(--neutral-800);
+  border-top: 1px solid rgba(255,255,255,0.08);
   gap: 16px;
 }
-.ptm-ft__left  { flex: 1; display: flex; align-items: center; }
-.ptm-ft__right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.ptm-ft__left   { flex: 1; display: flex; align-items: center; }
+.ptm-ft__center { flex-shrink: 0; display: flex; align-items: center; }
+.ptm-ft__right  { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.ptm-ft__btn-ghost {
+  height: var(--btn-height); min-width: 72px; padding: 0 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: transparent; color: #fff;
+  border-radius: var(--radius-default);
+  font-family: var(--font-family); font-size: 13px; font-weight: var(--fw-medium);
+  cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.ptm-ft__btn-ghost:hover { background: rgba(255,255,255,0.10); }
+
+/* Toggle switch */
+.ptm-ft__toggle {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; user-select: none;
+  color: #fff; font-size: 13px;
+  font-family: var(--font-family);
+}
+.toggle-sw {
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.20);
+  position: relative; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.toggle-sw::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.2s;
+}
+.toggle-sw--on { background: var(--bg-success); }
+.toggle-sw--on::after { left: 18px; }
 
 /* ── Animation ── */
 .ptm-overlay { animation: ptm-ov-in 0.18s ease; }

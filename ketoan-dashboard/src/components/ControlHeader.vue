@@ -131,9 +131,58 @@
 
               <!-- ── Tab: Thiết lập màu sắc ── -->
               <template v-if="activeTab === 'color'">
-                <p class="settings-section-title">Lựa chọn màu sắc bạn muốn hiển thị trên phần mềm</p>
+
+                <!-- Tiêu đề + Nền + Sidebar — luôn nằm trên, thấy ngay khi mở -->
+                <div class="settings-options-row">
+                  <div class="srow">
+                    <span class="srow__label">Tiêu đề</span>
+                    <div class="srow__btns">
+                      <button
+                        v-for="m in modes" :key="m.value"
+                        class="sopt"
+                        :class="{ 'sopt--active': draftMode === m.value }"
+                        type="button"
+                        @click="draftMode = m.value"
+                      >
+                        <span class="sopt__dot" />
+                        {{ m.label }}
+                      </button>
+                    </div>
+                  </div>
+                  <div class="srow">
+                    <span class="srow__label">Nền</span>
+                    <div class="srow__btns">
+                      <button
+                        v-for="t in bgTints" :key="t.value"
+                        class="sopt"
+                        :class="{ 'sopt--active': draftBgTint === t.value }"
+                        type="button"
+                        @click="draftBgTint = t.value"
+                      >
+                        <span class="sopt__dot" />
+                        {{ t.label }}
+                      </button>
+                    </div>
+                  </div>
+                  <div class="srow">
+                    <span class="srow__label">Sidebar</span>
+                    <div class="srow__btns">
+                      <button
+                        v-for="s in sidebarModes" :key="s.value"
+                        class="sopt"
+                        :class="{ 'sopt--active': draftSidebarMode === s.value }"
+                        type="button"
+                        @click="draftSidebarMode = s.value"
+                      >
+                        <span class="sopt__dot" />
+                        {{ s.label }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- Color swatches -->
+                <div class="settings-section-title">Lựa chọn màu sắc bạn muốn hiển thị trên phần mềm</div>
                 <div class="color-swatches">
                   <div
                     v-for="c in COLORS" :key="c.id"
@@ -154,30 +203,6 @@
                       <div class="color-swatch__block-right" :style="{ background: c.gradient || c.main }"></div>
                     </div>
                     <span class="color-swatch__label">{{ c.label }}</span>
-                  </div>
-                </div>
-
-                <!-- Tiêu đề + Nền — cùng hàng, dưới swatches -->
-                <div class="settings-options-row">
-                  <div class="settings-row">
-                    <span class="settings-row__label">Tiêu đề</span>
-                    <div class="radio-group">
-                      <label v-for="m in modes" :key="m.value" class="radio-item">
-                        <input type="radio" :value="m.value" v-model="draftMode" />
-                        <span class="radio-circle" :class="{ 'radio-circle--checked': draftMode === m.value }"></span>
-                        <span>{{ m.label }}</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="settings-row">
-                    <span class="settings-row__label">Nền</span>
-                    <div class="radio-group">
-                      <label v-for="t in bgTints" :key="t.value" class="radio-item">
-                        <input type="radio" :value="t.value" v-model="draftBgTint" />
-                        <span class="radio-circle" :class="{ 'radio-circle--checked': draftBgTint === t.value }"></span>
-                        <span>{{ t.label }}</span>
-                      </label>
-                    </div>
                   </div>
                 </div>
 
@@ -217,19 +242,22 @@
                       <!-- Mini Body -->
                       <div class="mini-body" :style="{ background: draftBgTint === 'color' ? previewColor.light : '#f0f2f4' }">
                         <!-- Mini Sidebar -->
-                        <div class="mini-sidebar">
+                        <div class="mini-sidebar" :style="miniSidebarStyle">
                           <div style="padding:6px 4px 4px">
-                            <div style="width:100%;height:16px;border-radius:3px;border:1px solid var(--stroke-brand)" :style="{borderColor: previewColor.main}"></div>
+                            <div style="width:100%;height:16px;border-radius:3px;border:1px solid"
+                              :style="{ borderColor: draftSidebarMode === 'dark' ? 'rgba(255,255,255,0.2)' : previewColor.main }"></div>
                           </div>
                           <div style="display:flex;flex-direction:column;gap:2px;padding:4px">
                             <div v-for="(item,i) in sidebarItems" :key="i"
                               style="display:flex;align-items:center;gap:4px;height:20px;padding:0 4px;border-radius:3px"
-                              :style="i===activeNav ? { background: previewColor.light, color: previewColor.main } : {}"
+                              :style="i===activeNav
+                                ? (draftSidebarMode === 'dark' ? { background: previewColor.main } : { background: previewColor.light })
+                                : {}"
                             >
                               <div style="width:10px;height:10px;border-radius:2px;flex-shrink:0"
-                                :style="{ background: i===activeNav ? previewColor.main : '#d5d7da' }"></div>
+                                :style="{ background: i===activeNav ? 'rgba(255,255,255,0.9)' : (draftSidebarMode === 'dark' ? 'rgba(255,255,255,0.28)' : '#d5d7da') }"></div>
                               <div style="height:6px;border-radius:2px;flex:1"
-                                :style="{ background: i===activeNav ? previewColor.main : '#d5d7da', opacity: i===activeNav ? 0.7 : 1 }"></div>
+                                :style="{ background: i===activeNav ? 'rgba(255,255,255,0.7)' : (draftSidebarMode === 'dark' ? 'rgba(255,255,255,0.2)' : '#d5d7da') }"></div>
                             </div>
                           </div>
                         </div>
@@ -334,7 +362,7 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
-import { COLORS, currentTheme, applyTheme, currentMode, applyMode, currentBgTint, applyBgTint } from '@mds/theme.js'
+import { COLORS, currentTheme, applyTheme, currentMode, applyMode, currentBgTint, applyBgTint, currentSidebarMode, applySidebarMode } from '@mds/theme.js'
 import IconMisaAI from '@mds/components/IconMisaAI.vue'
 import amisChatSrc from '@mds/assets/icon-amis-chat.png'
 
@@ -393,11 +421,12 @@ onMounted(() => document.addEventListener('mousedown', onDocMousedown))
 onUnmounted(() => document.removeEventListener('mousedown', onDocMousedown))
 
 /* ── Dialog state ── */
-const showSettings = ref(false)
-const activeTab    = ref('color')
-const draftColor   = ref(currentTheme.value)
-const draftMode    = ref(currentMode.value)
-const draftBgTint  = ref(currentBgTint.value)
+const showSettings      = ref(false)
+const activeTab         = ref('color')
+const draftColor        = ref(currentTheme.value)
+const draftMode         = ref(currentMode.value)
+const draftBgTint       = ref(currentBgTint.value)
+const draftSidebarMode  = ref(currentSidebarMode.value)
 
 const dialogTabs = [
   { id: 'color',   label: 'Thiết lập màu sắc' },
@@ -413,6 +442,10 @@ const bgTints = [
   { value: 'color', label: 'Màu đang chọn' },
   { value: 'gray',  label: 'Màu xám' },
 ]
+const sidebarModes = [
+  { value: 'light', label: 'Nền trắng' },
+  { value: 'dark',  label: 'Nền tối' },
+]
 const sidebarItems = Array(14).fill(0)
 const activeNav    = ref(1)
 
@@ -426,10 +459,18 @@ const miniHeaderStyle = computed(() =>
     : { background: previewColor.value.gradient || previewColor.value.main }
 )
 
+const miniSidebarStyle = computed(() =>
+  draftSidebarMode.value === 'dark'
+    ? { background: '#1c1e26', borderRightColor: 'rgba(255,255,255,0.07)' }
+    : {}
+)
+
 function openSettings() {
-  draftColor.value  = currentTheme.value
-  draftMode.value   = currentMode.value
-  draftBgTint.value = currentBgTint.value
+  activeTab.value        = 'color'
+  draftColor.value       = currentTheme.value
+  draftMode.value        = currentMode.value
+  draftBgTint.value      = currentBgTint.value
+  draftSidebarMode.value = currentSidebarMode.value
   showSettings.value = true
   nextTick(() => scalePreview())
 }
@@ -440,6 +481,7 @@ function saveSettings() {
   applyTheme(draftColor.value)
   applyMode(draftMode.value)
   applyBgTint(draftBgTint.value)
+  applySidebarMode(draftSidebarMode.value)
   showSettings.value = false
 }
 
@@ -464,15 +506,17 @@ watch(showSettings, (v) => { if (v) nextTick(scalePreview) })
   position: fixed; inset: 0; z-index: 9000;
   background: rgba(16,24,40,0.45);
   display: flex; align-items: flex-start; justify-content: center;
-  padding: 20px 20px 0;
+  padding: 20px 20px 20px;
+  overflow-y: auto;
 }
 .settings-dialog {
   background: var(--bg-white);
-  border-radius: var(--radius-dialog) var(--radius-dialog) 0 0;
+  border-radius: var(--radius-dialog);
   width: 100%; max-width: 1440px;
   display: flex; flex-direction: column;
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 40px);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 /* Header */
@@ -517,34 +561,46 @@ watch(showSettings, (v) => { if (v) nextTick(scalePreview) })
 
 /* Settings option rows */
 .settings-options-row {
-  display: flex; align-items: center; gap: 32px;
+  display: flex; align-items: center; gap: 24px;
   justify-content: center;
+  flex-wrap: wrap; row-gap: 12px;
 }
-.settings-row {
-  display: flex; align-items: center; gap: 12px;
+.srow { display: flex; align-items: center; gap: 10px; }
+.srow__label {
+  font-size: 11px; font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  min-width: 44px; text-align: right; white-space: nowrap;
 }
-.settings-row__label {
-  font-size: 13px; font-weight: var(--fw-medium); color: var(--text-primary);
-}
-.radio-group { display: flex; align-items: center; gap: 20px; }
-.radio-item {
-  display: flex; align-items: center; gap: 8px;
-  cursor: pointer; font-size: 13px; color: var(--text-primary);
-}
-.radio-item input[type="radio"] { display: none; }
-.radio-circle {
-  width: 16px; height: 16px; border-radius: 50%;
-  border: 2px solid var(--stroke-neutral);
+.srow__btns { display: flex; gap: 6px; }
+.sopt {
+  display: flex; align-items: center; gap: 6px;
+  height: 28px; padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--stroke-neutral);
   background: var(--bg-white);
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.15s;
-  flex-shrink: 0;
+  font-size: 12px; font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
-.radio-circle--checked {
+.sopt:hover {
   border-color: var(--stroke-brand);
-  background: var(--bg-brand);
-  box-shadow: inset 0 0 0 3px white;
+  color: var(--text-brand);
 }
+.sopt--active {
+  border-color: var(--stroke-brand);
+  background: var(--bg-brand-light);
+  color: var(--text-brand);
+  font-weight: var(--fw-semibold);
+}
+.sopt__dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--stroke-neutral);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.sopt--active .sopt__dot { background: var(--text-brand); }
 
 /* Color swatches */
 .color-swatches {
@@ -632,6 +688,7 @@ watch(showSettings, (v) => { if (v) nextTick(scalePreview) })
   width: 200px; flex-shrink: 0;
   background: white; border-right: 1px solid #e9eaeb;
   display: flex; flex-direction: column;
+  transition: background 0.2s, border-color 0.2s;
 }
 .mini-main {
   display: flex; flex-direction: column; flex: 1; overflow: hidden;
@@ -643,7 +700,7 @@ watch(showSettings, (v) => { if (v) nextTick(scalePreview) })
   gap: 12px; padding: 12px var(--dialog-px);
   background: var(--neutral-50);
   border-top: 1px solid var(--stroke-neutral-light);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-dialog) var(--radius-dialog);
   flex-shrink: 0;
 }
 

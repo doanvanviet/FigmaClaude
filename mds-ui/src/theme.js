@@ -60,7 +60,26 @@ export const currentMode = ref(_savedMode)
 
 export function applyMode(mode) {
   currentMode.value = mode
+  if (mode === 'light') {
+    document.documentElement.setAttribute('data-mode', 'light')
+  } else {
+    document.documentElement.removeAttribute('data-mode')
+  }
   localStorage.setItem('mds-header-mode', mode)
+}
+
+/* ── Sidebar mode (light = white bg, dark = dark bg) ── */
+const _savedSidebarMode = localStorage.getItem('mds-sidebar-mode') || 'light'
+export const currentSidebarMode = ref(_savedSidebarMode)
+
+export function applySidebarMode(mode) {
+  currentSidebarMode.value = mode
+  if (mode === 'dark') {
+    document.documentElement.setAttribute('data-sidebar', 'dark')
+  } else {
+    document.documentElement.removeAttribute('data-sidebar')
+  }
+  localStorage.setItem('mds-sidebar-mode', mode)
 }
 
 /* ── Background tint (color = brand-light tint, gray = neutral default) ── */

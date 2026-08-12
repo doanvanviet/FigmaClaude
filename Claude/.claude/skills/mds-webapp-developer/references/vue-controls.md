@@ -281,6 +281,8 @@ Item format: `{ id, icon, label }` hoặc `{ separator: true }`
 | `book` | Sách / Tài liệu |
 | `link` | Liên kết |
 | `paperclip` | Đính kèm |
+| `history` | Lịch sử chỉnh sửa / History |
+| `world` | Ngôn ngữ / Quốc tế / Website |
 
 > Nếu cần icon chưa có trong bảng → kiểm tra tên trong `@tabler/icons-vue` → thêm vào TIcon.vue → mới dùng.
 
@@ -480,7 +482,7 @@ CSS `field__label` — PHẢI định nghĩa trong `<style scoped>` của từng
   display: block;
   font-size: var(--text-body);
   font-weight: var(--fw-medium);
-  color: var(--text-secondary);
+  color: var(--text-primary);   /* ⛔ NGHIÊM CẤM dùng --text-secondary cho label */
   line-height: var(--text-body-lh);
   margin-bottom: 4px;
 }
@@ -1557,6 +1559,71 @@ Dùng cho `<input>` và `<select>` thuần HTML (ngoài ibox / AppTextbox compon
 5. **Dots button** → luôn ở ngoài cùng phải trong `#main-buttons` của TableHeader
 6. **Layout Tab+KPI+Master/Detail** → copy đúng section 5, không tự điều chỉnh cấu trúc flex/position
 7. **`input--select`** → KHÔNG override `padding-top/bottom` hay `line-height` — xem section 8
+8. **Density modes** → ⛔ NGHIÊM CẤM hardcode `height: Npx` cho input/button/row — dùng `var(--input-height)` / `var(--btn-height)` — xem section 12
+9. **Khoảng cách giữa controls** → 2 control đặt cạnh nhau trong cùng 1 group: `gap: 8px`. Khác group (section/column riêng): `gap: 16px` trở lên. KHÔNG dùng giá trị nào khác trừ khi có lý do rõ ràng.
+
+### Quy tắc border cho controls (⛔ Tuyệt đối — không tái phạm)
+
+```
+LUÔN dùng --stroke-neutral cho border của mọi input control (textbox, select, combobox, datebox, numberbox, search box, ibox...).
+NGHIÊM CẤM dùng --stroke-neutral-light cho border của control.
+
+--stroke-neutral-light CHỈ dùng cho:
+  - Divider / separator ngang/dọc giữa các vùng layout
+  - Border trong/nội bộ của table (ht-row, ht-cell, dt-row, dt-cell)
+  - Border của container/card/panel/wrapper (bọc nhiều thứ bên trong)
+  - Popup/dropdown/popover container
+  - Disabled state của control (border nhạt hơn khi control bị vô hiệu)
+  - Avatar, decoration border
+```
+
+```css
+/* ✅ ĐÚNG */
+.my-input     { border: 1px solid var(--stroke-neutral); }
+.search-box   { border: 1px solid var(--stroke-neutral); }
+.ibox         { border: 1px solid var(--stroke-neutral); }
+
+/* ❌ SAI — control không được dùng stroke-neutral-light */
+.my-input     { border: 1px solid var(--stroke-neutral-light); }
+.search-box   { border: 1px solid var(--stroke-neutral-light); }
+.ibox         { border: 1px solid var(--stroke-neutral-light); }
+
+/* ✅ ĐÚNG — container, divider dùng stroke-neutral-light */
+.table-wrap   { border: 1px solid var(--stroke-neutral-light); }
+.info-card    { border: 1px solid var(--stroke-neutral-light); }
+.popup-menu   { border: 1px solid var(--stroke-neutral-light); }
+.ibox--disabled { border-color: var(--stroke-neutral-light); }  /* disabled OK */
+```
+
+---
+
+### Quy tắc gap giữa controls (Rule #9 — chi tiết)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Tình huống                          │  gap    │  Token  │
+│──────────────────────────────────────┼─────────┼─────────│
+│  2+ control trong cùng row/group     │  8px    │  --btn-group-gap (8px) │
+│  Input + button kèm (search box…)    │  8px    │  --btn-group-gap │
+│  Các row trong cùng form section     │  16px   │  --input-row-gap │
+│  Giữa 2 section / 2 column           │  24px+  │  --form-col-gap  │
+└─────────────────────────────────────────────────────────┘
+```
+
+```css
+/* ✅ ĐÚNG — 2 button cạnh nhau trong cùng row */
+.toolbar { display: flex; align-items: center; gap: 8px; }
+
+/* ✅ ĐÚNG — search + button inline */
+.search-row { display: flex; gap: 8px; }
+
+/* ❌ SAI */
+.toolbar { gap: 10px; }   /* không phải token */
+.toolbar { gap: 12px; }   /* 12px chỉ dùng cho card gap, không phải control gap */
+.toolbar { gap: 6px; }    /* quá hẹp */
+```
+
+> **Nguồn:** CSS token `--btn-group-gap: 8px` (định nghĩa trong SKILL.md Section 1). Áp dụng cho mọi nơi: toolbar, page-header right, form inline group, filter bar, footer action bar.
 
 ---
 
@@ -1608,10 +1675,11 @@ const columns = [
 
 | Vị trí | Size | Class |
 |--------|------|-------|
-| Page header (ngang với ibox/input) | Standard 32px | `btn btn--primary`, `btn btn--outline btn--neutral`, `btn-icon btn-icon--outline` |
-| TableHeader toolbar (filter area) | Standard 32px | Như trên |
-| Row actions (cuối mỗi hàng bảng) | Small 28px | `btn-icon btn-icon--sm btn-icon--outline` |
-| Paging, sidebar | Small 28px | `btn-icon btn-icon--sm` |
+| Page header (ngang với ibox/input) | Standard (var(--btn-height)) | `btn btn--primary`, `btn btn--outline btn--neutral`, `btn-icon btn-icon--outline` |
+| TableHeader toolbar (filter area) | Standard | Như trên |
+| Compound input (textbox + icon) | Standard `btn-icon btn-icon--outline` | **KHÔNG dùng `btn-icon--sm`** |
+| Row actions (cuối mỗi hàng bảng) | Standard `btn-icon btn-icon--outline` | Chỉ dùng `btn-icon--sm` khi user yêu cầu tường minh |
+| Paging, sidebar | Standard | Chỉ dùng `btn-icon--sm` khi user yêu cầu tường minh |
 
 **Ví dụ page-header đúng:**
 ```html
@@ -1712,3 +1780,184 @@ body {
 > }
 > ```
 > Không có dòng này → dev server dùng Arial, build production thì đúng Inter. Rất dễ bỏ sót!
+
+---
+
+## 12. ⛔ 3 Density Modes — QUY TẮC BẮT BUỘC TUYỆT ĐỐI
+
+> **Đây là lỗi tái lặp nhiều nhất.** Đọc kỹ và tuân thủ triệt để.
+
+### 12.1 Ba chế độ density (từ `mds-ui/src/style.css`)
+
+```css
+/* Standard / Tiêu chuẩn (mặc định) */
+:root {
+  --input-height:    36px;
+  --btn-height:      36px;   /* = --input-height — btn-icon luôn bằng chiều cao input */
+  --dt-row-height:   36px;
+}
+
+/* Compact */
+:root[data-density="compact"] {
+  --input-height:    28px;
+  --btn-height:      28px;
+  --dt-row-height:   32px;
+}
+
+/* Comfortable / Rộng */
+:root[data-density="comfortable"] {
+  --input-height:    40px;
+  --btn-height:      40px;   /* = --input-height */
+  --dt-row-height:   40px;
+}
+```
+
+> **Nguyên tắc bất di bất dịch:** `--btn-height` LUÔN LUÔN bằng `--input-height` trong mọi density mode.
+> Lý do: btn-icon đặt cạnh input phải cùng chiều cao — nếu chênh là lỗi layout nghiêm trọng.
+
+Người dùng chọn density trong Settings → `document.documentElement.dataset.density = 'compact'` (hoặc xóa attribute để về mặc định).
+
+### 12.2 ⛔ NGHIÊM CẤM hardcode chiều cao px
+
+```css
+/* ❌ SAI — hardcode cứng, không đổi theo density */
+.my-input    { height: 32px; }
+.my-input    { height: 28px; }
+.my-button   { height: 36px; }
+.ht-input    { height: 28px; }   /* ← lỗi hay gặp trong inline-editable table */
+.ht-row      { height: 28px; }
+
+/* ✅ ĐÚNG — tự động đổi theo density */
+.my-input    { height: var(--input-height); }
+.my-button   { height: var(--btn-height); }
+.ht-input    { height: var(--input-height); }
+.ht-row      { height: var(--input-height); min-height: var(--input-height); }
+```
+
+**Quy tắc đơn giản:**
+- Input / textbox / select → `height: var(--input-height)`
+- Button → `height: var(--btn-height)` (tự động qua `.btn` class)
+- DataTable 1-line row → `height: var(--dt-row-height)` (tự động trong DataTable component)
+- DataTable 2-line row → **luôn 56px cố định**, không đổi theo density
+
+### 12.3 Pattern chuẩn cho Inline-Editable Table (ht-input)
+
+Bảng nhập liệu trực tiếp (hàng hóa trong chứng từ) — mỗi ô là input không border (chỉ show border khi focus).
+
+```html
+<!-- ✅ Pattern đúng — height dùng token, không hardcode -->
+<div class="ht-wrapper">
+  <!-- Header row -->
+  <div class="ht-header">
+    <div class="ht-cell ht-cell--header" style="width:40px">STT</div>
+    <div class="ht-cell ht-cell--header" style="flex:1;min-width:200px">Tên hàng hóa, dịch vụ</div>
+    <div class="ht-cell ht-cell--header" style="width:80px;text-align:right">Số lượng</div>
+    <div class="ht-cell ht-cell--header" style="width:120px;text-align:right">Đơn giá</div>
+    <div class="ht-cell ht-cell--header" style="width:120px;text-align:right">Thành tiền</div>
+  </div>
+
+  <!-- Data rows -->
+  <div v-for="(row, i) in rows" class="ht-row" :class="{ 'ht-row--active': activeHtRow === i }">
+    <div class="ht-cell" style="width:40px;text-align:center">{{ i + 1 }}</div>
+    <div class="ht-cell" style="flex:1;min-width:200px">
+      <input class="ht-input" v-model="row.name" placeholder="Chọn hàng hóa..." />
+    </div>
+    <div class="ht-cell ht-cell--num" style="width:80px">
+      <input class="ht-input ht-input--right" v-model="row.qty" type="number" />
+    </div>
+    <div class="ht-cell ht-cell--num" style="width:120px">
+      <input class="ht-input ht-input--right" v-model="row.price" type="number" />
+    </div>
+    <div class="ht-cell ht-cell--num" style="width:120px">
+      <span class="ht-cell__readonly">{{ formatMoney(row.qty * row.price) }}</span>
+    </div>
+  </div>
+
+  <!-- Add row button -->
+  <div class="ht-add-row" @click="addRow">
+    <TIcon name="plus" /><span>Thêm dòng</span>
+  </div>
+</div>
+```
+
+```css
+/* ✅ CSS chuẩn — KHÔNG hardcode px, dùng var(--input-height) */
+.ht-wrapper {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--stroke-neutral-light);
+  border-radius: var(--radius-default);
+  overflow: hidden;
+}
+.ht-header {
+  display: flex; align-items: center;
+  height: var(--table-header-height, 36px); /* header luôn 36px */
+  background: var(--dt-header-bg, #E4E6EA);
+  border-bottom: 1px solid var(--stroke-neutral-light);
+  flex-shrink: 0;
+}
+.ht-cell--header {
+  font-size: var(--text-sm); font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  padding: 0 8px;
+  display: flex; align-items: center;
+}
+.ht-row {
+  display: flex; align-items: stretch;
+  /* ✅ ĐÚNG: dùng token, KHÔNG hardcode */
+  min-height: var(--input-height);
+  border-bottom: 1px solid var(--stroke-neutral-light);
+  transition: background 0.1s;
+}
+.ht-row:last-of-type { border-bottom: none; }
+.ht-row:hover { background: var(--bg-neutral-hover); }
+.ht-row--active { background: var(--bg-brand-light); }
+.ht-cell {
+  display: flex; align-items: center;
+  border-right: 1px solid var(--stroke-neutral-light);
+  padding: 0;
+  overflow: hidden;
+}
+.ht-cell:last-child { border-right: none; }
+.ht-cell--num { justify-content: flex-end; }
+.ht-input {
+  /* ✅ ĐÚNG: height đổi theo density */
+  width: 100%; height: var(--input-height);
+  padding: 0 8px;
+  border: none; outline: none;
+  background: transparent;
+  font-size: var(--text-body); font-family: var(--font-family);
+  color: var(--text-primary);
+}
+.ht-input--right { text-align: right; }
+.ht-input:focus {
+  background: var(--bg-white);
+  box-shadow: inset 0 0 0 1px var(--stroke-brand);
+  border-radius: 2px;
+}
+.ht-cell__readonly {
+  padding: 0 8px;
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  font-feature-settings: 'tnum' 1;
+}
+.ht-add-row {
+  display: flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 12px;
+  color: var(--text-brand); font-size: var(--text-body);
+  cursor: pointer;
+  border-top: 1px solid var(--stroke-neutral-light);
+}
+.ht-add-row:hover { background: var(--bg-brand-light); }
+```
+
+### 12.4 Kiểm tra density trước khi submit code
+
+**Checklist density (bắt buộc kiểm tra trước khi hoàn thành bất kỳ form/bảng nào):**
+
+- [ ] Tất cả `<input>`, `<select>` custom đều dùng `height: var(--input-height)` — không có `height: 28px`, `height: 32px`, `height: 36px` cứng
+- [ ] Tất cả button custom đều dùng `height: var(--btn-height)` hoặc dùng class `.btn` / `.btn-icon`
+- [ ] Các ô `.ht-row` / `.ht-input` trong bảng nhập liệu dùng `min-height: var(--input-height)`
+- [ ] DataTable 2-line row (subtext, avatar-subtext, product-logo) được giữ cố định 56px — không cần token
+- [ ] Không có `height: px` nào ngoài: card header (48px fixed), dialog (theo spec), border-radius, avatar size
+
+> **Ghi nhớ:** Mở DevTools → `document.documentElement.dataset.density = 'compact'` → tất cả control phải co lại. Nếu có gì không co → đó là chỗ đang hardcode px.

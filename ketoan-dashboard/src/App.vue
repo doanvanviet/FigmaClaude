@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, watchEffect, onMounted, onUnmounted } from 'vue'
-import { applyTheme, currentTheme, applyDensity, currentDensity, applyMode, currentMode, applyBgTint, currentBgTint } from '@mds/theme.js'
+import { applyTheme, currentTheme, applyDensity, currentDensity, applyMode, currentMode, applyBgTint, currentBgTint, applySidebarMode, currentSidebarMode } from '@mds/theme.js'
 import AVAChatPanel from './components/AVAChatPanel.vue'
 
 const showAvaChat = ref(false)
@@ -40,6 +40,7 @@ onMounted(() => {
   applyDensity(currentDensity.value)
   applyMode(currentMode.value)
   applyBgTint(currentBgTint.value)
+  applySidebarMode(currentSidebarMode.value)
   document.addEventListener('click', handleDocClick, true)
 })
 
