@@ -471,7 +471,7 @@ body {
 .btn-collapse {
   position: absolute; bottom: 0; right: 0;
   width: 40px; height: 40px;
-  background: var(--neutral-50);
+  background: var(--bg-neutral-light);
   border: none;
   border-top: 1px solid var(--stroke-neutral-light);
   border-left: 1px solid var(--stroke-neutral-light);
@@ -538,8 +538,8 @@ body {
 .sub-nav {
   display: flex; align-items: flex-end;
   height: 44px; padding: 0 16px;
-  background: var(--bg-white);
-  border-bottom: 1px solid var(--stroke-neutral-light);
+  background: var(--bg-neutral-light);
+  border-bottom: 1px solid var(--stroke-neutral);
   flex-shrink: 0; gap: 0;
   justify-content: space-between;
   overflow: hidden;
@@ -558,7 +558,7 @@ body {
   height: var(--layout-page-header-h);
   padding: 0 16px;
   background: var(--bg-white);
-  border-bottom: 1px solid var(--stroke-neutral-light);
+  border-bottom: 1px solid var(--stroke-neutral);
   flex-shrink: 0; gap: 8px;
 }
 .page-header__left  { display: flex; align-items: center; gap: 8px; }

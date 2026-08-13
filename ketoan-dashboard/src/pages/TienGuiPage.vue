@@ -31,6 +31,8 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
+            <AvaInsightBanner :sections="[{ title: 'Dòng tiền thuần' }, { title: 'Rủi ro & Khuyến nghị' }]" />
+
             <!-- KPI Row (3 boxes riêng) -->
             <div v-if="kpiOpen" class="kpi-row">
               <div class="kpi-card">
@@ -351,6 +353,7 @@ import IconMisaAI    from '@mds/components/IconMisaAI.vue'
 import AppCheckbox          from '@mds/components/AppCheckbox.vue'
 import CollapseExpandPanel  from '@mds/components/CollapseExpandPanel.vue'
 import TablePaging          from '@mds/components/TablePaging.vue'
+import AvaInsightBanner     from '../components/AvaInsightBanner.vue'
 
 const router = useRouter()
 
@@ -412,15 +415,15 @@ const detailHeight = ref(280)
 /* ── Main columns ── */
 const ACTION_WIDTH = 140
 const mainCols = [
-  { key: 'ngayHachToan', label: 'Ngày hạch toán',  width: 108 },
-  { key: 'ngayChungTu',  label: 'Ngày chứng từ',   width: 108 },
-  { key: 'soChungTu',    label: 'Số chứng từ',     width: 108 },
+  { key: 'ngayHachToan', label: 'Ngày hạch toán',  width: 144 },
+  { key: 'ngayChungTu',  label: 'Ngày chứng từ',   width: 136 },
+  { key: 'soChungTu',    label: 'Số chứng từ',     width: 120 },
   { key: 'dienGiai',     label: 'Diễn giải',        flex: true, minWidth: 200 },
   { key: 'soTien',       label: 'Số tiền',          width: 128, align: 'right' },
   { key: 'doiTuong',     label: 'Đối tượng',        width: 180 },
-  { key: 'soTaiKhoan',   label: 'Số tài khoản NH',  width: 136 },
+  { key: 'soTaiKhoan',   label: 'Số tài khoản NH',  width: 152 },
   { key: 'lyDo',         label: 'Lý do thu/chi',    width: 148 },
-  { key: 'loaiCT',       label: 'Loại chứng từ',    width: 104 },
+  { key: 'loaiCT',       label: 'Loại chứng từ',    width: 136 },
 ]
 const lastColKey = mainCols[mainCols.length - 1].key
 
@@ -487,9 +490,9 @@ const detailCols = [
   { key: 'tenHang',     label: 'Tên hàng',              flex: true, minWidth: 160 },
   { key: 'viTri',       label: 'Vị trí',                width: 100 },
   { key: 'chietKhau',   label: 'Chiết khấu thương mại', width: 168 },
-  { key: 'tkTien',      label: 'TK tiền',               width: 80 },
-  { key: 'tkDoanhThu',  label: 'TK doanh thu',          width: 104 },
-  { key: 'doiTuong',    label: 'Đối tượng',             width: 100 },
+  { key: 'tkTien',      label: 'TK tiền',               width: 88  },
+  { key: 'tkDoanhThu',  label: 'TK doanh thu',          width: 128 },
+  { key: 'doiTuong',    label: 'Đối tượng',             width: 104 },
   { key: 'tenDoiTuong', label: 'Tên đối tượng',         width: 148 },
   { key: 'quyCach',     label: 'Quy cách',              width: 100 },
 ]
@@ -619,7 +622,7 @@ const detailRows = [
 </script>
 
 <style scoped>
-.sub-nav { border-bottom: 1px solid var(--stroke-neutral-light); background: var(--bg-white); flex-shrink: 0; }
+.sub-nav { border-bottom: 1px solid var(--stroke-neutral); background: var(--bg-neutral-light); flex-shrink: 0; }
 .sub-nav__scroll {
   display: flex; align-items: flex-end; height: 100%;
   overflow-x: auto; scrollbar-width: none;
@@ -630,7 +633,7 @@ const detailRows = [
   flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative;
 }
 .table-panel {
-  flex: 1; min-height: 0; display: flex; flex-direction: column;
+  flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--card-col-gap);
 }
 .data-panel--master {
   flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -638,7 +641,8 @@ const detailRows = [
 }
 .data-panel--detail {
   flex-shrink: 0; display: flex; flex-direction: column;
-  background: var(--bg-white); border-radius: 8px; overflow: hidden;
+  background: var(--bg-white); border-radius: 8px;
+  position: relative; overflow: visible;
 }
 
 /* KPI */
@@ -683,7 +687,9 @@ const detailRows = [
   display: flex; justify-content: center;
 }
 .detail-cep {
-  display: flex; justify-content: center; flex-shrink: 0;
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 .detail-panel__tabs {
   display: flex; align-items: flex-end; flex-shrink: 0; padding: 0 4px;

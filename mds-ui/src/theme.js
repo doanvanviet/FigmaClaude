@@ -37,7 +37,7 @@ export const DENSITIES = [
   { id: 'comfortable', label: 'Rộng',       height: 36, description: 'Rộng rãi — dễ thao tác trên màn to' },
 ]
 
-const _savedDensity = localStorage.getItem('mds-density') || 'medium'
+const _savedDensity = localStorage.getItem('mds-density') || 'compact'
 export const currentDensity = ref(_savedDensity)
 
 export function applyDensity(density) {

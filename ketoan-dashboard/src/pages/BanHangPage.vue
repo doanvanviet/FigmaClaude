@@ -32,6 +32,7 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
+            <AvaInsightBanner :sections="[{ title: 'Phân tích doanh thu' }, { title: 'Rủi ro & Khuyến nghị' }]" />
 
             <div class="data-panel data-panel--master">
               <TableHeader
@@ -702,6 +703,7 @@ import AppCheckbox         from '@mds/components/AppCheckbox.vue'
 import CollapseExpandPanel from '@mds/components/CollapseExpandPanel.vue'
 import TablePaging         from '@mds/components/TablePaging.vue'
 import BanHangForm         from '../components/BanHangForm.vue'
+import AvaInsightBanner    from '../components/AvaInsightBanner.vue'
 
 const router = useRouter()
 
@@ -767,16 +769,16 @@ const detailHeight = ref(300)
 
 /* ── Main columns ── */
 const columns = [
-  { key: 'ngayHT',   label: 'Ngày hạch toán',        width: 112 },
-  { key: 'soCT',     label: 'Số chứng từ',            width: 112 },
-  { key: 'soHD',     label: 'Số hóa đơn',             width: 100 },
+  { key: 'ngayHT',   label: 'Ngày hạch toán',        width: 144 },
+  { key: 'soCT',     label: 'Số chứng từ',            width: 120 },
+  { key: 'soHD',     label: 'Số hóa đơn',             width: 112 },
   { key: 'kh',       label: 'Khách hàng',             flex: true, minWidth: 220 },
   { key: 'tongTien', label: 'Tổng tiền thanh toán',   width: 160, align: 'right' },
-  { key: 'ttLapHD',  label: 'TT lập hóa đơn',        width: 120 },
-  { key: 'ttTT',     label: 'TT thanh toán',          width: 135 },
-  { key: 'ttXH',     label: 'TT xuất hàng',           width: 110 },
-  { key: 'cukcuk',   label: 'Số chứng từ CUKCUK',     width: 148 },
-  { key: 'eshop',    label: 'Số chứng từ eShop',      width: 140 },
+  { key: 'ttLapHD',  label: 'TT lập hóa đơn',        width: 144 },
+  { key: 'ttTT',     label: 'TT thanh toán',          width: 136 },
+  { key: 'ttXH',     label: 'TT xuất hàng',           width: 128 },
+  { key: 'cukcuk',   label: 'Số chứng từ CUKCUK',     width: 176 },
+  { key: 'eshop',    label: 'Số chứng từ eShop',      width: 168 },
 ]
 
 const ACTION_WIDTH    = 140
@@ -854,9 +856,9 @@ const detailCols = [
   { key: 'maHang',  label: 'Mã hàng',                 width: 100 },
   { key: 'tenHang', label: 'Tên hàng',                flex: true, minWidth: 160 },
   { key: 'hangKM',  label: 'Hàng khuyến mại',         width: 120, align: 'center' },
-  { key: 'ckTM',    label: 'Chiết khấu TM',           width: 120, align: 'center' },
-  { key: 'tkCN',    label: 'TK công nợ',              width: 90 },
-  { key: 'tkDT',    label: 'TK doanh thu',            width: 100 },
+  { key: 'ckTM',    label: 'Chiết khấu TM',           width: 136, align: 'center' },
+  { key: 'tkCN',    label: 'TK công nợ',              width: 112 },
+  { key: 'tkDT',    label: 'TK doanh thu',            width: 128 },
   { key: 'dvt',     label: 'DVT',                     width: 60 },
   { key: 'soLuong', label: 'Số lượng',                width: 90,  align: 'right' },
   { key: 'donGia',  label: 'Đơn giá',                 width: 120, align: 'right' },
@@ -1069,7 +1071,7 @@ const detailRows = [
 </script>
 
 <style scoped>
-.sub-nav { border-bottom: 1px solid var(--stroke-neutral-light); background: var(--bg-white); flex-shrink: 0; }
+.sub-nav { border-bottom: 1px solid var(--stroke-neutral); background: var(--bg-neutral-light); flex-shrink: 0; }
 .sub-nav__scroll { display: flex; align-items: flex-end; height: 100%; overflow-x: auto; scrollbar-width: none; }
 .sub-nav__scroll::-webkit-scrollbar { display: none; }
 
@@ -1102,7 +1104,7 @@ const detailRows = [
 }
 
 .content-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative; }
-.table-panel     { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.table-panel     { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--card-col-gap); }
 
 .data-panel--master {
   flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -1110,7 +1112,8 @@ const detailRows = [
 }
 .data-panel--detail {
   flex-shrink: 0; display: flex; flex-direction: column;
-  background: var(--bg-white); border-radius: 8px; overflow: hidden;
+  background: var(--bg-white); border-radius: 8px;
+  position: relative; overflow: visible;
 }
 
 .datatable         { flex: 1; min-height: 0; overflow-y: auto; }
@@ -1123,7 +1126,7 @@ const detailRows = [
 
 .master-bottom-cep { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; }
 
-.detail-cep         { display: flex; justify-content: center; flex-shrink: 0; }
+.detail-cep         { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 10; }
 .detail-panel__tabs { display: flex; align-items: flex-end; flex-shrink: 0; padding: 0 4px; }
 .detail-panel__tabs .sub-nav-tab { height: 36px; }
 

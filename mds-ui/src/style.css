@@ -598,6 +598,10 @@ body {
   box-shadow: var(--shadow-card);
   padding: var(--card-py) var(--card-px);
 }
+/* White panels/boxes trên --bg-page — Drop Shadow / Neutral / All 2 */
+.kpi-card,
+.data-panel--master,
+.data-panel--detail { box-shadow: var(--shadow-card); }
 .card-row {
   display: grid; gap: var(--card-col-gap);
 }
@@ -991,6 +995,7 @@ body {
 }
 .dt-cell-inner--right  { justify-content: flex-end; }
 .dt-cell-inner--center { justify-content: center; }
+.dt-cell--header .dt-cell-inner--center { padding-left: 20px; }
 .dt-cell--header { background: var(--dt-header-bg); }
 .dt-cell--footer { background: var(--dt-footer-bg); }
 .dt-cell--header .dt-cell-inner { font-size: 13px; font-weight: var(--fw-bold); color: var(--text-primary); white-space: nowrap; padding-right: 20px; }
@@ -1497,7 +1502,9 @@ body {
 /* ── Cards — glass effect ── */
 :root[data-wallpaper] .card,
 :root[data-wallpaper] .kpi-card,
-:root[data-wallpaper] .hero-card {
+:root[data-wallpaper] .hero-card,
+:root[data-wallpaper] .data-panel--master,
+:root[data-wallpaper] .data-panel--detail {
   background: rgba(255, 255, 255, 0.72) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);

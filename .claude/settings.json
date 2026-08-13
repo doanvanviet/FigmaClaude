@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//tmp/**)",
+      "Bash(curl -s -X POST http://localhost:5080/api/Table -H \"Content-Type: application/json\" -d '{\"TableWidth\":800,\"RowHeight\":48,\"RowNum\":3,\"ColNum\":2,\"FontSize\":14,\"FontFamily\":\"Inter\",\"PagingStyle\":2,\"Padding\":16,\"CheckColumn\":false,\"HasHeader\":true,\"HasPaging\":true,\"DividerCol\":false,\"RowStyle\":1,\"Language\":\"en\",\"ColumnData\":[{\"Name\":\"Name\",\"Width\":0,\"DataType\":\"FullName\",\"OtherConfig\":\"\",\"CustomValue\":[]},{\"Name\":\"Email\",\"Width\":0,\"DataType\":\"Email\",\"OtherConfig\":\"\",\"CustomValue\":[]}]}' > /tmp/svgtest.svg && echo \"File size: $\\(wc -c < /tmp/svgtest.svg\\)\" && grep -c \"g fill=\" /tmp/svgtest.svg && grep -c \"stroke='none'\" /tmp/svgtest.svg)",
+      "Bash(curl -s http://localhost:5080)",
+      "Bash(curl -s -X POST http://localhost:5080/api/Table -H \"Content-Type: application/json\" -d '{\"TableWidth\":800,\"RowHeight\":48,\"RowNum\":2,\"ColNum\":2,\"FontSize\":14,\"FontFamily\":\"Inter\",\"PagingStyle\":1,\"Padding\":16,\"CheckColumn\":false,\"HasHeader\":true,\"HasPaging\":false,\"DividerCol\":false,\"RowStyle\":1,\"Language\":\"en\",\"ColumnData\":[{\"Name\":\"Email\",\"Width\":0,\"DataType\":\"Email\",\"OtherConfig\":\"\",\"CustomValue\":[]},{\"Name\":\"Phone\",\"Width\":0,\"DataType\":\"PhoneNumber\",\"OtherConfig\":\"\",\"CustomValue\":[]}]}')",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(fly version *)",
+      "PowerShell(docker stop ketoan-dashboard-app 2>$null)",
+      "PowerShell(docker rm ketoan-dashboard-app 2>$null)",
+      "PowerShell(docker run -d --name ketoan-dashboard-app -p 8080:80 ketoan-dashboard:latest)",
+      "PowerShell(docker rm ketoan-dashboard)",
+      "PowerShell(docker rm -f ketoan-dashboard-app)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}
