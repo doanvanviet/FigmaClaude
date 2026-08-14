@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <Teleport to="body">
     <div class="ptm-overlay">
       <div class="ptm-overlay-inner" @mousedown.self="$emit('close')">
@@ -128,7 +128,7 @@
                       <select class="ibox__native ibox__native--select" v-model="form.loaiTien">
                         <option>VND</option><option>USD</option><option>EUR</option>
                       </select>
-                      <TIcon name="chevron-down" class="ibox__icon" style="font-size:13px;pointer-events:none;flex-shrink:0" />
+                      <TIcon name="chevron-down" class="ibox__icon" style="font-size: 13px;pointer-events:none;flex-shrink:0" />
                     </div>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ const totalDisplay = computed(() =>
 }
 .ptm-hd__title { font-size: var(--text-h3); font-weight: var(--fw-semibold); color: var(--text-primary); white-space: nowrap; }
 .ptm-hd__no {
-  font-size: var(--text-body); color: var(--text-secondary);
+  font-size: 13px; color: var(--text-secondary);
   background: var(--bg-neutral-light); border-radius: var(--radius-sm);
   padding: 2px 8px; white-space: nowrap;
 }
@@ -330,7 +330,7 @@ const totalDisplay = computed(() =>
 /* ── Field label ── */
 .field__label {
   display: block;
-  font-size: var(--text-body);
+  font-size: 13px;
   font-weight: var(--fw-medium);
   color: var(--text-primary);
   line-height: var(--text-body-lh);
@@ -388,7 +388,7 @@ const totalDisplay = computed(() =>
 .ptm-tabs { display: flex; }
 .ptm-tab {
   height: 40px; padding: 0 16px;
-  font-size: var(--text-body); font-weight: var(--fw-medium); font-family: var(--font-family);
+  font-size: 13px; font-weight: var(--fw-medium); font-family: var(--font-family);
   color: var(--text-secondary);
   background: transparent; border: none;
   border-bottom: 2px solid transparent;

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="table-header">
 
     <!-- ── BULK ACTION MODE: đè lên toàn bộ nội dung header ── -->

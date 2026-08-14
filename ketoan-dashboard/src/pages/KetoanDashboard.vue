@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán">
       <template #header-meta>
@@ -51,7 +51,7 @@
               </div>
               <button class="btn btn--outline btn--neutral" style="flex-shrink:0;white-space:nowrap;gap:6px">
                 Xem nhật ký phát hành
-                <TIcon name="external-link" style="font-size:13px" />
+                <TIcon name="external-link" style="font-size: 13px" />
               </button>
             </div>
 
@@ -63,9 +63,9 @@
                 </span>
                 <div class="tnm-hero__title">{{ featuredFeatures[0].title }}</div>
                 <div class="tnm-hero__meta">
-                  <TIcon name="calendar" style="font-size:13px" /><span>{{ featuredFeatures[0].date }}</span>
+                  <TIcon name="calendar" style="font-size: 13px" /><span>{{ featuredFeatures[0].date }}</span>
                   <span class="tnm-dot">·</span>
-                  <TIcon name="eye" style="font-size:13px" /><span>{{ featuredFeatures[0].views }} lượt xem</span>
+                  <TIcon name="eye" style="font-size: 13px" /><span>{{ featuredFeatures[0].views }} lượt xem</span>
                 </div>
                 <div class="tnm-hero__desc">{{ featuredFeatures[0].desc }}</div>
                 <div class="tnm-hero__actions">
@@ -143,9 +143,9 @@
                   <span class="tnm-tag" :style="{ background: colorBgMap[tagMap[f.tag]], color: colorMap[tagMap[f.tag]] }">{{ f.tag }}</span>
                   <div class="tnm-alt-row__title">{{ f.title }}</div>
                   <div class="tnm-alt-row__meta">
-                    <TIcon name="calendar" style="font-size:13px" />{{ f.date }}
+                    <TIcon name="calendar" style="font-size: 13px" />{{ f.date }}
                     <span class="tnm-dot">·</span>
-                    <TIcon name="eye" style="font-size:13px" />{{ f.views }} lượt xem
+                    <TIcon name="eye" style="font-size: 13px" />{{ f.views }} lượt xem
                   </div>
                   <div class="tnm-alt-row__desc">{{ f.desc }}</div>
                   <div class="tnm-alt-row__actions">
@@ -934,7 +934,7 @@ watch(currentTheme, () => initCharts())
   font-size: var(--text-h2); font-weight: var(--fw-bold);
   line-height: var(--text-h2-lh); color: var(--text-primary);
 }
-.tnm-page-hd__sub { font-size: var(--text-body); color: var(--text-secondary); }
+.tnm-page-hd__sub { font-size: 13px; color: var(--text-secondary); }
 
 /* ── Section heading ── */
 .tnm-sec-hd { display: flex; align-items: center; margin-top: 8px; }
@@ -1041,7 +1041,7 @@ watch(currentTheme, () => initCharts())
   font-size: var(--text-sm); color: var(--text-secondary);
 }
 .tnm-grid3-card__desc {
-  font-size: var(--text-body); color: var(--text-primary);
+  font-size: 13px; color: var(--text-primary);
   line-height: var(--text-body-lh); flex: 1;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }

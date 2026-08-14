@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { ref, computed } from 'vue'
 import TIcon        from '@mds/components/TIcon.vue'
 import TablePaging  from '@mds/components/TablePaging.vue'
@@ -72,7 +72,7 @@ const showTK = ref(true)
         <button class="btn btn--outline btn--neutral" type="button">
           <TIcon name="help-circle" style="font-size:15px;color:var(--text-success)" />
           Hướng dẫn sử dụng
-          <TIcon name="chevron-down" style="font-size:13px" />
+          <TIcon name="chevron-down" style="font-size: 13px" />
         </button>
         <button class="btn-icon btn-icon--outline" type="button"><TIcon name="settings" /></button>
         <button class="btn-icon btn-icon--outline" type="button" @click="emit('close')"><TIcon name="x" /></button>
@@ -176,7 +176,7 @@ const showTK = ref(true)
               <select class="ibox__native ibox__native--select" v-model="form.loaiTien">
                 <option>VND</option><option>USD</option><option>EUR</option>
               </select>
-              <TIcon name="chevron-down" class="ibox__icon" style="font-size:13px;pointer-events:none;flex-shrink:0" />
+              <TIcon name="chevron-down" class="ibox__icon" style="font-size: 13px;pointer-events:none;flex-shrink:0" />
             </div>
           </div>
         </div>
@@ -349,7 +349,7 @@ const showTK = ref(true)
 /* ── Field label ── */
 .field__label {
   display: block;
-  font-size: var(--text-body);
+  font-size: 13px;
   font-weight: var(--fw-medium);
   color: var(--text-primary);
   line-height: var(--text-body-lh);

@@ -1,4 +1,4 @@
-/* ── Inter Variable Font v4.1 — self-hosted (rsms.me/inter) ── */
+﻿/* ── Inter Variable Font v4.1 — self-hosted (rsms.me/inter) ── */
 /* Tên mới (v4+): InterVariable (không dấu cách, không quote)   */
 /* Tên cũ 'Inter var' giữ lại để tương thích ngược              */
 @font-face {
@@ -271,15 +271,17 @@ button, input, select, textarea {
 
 body {
   font-family: var(--font-family);
-  font-size: var(--text-body);
+  font-size: 13px;
   line-height: var(--text-body-lh);
   color: var(--text-primary);
   background: var(--bg-page);
   font-optical-sizing: auto;
   font-feature-settings: 'liga' 1, 'calt' 1, 'tnum' 1, 'lnum' 1;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
+  font-weight: 420;
+  letter-spacing: 0.01em;
 }
 
 .h1 { font-size: var(--text-h1); font-weight: var(--fw-semibold); line-height: var(--text-h1-lh); }
@@ -899,7 +901,7 @@ body {
   display: flex; align-items: center;
   width: 100%; height: 32px;
   padding: 0 12px 0 16px; gap: 8px;
-  font-size: var(--text-body); font-weight: var(--fw-regular);
+  font-size: 13px; font-weight: var(--fw-regular);
   color: var(--text-primary); background: transparent; border: none;
   cursor: pointer; text-align: left;
   transition: background 0.12s;

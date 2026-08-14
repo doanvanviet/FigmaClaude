@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán" app-tag="HKĐ">
       <template #header-meta>
@@ -1104,7 +1104,7 @@ const detailRows = [
 }
 
 .content-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative; }
-.table-panel     { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--card-col-gap); }
+.table-panel     { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 
 .data-panel--master {
   flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -1162,7 +1162,7 @@ const detailRows = [
 .form-hd__icon .ti { font-size: 18px; }
 .form-hd__title { font-size: var(--text-h3); font-weight: var(--fw-semibold); color: var(--text-primary); }
 .form-hd__no {
-  font-size: var(--text-body); color: var(--text-secondary);
+  font-size: 13px; color: var(--text-secondary);
   padding: 2px 8px; background: var(--bg-neutral-light); border-radius: var(--radius-sm);
 }
 .form-hd__right { display: flex; align-items: center; gap: 8px; }
@@ -1175,20 +1175,20 @@ const detailRows = [
   border-bottom: 1px solid var(--stroke-neutral-light);
 }
 .form-opts__group    { display: flex; align-items: center; gap: 6px; }
-.fopt-label          { font-size: var(--text-body); color: var(--text-primary); white-space: nowrap; }
+.fopt-label          { font-size: 13px; color: var(--text-primary); white-space: nowrap; }
 .fopt-select {
   height: var(--input-height); padding: 0 8px;
   border: 1px solid var(--stroke-neutral); border-radius: var(--radius-inner);
-  font-size: var(--text-body); font-family: var(--font-family); color: var(--text-primary);
+  font-size: 13px; font-family: var(--font-family); color: var(--text-primary);
   background: var(--bg-white); outline: none; cursor: pointer; min-width: 120px;
 }
 .fopt-select:focus   { border-color: var(--stroke-brand); }
 .form-opts__div      { width: 1px; height: 20px; background: var(--stroke-neutral-light); flex-shrink: 0; }
 .form-opts__radios   { display: flex; align-items: center; gap: 12px; }
-.fopt-radio          { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: var(--text-body); }
+.fopt-radio          { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; }
 .fopt-radio input    { width: 14px; height: 14px; accent-color: var(--bg-brand); cursor: pointer; }
 .form-opts__checks   { display: flex; align-items: center; gap: 12px; }
-.fopt-check          { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: var(--text-body); }
+.fopt-check          { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; }
 
 /* ── Body layout ── */
 .form-body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
@@ -1203,12 +1203,12 @@ const detailRows = [
 .fgrid        { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
 .ff           { display: flex; flex-direction: column; gap: 4px; }
 .ff--span2    { grid-column: span 2; }
-.ff-lbl       { font-size: var(--text-body); font-weight: var(--fw-medium); color: var(--text-primary); }
+.ff-lbl       { font-size: 13px; font-weight: var(--fw-medium); color: var(--text-primary); }
 .ff-input {
   height: var(--input-height); padding: 0 var(--input-px);
   overflow-clip-margin: 6px !important;
   border: 1px solid var(--stroke-neutral); border-radius: var(--radius-default);
-  font-size: var(--text-body); font-family: var(--font-family); color: var(--text-primary);
+  font-size: 13px; font-family: var(--font-family); color: var(--text-primary);
   background: var(--bg-white); outline: none; width: 100%;
   transition: border-color 0.15s;
 }
@@ -1240,7 +1240,7 @@ const detailRows = [
   border: 1px solid transparent; border-radius: var(--radius-inner);
   outline: none; background: transparent;
   padding: 0 6px;
-  font-size: var(--text-body); font-family: var(--font-family);
+  font-size: 13px; font-family: var(--font-family);
   color: var(--text-primary);
   transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
 }
@@ -1261,7 +1261,7 @@ const detailRows = [
 .fdt-summary { border-top: 1px solid var(--stroke-neutral-light); }
 .fdt-sum-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 6px 12px; font-size: var(--text-body);
+  padding: 6px 12px; font-size: 13px;
 }
 .fdt-sum-row + .fdt-sum-row { border-top: 1px solid var(--stroke-neutral-light); }
 .fdt-sum-row--total { font-weight: var(--fw-semibold); }
@@ -1271,13 +1271,13 @@ const detailRows = [
 /* ── Below-table section ── */
 .fbtm          { display: flex; flex-direction: column; gap: 12px; }
 .fbtm-check    { display: flex; align-items: center; gap: 8px; }
-.fbtm-lbl      { font-size: var(--text-body); }
+.fbtm-lbl      { font-size: 13px; }
 .fbtm-attach   { display: flex; flex-direction: column; gap: 6px; }
 .fbtm-dropzone {
   display: flex; align-items: center; gap: 10px;
   min-height: 52px; padding: 10px 16px;
   border: 1.5px dashed var(--stroke-neutral); border-radius: var(--radius-default);
-  font-size: var(--text-body); color: var(--text-secondary); cursor: pointer;
+  font-size: 13px; color: var(--text-secondary); cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
 }
 .fbtm-dropzone:hover { border-color: var(--stroke-brand); background: var(--bg-brand-light); }
@@ -1295,17 +1295,17 @@ const detailRows = [
   padding: 12px; display: flex; flex-direction: column; gap: 8px;
 }
 .faside-card__head   { display: flex; align-items: center; justify-content: space-between; }
-.faside-card__title  { font-size: var(--text-body); font-weight: var(--fw-semibold); color: var(--text-primary); }
+.faside-card__title  { font-size: 13px; font-weight: var(--fw-semibold); color: var(--text-primary); }
 .faside-badge        { font-size: var(--text-sm); font-weight: var(--fw-medium); padding: 2px 8px; border-radius: var(--radius-sm); }
 .faside-badge--success { background: var(--bg-success-light); color: var(--text-success); }
-.faside-row          { display: flex; align-items: center; justify-content: space-between; font-size: var(--text-body); gap: 8px; }
+.faside-row          { display: flex; align-items: center; justify-content: space-between; font-size: 13px; gap: 8px; }
 .faside-key          { color: var(--text-secondary); flex-shrink: 0; }
 .faside-val          { color: var(--text-primary); font-weight: var(--fw-medium); }
 .faside-total {
   border: 1px solid var(--stroke-neutral-light); border-radius: var(--radius-default);
   padding: 12px; display: flex; flex-direction: column; gap: 6px;
 }
-.faside-tot-row      { display: flex; align-items: center; justify-content: space-between; font-size: var(--text-body); gap: 8px; }
+.faside-tot-row      { display: flex; align-items: center; justify-content: space-between; font-size: 13px; gap: 8px; }
 .faside-tot-lbl      { color: var(--text-secondary); }
 .faside-tot-val      { color: var(--text-primary); font-feature-settings: 'tnum' 1, 'lnum' 1; }
 .faside-tot-row--main .faside-tot-lbl { color: var(--text-primary); font-weight: var(--fw-semibold); }

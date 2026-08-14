@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="ava-panel" :style="{ width: panelWidth + 'px' }">
     <!-- Resize handle -->
     <div class="ava-resize-handle" @mousedown.prevent="startResize"></div>

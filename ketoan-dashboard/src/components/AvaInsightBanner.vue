@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div v-if="visible" class="ava-banner">
     <!-- Header -->
     <div class="ava-banner__header">
@@ -80,7 +80,7 @@ const currentTime  = now.getHours() + 'h' + String(now.getMinutes()).padStart(2,
   width: 20px; height: 20px; flex-shrink: 0;
 }
 .ava-banner__name {
-  font-size: var(--text-body); font-weight: var(--fw-semibold);
+  font-size: 13px; font-weight: var(--fw-semibold);
   color: var(--text-primary);
 }
 

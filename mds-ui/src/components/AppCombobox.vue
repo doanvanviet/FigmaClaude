@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="ibox" :class="boxClass" style="cursor:pointer">
     <TIcon v-if="iconLeft" :name="iconLeft" class="ibox__icon" />
 
@@ -27,7 +27,7 @@
           {{ labelOf(val) }}
           <span style="cursor:pointer;line-height:0;margin-left:2px" @click.stop="removeValue(val)"><TIcon name="x" style="font-size:10px" /></span>
         </span>
-        <span v-if="!selectedValues.length" style="color:var(--text-hint);font-size:13px">{{ placeholder }}</span>
+        <span v-if="!selectedValues.length" style="color:var(--text-hint);font-size: 13px">{{ placeholder }}</span>
       </div>
       <select
         class="ibox__native--select"

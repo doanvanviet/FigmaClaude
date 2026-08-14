@@ -1,4 +1,4 @@
-/* ── MDS Web Components v2.0 — Design Tokens ── */
+﻿/* ── MDS Web Components v2.0 — Design Tokens ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -224,7 +224,7 @@ body {
 /* ── Base ── */
 body {
   font-family: var(--font-family);
-  font-size: var(--text-body);
+  font-size: 13px;
   line-height: var(--text-body-lh);
   color: var(--text-primary);
   background: var(--bg-page);

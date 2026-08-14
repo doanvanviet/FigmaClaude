@@ -161,7 +161,7 @@ const _cardOpen = `
 
 const _disclaimer = `
 <tr><td style="padding:16px 40px 24px;">
-  <p style="margin:0;font-size:13px;font-style:italic;line-height:20px;color:#6b707a;">
+  <p style="margin:0;font-size: 13px;font-style:italic;line-height:20px;color:#6b707a;">
     * Đây là email tự động từ hệ thống, Quý khách vui lòng không phản hồi.
   </p>
 </td></tr>`
@@ -304,14 +304,14 @@ const CONTENT_1 = `
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
        style="margin-bottom:16px;border-collapse:separate;border-spacing:0;"><tr>
   <td style="border:1px solid #99c5f7;border-radius:12px;padding:24px;">
-    <p style="margin:0 0 12px;font-size:13px;font-weight:700;line-height:20px;color:#10141b;">
+    <p style="margin:0 0 12px;font-size: 13px;font-weight:700;line-height:20px;color:#10141b;">
       melnvoice Doanh nghiệp - Xử lý hóa đơn
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
            style="border-bottom:1px solid #e9eaeb;"><tr>
       <td style="padding:8px 0;vertical-align:top;">
         <p style="margin:0;font-size:14px;line-height:20px;color:#10141b;">Dịch vụ phần mềm</p>
-        <p style="margin:4px 0 0;font-size:13px;line-height:20px;color:#6b707a;">1 Năm x 500.000 VND</p>
+        <p style="margin:4px 0 0;font-size: 13px;line-height:20px;color:#6b707a;">1 Năm x 500.000 VND</p>
       </td>
       <td style="padding:8px 0;vertical-align:middle;text-align:right;white-space:nowrap;">
         <strong style="font-size:14px;font-weight:600;color:#10141b;">500.000 VND</strong>
@@ -321,7 +321,7 @@ const CONTENT_1 = `
            style="border-bottom:1px solid #e9eaeb;"><tr>
       <td style="padding:8px 0;vertical-align:top;">
         <p style="margin:0;font-size:14px;line-height:20px;color:#10141b;">MEIX-2.000</p>
-        <p style="margin:4px 0 0;font-size:13px;line-height:20px;color:#6b707a;">1 Gói x 1.190.000 VND</p>
+        <p style="margin:4px 0 0;font-size: 13px;line-height:20px;color:#6b707a;">1 Gói x 1.190.000 VND</p>
       </td>
       <td style="padding:8px 0;vertical-align:middle;text-align:right;white-space:nowrap;">
         <strong style="font-size:14px;font-weight:600;color:#10141b;">1.190.000 VND</strong>
@@ -344,7 +344,7 @@ const CONTENT_1 = `
     <a href="{{PAYMENT_URL}}"
        style="display:block;background:#245fdf;color:#ffffff;text-align:center;
               text-decoration:none;padding:10px 24px;border-radius:8px;
-              font-family:Inter,Arial,sans-serif;font-size:13px;font-weight:500;
+              font-family:Inter,Arial,sans-serif;font-size: 13px;font-weight:500;
               line-height:20px;-webkit-text-size-adjust:none;">
       &#8594;&nbsp; Thanh toán ngay
     </a>
@@ -389,7 +389,7 @@ const CONTENT_2 = `
     <a href="{{ACTIVATION_URL}}"
        style="display:block;background:#245fdf;color:#ffffff;text-align:center;
               text-decoration:none;padding:10px 24px;border-radius:8px;
-              font-family:Inter,Arial,sans-serif;font-size:13px;font-weight:500;
+              font-family:Inter,Arial,sans-serif;font-size: 13px;font-weight:500;
               line-height:20px;-webkit-text-size-adjust:none;">
       Kích hoạt ngay &nbsp;&#128072;
     </a>
@@ -465,7 +465,7 @@ const CONTENT_3 = `
     <a href="{{DETAIL_URL}}"
        style="display:block;background:#00a2cf;color:#ffffff;text-align:center;
               text-decoration:none;padding:10px 24px;border-radius:8px;
-              font-family:Inter,Arial,sans-serif;font-size:13px;font-weight:500;
+              font-family:Inter,Arial,sans-serif;font-size: 13px;font-weight:500;
               line-height:20px;-webkit-text-size-adjust:none;">
       Xem chi tiết &nbsp;&#8594;
     </a>
@@ -550,7 +550,7 @@ const templates = [
   margin-bottom: 4px;
 }
 .tmpl-card__name {
-  font-size: var(--text-body);
+  font-size: 13px;
   font-weight: var(--fw-semibold);
   color: var(--text-primary);
   line-height: var(--text-body-lh);

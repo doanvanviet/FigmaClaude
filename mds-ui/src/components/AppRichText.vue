@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="mds-rt" :class="rootClass">
 
     <!-- ── Basic mode: textarea → TinyMCE replaces with iframe editor ── -->
@@ -184,7 +184,7 @@ watch(() => props.modelValue, (val) => {
   padding: 8px 12px;
   border: 1px solid var(--stroke-neutral);
   border-radius: var(--radius-default);
-  font-size: var(--text-body);
+  font-size: 13px;
   line-height: var(--text-body-lh);
   color: var(--text-primary);
   background: var(--bg-white);

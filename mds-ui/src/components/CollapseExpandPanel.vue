@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <button
     class="cep"
     :class="[`cep--${pos}`, bgColor === 'White' && 'cep--white']"

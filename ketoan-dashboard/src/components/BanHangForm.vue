@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <Teleport to="body">
     <div class="bh-overlay">
 
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="bh-bar__right">
-          <button class="btn btn--ghost" type="button" style="gap:6px;font-size:13px">
+          <button class="btn btn--ghost" type="button" style="gap:6px;font-size: 13px">
             <TIcon name="help-circle" style="color:var(--text-success)" />
             Hướng dẫn sử dụng
           </button>
@@ -62,7 +62,7 @@
           </label>
         </div>
         <div class="bh-toolbar__right">
-          <button class="btn btn--outline btn--neutral" type="button" style="font-size:13px">Đã lập hóa đơn</button>
+          <button class="btn btn--outline btn--neutral" type="button" style="font-size: 13px">Đã lập hóa đơn</button>
           <span class="bh-sep"></span>
           <span class="bh-toolbar__total-label">Tổng tiền thanh toán:</span>
           <span class="bh-toolbar__total-value">{{ tongTienDisplay }}</span>
@@ -190,19 +190,19 @@
               <button class="bh-hang-tab" :class="{ active: activeHangTab === 'giavon' }" @click="activeHangTab = 'giavon'">Giá vốn</button>
             </div>
             <div class="bh-hang-toolbar">
-              <button class="btn btn--ai" type="button" style="gap:6px;font-size:13px">
+              <button class="btn btn--ai" type="button" style="gap:6px;font-size: 13px">
                 <IconMisaAI style="width:16px;height:16px" />
                 Gợi ý hồ sơ
               </button>
               <div class="ibox" style="width:130px">
-                <span class="ibox-label" style="padding-left:6px;flex-shrink:0;font-size:13px">Loại tiền</span>
+                <span class="ibox-label" style="padding-left:6px;flex-shrink:0;font-size: 13px">Loại tiền</span>
                 <select class="ibox__native ibox__native--select" v-model="form.loaiTien">
                   <option>VND</option><option>USD</option><option>EUR</option>
                 </select>
                 <TIcon name="chevron-down" class="ibox__icon" style="font-size:12px;pointer-events:none;flex-shrink:0" />
               </div>
               <div class="ibox" style="width:200px">
-                <span class="ibox-label" style="padding-left:6px;flex-shrink:0;font-size:13px">Chiết khấu</span>
+                <span class="ibox-label" style="padding-left:6px;flex-shrink:0;font-size: 13px">Chiết khấu</span>
                 <select class="ibox__native ibox__native--select" v-model="form.chietKhau">
                   <option>Không chiết khấu</option><option>Chiết khấu theo dòng</option><option>Chiết khấu tổng</option>
                 </select>
@@ -515,7 +515,7 @@ const tongTienDisplay = computed(() => '0')
   color: var(--text-primary); white-space: nowrap; flex-shrink: 0;
 }
 .bh-bar__no {
-  font-size: var(--text-body); color: var(--text-secondary);
+  font-size: 13px; color: var(--text-secondary);
   background: var(--bg-neutral-light); border-radius: var(--radius-sm);
   padding: 2px 8px; white-space: nowrap; flex-shrink: 0;
 }
@@ -584,7 +584,7 @@ const tongTienDisplay = computed(() => '0')
 }
 .bh-snav-tab {
   height: 40px; padding: 0 16px;
-  font-size: var(--text-body); font-weight: var(--fw-medium);
+  font-size: 13px; font-weight: var(--fw-medium);
   font-family: var(--font-family);
   color: var(--text-secondary);
   background: transparent; border: none;
@@ -607,7 +607,7 @@ const tongTienDisplay = computed(() => '0')
 /* ── Field label ── */
 .field__label {
   display: block;
-  font-size: var(--text-body);
+  font-size: 13px;
   font-weight: var(--fw-medium);
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -666,7 +666,7 @@ const tongTienDisplay = computed(() => '0')
 .bh-hang-tabs { display: flex; }
 .bh-hang-tab {
   height: 38px; padding: 0 14px;
-  font-size: var(--text-body); font-weight: var(--fw-medium);
+  font-size: 13px; font-weight: var(--fw-medium);
   font-family: var(--font-family);
   color: var(--text-secondary);
   background: transparent; border: none;

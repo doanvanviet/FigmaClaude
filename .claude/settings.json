@@ -14,7 +14,10 @@
       "PowerShell(docker rm ketoan-dashboard-app 2>$null)",
       "PowerShell(docker run -d --name ketoan-dashboard-app -p 8080:80 ketoan-dashboard:latest)",
       "PowerShell(docker rm ketoan-dashboard)",
-      "PowerShell(docker rm -f ketoan-dashboard-app)"
+      "PowerShell(docker rm -f ketoan-dashboard-app)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code}\" --connect-timeout 5 http://45.32.123.3)",
+      "Bash(curl -o /dev/null -s -w \"HTTP: %{http_code} | IP: %{remote_ip}\" --connect-timeout 10 https://copyicon.com)",
+      "PowerShell(\\(Get-Content \"d:\\\\Figma\\\\mds-ui\\\\src\\\\style.css\" -Raw -Encoding UTF8\\) -replace '--text-body: 13px;', '--text-body: 14px;' | Set-Content \"d:\\\\Figma\\\\mds-ui\\\\src\\\\style.css\" -Encoding UTF8 -NoNewline)"
     ],
     "additionalDirectories": [
       "\\tmp"

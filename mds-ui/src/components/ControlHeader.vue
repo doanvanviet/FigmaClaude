@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- ── Global Header ── -->
   <header class="global-header" :class="{ 'global-header--white': currentMode === 'light' }">
     <!-- Left -->

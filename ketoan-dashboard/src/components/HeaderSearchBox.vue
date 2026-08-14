@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div ref="wrapRef" class="search-popover-wrap" @click="open" @keydown.escape="close">
     <div class="search-box-header">
       <TIcon name="search" />

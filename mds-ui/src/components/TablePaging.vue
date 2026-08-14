@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="paging">
     <span class="paging__total">
       <span class="paging__total-label">Tổng số:</span>
@@ -14,7 +14,7 @@
         >
           <option v-for="n in pageSizeOptions" :key="n" :value="n">{{ n }}</option>
         </select>
-        <TIcon name="chevron-down" class="ibox__icon" style="font-size:13px;pointer-events:none" />
+        <TIcon name="chevron-down" class="ibox__icon" style="font-size: 13px;pointer-events:none" />
       </div>
       <span class="paging__range">{{ rangeStart }} - {{ rangeEnd }}</span>
       <div class="paging__nav">

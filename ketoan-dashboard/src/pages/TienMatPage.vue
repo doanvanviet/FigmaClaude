@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán" app-tag="HKĐ">
       <template #header-meta>
@@ -33,57 +33,57 @@
           <div class="table-panel">
             <AvaInsightBanner :sections="[{ title: 'Dòng tiền mặt' }, { title: 'Rủi ro & Khuyến nghị' }]" />
 
-            <!-- KPI Row (3 boxes riêng) -->
-            <div v-if="kpiOpen" class="kpi-row">
-              <div class="kpi-card">
-                <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                <div class="kpi-card__icon kpi-card__icon--success"><TIcon name="trending-up" /></div>
-                <div class="kpi-card__content">
-                  <span class="kpi-card__label">Tổng thu đầu năm đến hiện tại</span>
-                  <div class="kpi-card__bottom">
-                    <span class="kpi-card__value kpi-card__value--success">89.245.600.000</span>
-                    <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
-                      <TIcon name="clock" /><span>15:59</span>
-                    </span>
+            <!-- KPI Row + toggle gắn liền nhau -->
+            <div class="kpi-wrapper">
+              <div v-if="kpiOpen" class="kpi-row">
+                <div class="kpi-card">
+                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
+                  <div class="kpi-card__icon kpi-card__icon--success"><TIcon name="trending-up" /></div>
+                  <div class="kpi-card__content">
+                    <span class="kpi-card__label">Tổng thu đầu năm đến hiện tại</span>
+                    <div class="kpi-card__bottom">
+                      <span class="kpi-card__value kpi-card__value--success">89.245.600.000</span>
+                      <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
+                        <TIcon name="clock" /><span>15:59</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="kpi-card">
+                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
+                  <div class="kpi-card__icon kpi-card__icon--warning"><TIcon name="trending-down" /></div>
+                  <div class="kpi-card__content">
+                    <span class="kpi-card__label">Tổng chi đầu năm đến hiện tại</span>
+                    <div class="kpi-card__bottom">
+                      <span class="kpi-card__value kpi-card__value--warning">86.628.811.039</span>
+                      <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
+                        <TIcon name="clock" /><span>15:59</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="kpi-card">
+                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
+                  <div class="kpi-card__icon kpi-card__icon--brand"><TIcon name="cash" /></div>
+                  <div class="kpi-card__content">
+                    <span class="kpi-card__label">Tổng quỹ tiền mặt</span>
+                    <div class="kpi-card__bottom">
+                      <span class="kpi-card__value kpi-card__value--brand">2.616.788.961.791</span>
+                      <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
+                        <TIcon name="clock" /><span>15:59</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="kpi-card">
-                <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                <div class="kpi-card__icon kpi-card__icon--warning"><TIcon name="trending-down" /></div>
-                <div class="kpi-card__content">
-                  <span class="kpi-card__label">Tổng chi đầu năm đến hiện tại</span>
-                  <div class="kpi-card__bottom">
-                    <span class="kpi-card__value kpi-card__value--warning">86.628.811.039</span>
-                    <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
-                      <TIcon name="clock" /><span>15:59</span>
-                    </span>
-                  </div>
-                </div>
+              <div :class="['kpi-cep', !kpiOpen && 'kpi-cep--pinned']">
+                <CollapseExpandPanel
+                  :type="kpiOpen ? 'Expand' : 'Collapse'"
+                  position="Top"
+                  bg-color="White"
+                  @click="kpiOpen = !kpiOpen"
+                />
               </div>
-              <div class="kpi-card">
-                <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                <div class="kpi-card__icon kpi-card__icon--brand"><TIcon name="cash" /></div>
-                <div class="kpi-card__content">
-                  <span class="kpi-card__label">Tổng quỹ tiền mặt</span>
-                  <div class="kpi-card__bottom">
-                    <span class="kpi-card__value kpi-card__value--brand">2.616.788.961.791</span>
-                    <span class="kpi-card__time" title="Số liệu tính đến: 15h59">
-                      <TIcon name="clock" /><span>15:59</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- KPI toggle -->
-            <div :class="['kpi-cep', !kpiOpen && 'kpi-cep--pinned']">
-              <CollapseExpandPanel
-                :type="kpiOpen ? 'Expand' : 'Collapse'"
-                position="Top"
-                bg-color="White"
-                @click="kpiOpen = !kpiOpen"
-              />
             </div>
 
             <div class="data-panel data-panel--master">
@@ -109,7 +109,7 @@
                 </template>
                 <template #filters>
                   <div class="ibox" style="width:160px;cursor:pointer;gap:4px">
-                    <span style="font-size:13px;color:var(--text-secondary);white-space:nowrap;flex-shrink:0">Trường:</span>
+                    <span style="font-size: 13px;color:var(--text-secondary);white-space:nowrap;flex-shrink:0">Trường:</span>
                     <select class="ibox__native ibox__native--select" v-model="truong">
                       <option value="all">Tất cả</option>
                       <option value="so_ct">Số chứng từ</option>
@@ -623,7 +623,7 @@ const detailRows = [
   flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative;
 }
 .table-panel {
-  flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--card-col-gap);
+  flex: 1; min-height: 0; display: flex; flex-direction: column;
 }
 .data-panel--master {
   flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -636,6 +636,7 @@ const detailRows = [
 }
 
 /* KPI */
+.kpi-wrapper { display: flex; flex-direction: column; flex-shrink: 0; }
 .kpi-row { display: flex; gap: 12px; flex-shrink: 0; }
 .kpi-cep { display: flex; justify-content: center; flex-shrink: 0; margin-top: -1px; margin-bottom: 0; }
 .kpi-cep--pinned { position: absolute; top: 0; left: 0; right: 0; margin-top: 0; margin-bottom: 0; z-index: 10; }
