@@ -215,41 +215,41 @@
           <div class="ht-table" style="margin-top:8px">
             <!-- Header row -->
             <div class="ht-row ht-row--header">
-              <div class="ht-cell" style="width:40px;justify-content:center;flex-shrink:0">#</div>
-              <div class="ht-cell" style="width:40px;justify-content:center;flex-shrink:0">
+              <div class="ht-cell ht-cell--stt">#</div>
+              <div class="ht-cell ht-cell--chk">
                 <AppCheckbox v-model="selectAllRows" />
               </div>
-              <div class="ht-cell" style="width:120px;flex-shrink:0">Mã hàng</div>
-              <div class="ht-cell" style="flex:1;min-width:120px">Tên hàng</div>
-              <div class="ht-cell" style="width:60px;flex-shrink:0">ĐVT</div>
-              <div class="ht-cell ht-cell--right" style="width:90px;flex-shrink:0">Số lượng</div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0">Số lô</div>
-              <div class="ht-cell" style="width:110px;flex-shrink:0">Hạn sử dụng</div>
-              <div class="ht-cell ht-cell--right" style="width:100px;flex-shrink:0">CK thương mại</div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0">TK công nợ</div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0">TK doanh thu</div>
-              <div class="ht-cell ht-cell--right" style="width:100px;flex-shrink:0">SL đã xuất HĐ</div>
-              <div class="ht-cell" style="width:80px;flex-shrink:0">Quy cách</div>
-              <div class="ht-cell" style="width:40px;flex-shrink:0"></div>
+              <div class="ht-cell ht-cell--ma-hang">Mã hàng</div>
+              <div class="ht-cell ht-cell--ten-hang">Tên hàng</div>
+              <div class="ht-cell ht-cell--dvt">ĐVT</div>
+              <div class="ht-cell ht-cell--so-luong ht-cell--right">Số lượng</div>
+              <div class="ht-cell ht-cell--so-lo">Số lô</div>
+              <div class="ht-cell ht-cell--han-sd">Hạn sử dụng</div>
+              <div class="ht-cell ht-cell--ck-tm ht-cell--right">CK thương mại</div>
+              <div class="ht-cell ht-cell--tk-cn">TK công nợ</div>
+              <div class="ht-cell ht-cell--tk-dt">TK doanh thu</div>
+              <div class="ht-cell ht-cell--sl-hd ht-cell--right">SL đã xuất HĐ</div>
+              <div class="ht-cell ht-cell--quy-cach">Quy cách</div>
+              <div class="ht-cell ht-cell--del"></div>
             </div>
             <!-- Body rows -->
             <div v-for="(row, i) in rows" :key="i" class="ht-row ht-row--body">
-              <div class="ht-cell" style="width:40px;justify-content:center;flex-shrink:0;color:var(--text-secondary);font-size:12px">{{ i + 1 }}</div>
-              <div class="ht-cell" style="width:40px;justify-content:center;flex-shrink:0">
+              <div class="ht-cell ht-cell--stt">{{ i + 1 }}</div>
+              <div class="ht-cell ht-cell--chk">
                 <AppCheckbox v-model="row.selected" />
               </div>
-              <div class="ht-cell" style="width:120px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.maHang" /></div>
-              <div class="ht-cell" style="flex:1;min-width:120px"><input class="ht-input" type="text" v-model="row.tenHang" /></div>
-              <div class="ht-cell" style="width:60px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.dvt" /></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"><input class="ht-input ht-input--right" type="number" v-model="row.soLuong" /></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.soLo" /></div>
-              <div class="ht-cell" style="width:110px;flex-shrink:0"><input class="ht-input" type="date" v-model="row.hanSuDung" /></div>
-              <div class="ht-cell" style="width:100px;flex-shrink:0"><input class="ht-input ht-input--right" type="number" v-model="row.ckThuongMai" /></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.tkCongNo" /></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.tkDoanhThu" /></div>
-              <div class="ht-cell" style="width:100px;flex-shrink:0"><input class="ht-input ht-input--right" type="number" v-model="row.slDaXuatHD" /></div>
-              <div class="ht-cell" style="width:80px;flex-shrink:0"><input class="ht-input" type="text" v-model="row.quyCach" /></div>
-              <div class="ht-cell" style="width:40px;flex-shrink:0;justify-content:center">
+              <div class="ht-cell ht-cell--ma-hang"><input class="ht-input" type="text" v-model="row.maHang" /></div>
+              <div class="ht-cell ht-cell--ten-hang"><input class="ht-input" type="text" v-model="row.tenHang" /></div>
+              <div class="ht-cell ht-cell--dvt"><input class="ht-input" type="text" v-model="row.dvt" /></div>
+              <div class="ht-cell ht-cell--so-luong"><input class="ht-input ht-input--right" type="number" v-model="row.soLuong" /></div>
+              <div class="ht-cell ht-cell--so-lo"><input class="ht-input" type="text" v-model="row.soLo" /></div>
+              <div class="ht-cell ht-cell--han-sd"><input class="ht-input" type="date" v-model="row.hanSuDung" /></div>
+              <div class="ht-cell ht-cell--ck-tm"><input class="ht-input ht-input--right" type="number" v-model="row.ckThuongMai" /></div>
+              <div class="ht-cell ht-cell--tk-cn"><input class="ht-input" type="text" v-model="row.tkCongNo" /></div>
+              <div class="ht-cell ht-cell--tk-dt"><input class="ht-input" type="text" v-model="row.tkDoanhThu" /></div>
+              <div class="ht-cell ht-cell--sl-hd"><input class="ht-input ht-input--right" type="number" v-model="row.slDaXuatHD" /></div>
+              <div class="ht-cell ht-cell--quy-cach"><input class="ht-input" type="text" v-model="row.quyCach" /></div>
+              <div class="ht-cell ht-cell--del" style="justify-content:center">
                 <button class="btn-icon btn-icon--danger" type="button" @click="rows.splice(i,1)">
                   <TIcon name="trash" />
                 </button>
@@ -257,20 +257,20 @@
             </div>
             <!-- Footer row -->
             <div class="ht-row ht-row--footer">
-              <div class="ht-cell" style="width:40px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:40px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:120px;flex-shrink:0"></div>
-              <div class="ht-cell" style="flex:1;min-width:120px"></div>
-              <div class="ht-cell" style="width:60px;flex-shrink:0"></div>
-              <div class="ht-cell ht-cell--total ht-cell--right" style="width:90px;flex-shrink:0">{{ tongSoLuong }}</div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:110px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:100px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:90px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:100px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:80px;flex-shrink:0"></div>
-              <div class="ht-cell" style="width:40px;flex-shrink:0"></div>
+              <div class="ht-cell ht-cell--stt"></div>
+              <div class="ht-cell ht-cell--chk"></div>
+              <div class="ht-cell ht-cell--ma-hang"></div>
+              <div class="ht-cell ht-cell--ten-hang"></div>
+              <div class="ht-cell ht-cell--dvt"></div>
+              <div class="ht-cell ht-cell--so-luong ht-cell--total ht-cell--right">{{ tongSoLuong }}</div>
+              <div class="ht-cell ht-cell--so-lo"></div>
+              <div class="ht-cell ht-cell--han-sd"></div>
+              <div class="ht-cell ht-cell--ck-tm"></div>
+              <div class="ht-cell ht-cell--tk-cn"></div>
+              <div class="ht-cell ht-cell--tk-dt"></div>
+              <div class="ht-cell ht-cell--sl-hd"></div>
+              <div class="ht-cell ht-cell--quy-cach"></div>
+              <div class="ht-cell ht-cell--del"></div>
             </div>
           </div><!-- /ht-table -->
 
@@ -489,7 +489,7 @@ const tongTienDisplay = computed(() => '0')
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 48px;
+  height: var(--layout-page-header-h);
   padding: 0 12px 0 8px;
   background: var(--bg-white);
   border-bottom: 1px solid var(--stroke-neutral-light);
@@ -526,7 +526,7 @@ const tongTienDisplay = computed(() => '0')
   display: flex; align-items: center; gap: 6px;
   border: 1px solid var(--stroke-neutral);
   border-radius: var(--radius-default);
-  padding: 0 8px; height: 32px; min-width: 180px;
+  padding: 0 8px; height: var(--input-height); min-width: 180px;
   background: var(--bg-white);
 }
 .bh-bar__search-icon { font-size: 15px; color: var(--text-hint); flex-shrink: 0; }
@@ -665,7 +665,7 @@ const tongTienDisplay = computed(() => '0')
 }
 .bh-hang-tabs { display: flex; }
 .bh-hang-tab {
-  height: 38px; padding: 0 14px;
+  height: var(--btn-height); padding: 0 14px;
   font-size: 13px; font-weight: var(--fw-medium);
   font-family: var(--font-family);
   color: var(--text-secondary);
@@ -683,31 +683,26 @@ const tongTienDisplay = computed(() => '0')
   display: flex; align-items: center; gap: 8px; padding-bottom: 6px;
 }
 
-/* ── Inline table (shared with PTM pattern) ── */
-.ht-table {
-  border: 1px solid var(--stroke-neutral-light);
-  border-radius: var(--radius-default);
-  overflow: auto;
-  font-size: 13px;
-  min-width: 0;
-}
-.ht-row {
-  display: flex; align-items: stretch;
-  border-bottom: 1px solid var(--stroke-neutral-light);
-}
-.ht-row:last-child { border-bottom: none; }
-.ht-row--header { background: var(--bg-neutral-light); }
-.ht-row--footer { background: var(--bg-neutral-light); }
-.ht-row--body:hover { background: var(--bg-brand-light); }
-
-.ht-cell {
-  display: flex; align-items: center; padding: 0 8px;
-  height: var(--input-height); border-right: 1px solid var(--stroke-neutral-light);
-  overflow: hidden;
-}
-.ht-cell:last-child { border-right: none; }
+/* ── Inline table ──
+   Khung dùng chung (.ht-table/.ht-row/.ht-cell) đã chuyển sang style.css global,
+   ở đây chỉ còn tweak riêng (bảng nhiều cột cần cuộn ngang) + class độ rộng cột của bán hàng. */
+.ht-table { overflow: auto; min-width: 0; }
 .ht-cell--right { justify-content: flex-end; }
-.ht-cell--total { font-weight: var(--fw-semibold); color: var(--text-primary); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+.ht-cell--stt      { width: 40px;  justify-content: center; flex-shrink: 0; color: var(--text-secondary); font-size: 12px; }
+.ht-cell--chk      { width: 40px;  justify-content: center; flex-shrink: 0; }
+.ht-cell--ma-hang  { width: 120px; flex-shrink: 0; }
+.ht-cell--ten-hang { flex: 1; min-width: 120px; }
+.ht-cell--dvt      { width: 60px;  flex-shrink: 0; }
+.ht-cell--so-luong { width: 90px;  flex-shrink: 0; }
+.ht-cell--so-lo    { width: 90px;  flex-shrink: 0; }
+.ht-cell--han-sd   { width: 110px; flex-shrink: 0; }
+.ht-cell--ck-tm    { width: 100px; flex-shrink: 0; }
+.ht-cell--tk-cn    { width: 90px;  flex-shrink: 0; }
+.ht-cell--tk-dt    { width: 90px;  flex-shrink: 0; }
+.ht-cell--sl-hd    { width: 100px; flex-shrink: 0; }
+.ht-cell--quy-cach { width: 80px;  flex-shrink: 0; }
+.ht-cell--del      { width: 40px;  flex-shrink: 0; }
 
 .ht-row--header .ht-cell {
   font-size: 12px; font-weight: var(--fw-medium); color: var(--text-secondary);

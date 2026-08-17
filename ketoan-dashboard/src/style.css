@@ -27,8 +27,9 @@
 
   --bg-page:              #ECEDEF;
   --bg-white:             #ffffff;
-  --dt-header-bg:         #ECEDEF;
+  --dt-header-bg:         #E6E7EA;
   --dt-footer-bg:         #F2F2F4;
+  --dt-row-selected-bg:   #E0E9FB;
   --bg-brand:             #245fdf;
   --bg-brand-light:       #f0f6fe;
   --bg-brand-hover:       #c8eefb;
@@ -133,54 +134,63 @@
   --text-brand: #0e9a62; --text-link: #0e9a62;
   --icon-brand: #0e9a62; --stroke-brand: #0e9a62;
   --bg-brand-pressed: #076b43; --bg-brand-disable: #7dcca8;
+  --dt-row-selected-bg: #DDF1E9;
 }
 :root[data-theme="blue-gray"] {
   --bg-brand: #4e5ba6; --bg-brand-light: #fcfcfd;
   --text-brand: #4e5ba6; --text-link: #1570ef;
   --icon-brand: #4e5ba6; --stroke-brand: #4e5ba6;
   --bg-brand-pressed: #3a4480; --bg-brand-disable: #a3aad2;
+  --dt-row-selected-bg: #E6E8F3;
 }
 :root[data-theme="teal"] {
   --bg-brand: #0e9384; --bg-brand-light: #f0fdfa;
   --text-brand: #0e9384; --text-link: #0e9384;
   --icon-brand: #0e9384; --stroke-brand: #0e9384;
   --bg-brand-pressed: #0a6b5e; --bg-brand-disable: #7dc9c2;
+  --dt-row-selected-bg: #DDF0EE;
 }
 :root[data-theme="cyan"] {
   --bg-brand: #00a2cf; --bg-brand-light: #f0fbff;
   --text-brand: #00a2cf; --text-link: #00a2cf;
   --icon-brand: #00a2cf; --stroke-brand: #00a2cf;
   --bg-brand-pressed: #007a9e; --bg-brand-disable: #7dd1e7;
+  --dt-row-selected-bg: #DBF2F8;
 }
 :root[data-theme="indigo"] {
   --bg-brand: #4155f5; --bg-brand-light: #ecf4ff;
   --text-brand: #4155f5; --text-link: #4155f5;
   --icon-brand: #4155f5; --stroke-brand: #4155f5;
   --bg-brand-pressed: #3040c4; --bg-brand-disable: #a0aafa;
+  --dt-row-selected-bg: #E4E7FE;
 }
 :root[data-theme="purple"] {
   --bg-brand: #744ec7; --bg-brand-light: #f7f5fd;
   --text-brand: #744ec7; --text-link: #744ec7;
   --icon-brand: #744ec7; --stroke-brand: #744ec7;
   --bg-brand-pressed: #563899; --bg-brand-disable: #b9a3e3;
+  --dt-row-selected-bg: #ECE6F7;
 }
 :root[data-theme="pink"] {
   --bg-brand: #c64691; --bg-brand-light: #fcf3f9;
   --text-brand: #c64691; --text-link: #c64691;
   --icon-brand: #c64691; --stroke-brand: #c64691;
   --bg-brand-pressed: #97336d; --bg-brand-disable: #e2a4c8;
+  --dt-row-selected-bg: #F7E5F0;
 }
 :root[data-theme="red"] {
   --bg-brand: #c34266; --bg-brand-light: #fbf4f7;
   --text-brand: #c34266; --text-link: #c34266;
   --icon-brand: #c34266; --stroke-brand: #c34266;
   --bg-brand-pressed: #932f4d; --bg-brand-disable: #e1a0b2;
+  --dt-row-selected-bg: #F7E5EA;
 }
 :root[data-theme="orange"] {
   --bg-brand: #ea580c; --bg-brand-light: #fff7ed;
   --text-brand: #ea580c; --text-link: #ea580c;
   --icon-brand: #ea580c; --stroke-brand: #ea580c;
   --bg-brand-pressed: #b54209; --bg-brand-disable: #f4aa86;
+  --dt-row-selected-bg: #FCE8DD;
 }
 
 
@@ -544,13 +554,48 @@ body {
   justify-content: space-between;
   overflow: hidden;
 }
+/* Khi Nền = "Màu đang chọn": ngả nhẹ sang tone brand, giữ nguyên khi Nền = "Màu xám"
+   Base sáng hơn --bg-page (F2F2F4 thay vì EDEEF2) để tab luôn sáng hơn nền trang, nhưng vẫn pha brand nên không trắng tinh */
+:root[data-bg-tint="color"] .sub-nav {
+  background: color-mix(in srgb, var(--bg-brand) 3%, #F2F2F4);
+}
 /* Chỉ override height so với mds-ui (48px → 44px) */
 .sub-nav-tab { height: 44px; }
+
+/* Nền dòng được chọn/active trong bảng — đậm hơn bg-brand-light mặc định của mds-ui vì trên nền neutral-50 mới nhìn quá mờ
+   Mã màu cố định theo từng theme (--dt-row-selected-bg khai báo ở :root và từng khối data-theme) */
+.dt-row--selected, .dt-row--active {
+  background: var(--dt-row-selected-bg) !important;
+}
 .badge-new {
   background: var(--bg-brand-light); color: var(--text-brand);
   font-size: 10px; font-weight: var(--fw-bold); padding: 1px 5px;
   border-radius: var(--radius-pill); line-height: 14px;
 }
+
+/* ── Inline accounting table (ht-table) — khung dùng chung ──
+   Dùng ở PhieuThuForm.vue, BanHangForm.vue, PhieuTienMatPopup.vue.
+   Mỗi file chỉ còn giữ lại các class độ rộng cột riêng (.ht-cell--*) vì số cột/tên khác nhau theo loại chứng từ. */
+.ht-table {
+  border: 1px solid var(--stroke-neutral-light);
+  border-radius: var(--radius-default);
+  overflow: hidden;
+  font-size: 13px;
+}
+.ht-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--stroke-neutral-light); }
+.ht-row:last-child { border-bottom: none; }
+.ht-row--header { background: var(--dt-header-bg); }
+.ht-row--footer { background: var(--dt-footer-bg); }
+.ht-row--body:hover { background: var(--bg-brand-light); }
+.ht-cell {
+  display: flex; align-items: center; padding: 0 8px;
+  height: var(--input-height);
+  border-right: 1px solid var(--stroke-neutral-light);
+  flex-shrink: 0; overflow: hidden;
+}
+.ht-cell:last-child { border-right: none; }
+.ht-row--header .ht-cell { font-size: 12px; font-weight: var(--fw-medium); color: var(--text-secondary); }
+.ht-cell--total { font-weight: var(--fw-semibold); color: var(--text-primary); font-feature-settings: 'lnum' 1, 'tnum' 1; }
 
 /* ── Page Header ── */
 .page-header {

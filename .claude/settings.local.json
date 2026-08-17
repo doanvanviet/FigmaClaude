@@ -2,7 +2,24 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "PowerShell(netstat -ano)"
+      "PowerShell(netstat -ano)",
+      "Bash(lsof -nP -iTCP -sTCP:LISTEN)",
+      "Read(//usr/local/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//Users/dvviet/**)",
+      "Bash(command -v fnm)",
+      "Read(//Users/dvviet/Library/**)",
+      "Read(//Users/dvviet/.local/share/**)",
+      "Bash(mdfind -name \"node\" -onlyin /Users/dvviet)",
+      "Bash(brew install *)",
+      "Bash(npm install *)",
+      "Bash(/usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate)",
+      "Bash(/usr/libexec/ApplicationFirewall/socketfilterfw --getblockall)",
+      "Bash(/usr/libexec/ApplicationFirewall/socketfilterfw --listapps)",
+      "Bash(lsof -nP -iTCP:3000 -sTCP:LISTEN)",
+      "Bash(grep -rn \"\\\\.data-panel \\\\|\\\\.data-panel{\\\\|\\\\.data-panel$\\\\|\\\\.datatable {\\\\|\\\\.datatable{\\\\|dt-row--header\\\\|dt-row--body\\\\|dt-cell--header\\\\|dt-row--footer\" /Users/dvviet/Github/FigmaClaude/mds-ui/src/style.css)",
+      "Bash(node -e ' *)",
+      "Bash(grep -n \"^\\\\.ht-table {$\\\\|^\\\\.ht-row {$\\\\|^\\\\.ht-row--header\\\\|^\\\\.ht-row--footer\\\\|^\\\\.ht-row--body:hover\\\\|^\\\\.ht-cell {$\" /Users/dvviet/Github/FigmaClaude/ketoan-dashboard/src/pages/PhieuThuForm.vue /Users/dvviet/Github/FigmaClaude/ketoan-dashboard/src/components/PhieuTienMatPopup.vue /Users/dvviet/Github/FigmaClaude/ketoan-dashboard/src/components/BanHangForm.vue)"
     ]
   }
 }

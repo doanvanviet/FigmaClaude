@@ -13,7 +13,7 @@
         <span class="ava-banner__time"><TIcon name="clock" />Số liệu tính đến: {{ currentTime }}</span>
         <button class="ava-btn-icon" title="Tải lại"><TIcon name="refresh" /></button>
         <button class="ava-banner__see-all">Xem tất cả <TIcon name="chevron-right" /></button>
-        <button class="ava-btn-icon" @click="visible = false"><TIcon name="x" /></button>
+        <button class="ava-btn-icon" @click="dismiss"><TIcon name="x" /></button>
       </div>
     </div>
 
@@ -36,17 +36,28 @@ import { ref } from 'vue'
 import TIcon      from '@mds/components/TIcon.vue'
 import IconMisaAI from '@mds/components/IconMisaAI.vue'
 
-defineProps({
+const props = defineProps({
   sections: {
     type: Array,
     default: () => [
       { title: 'Dòng tiền thuần' },
       { title: 'Rủi ro & Khuyến nghị' },
     ]
+  },
+  moduleId: {
+    type: String,
+    required: true
   }
 })
 
-const visible = ref(true)
+const storageKey = `ava-banner-dismissed-${props.moduleId}`
+const visible = ref(localStorage.getItem(storageKey) !== '1')
+
+function dismiss() {
+  visible.value = false
+  localStorage.setItem(storageKey, '1')
+}
+
 const now = new Date()
 const currentMonth = now.getMonth() + 1
 const currentTime  = now.getHours() + 'h' + String(now.getMinutes()).padStart(2, '0')
@@ -64,6 +75,7 @@ const currentTime  = now.getHours() + 'h' + String(now.getMinutes()).padStart(2,
   box-shadow: 0 2px 12px rgba(124, 58, 237, 0.1), var(--shadow-card);
   flex-shrink: 0;
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
 /* ── Header ── */

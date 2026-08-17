@@ -32,7 +32,7 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
-            <AvaInsightBanner :sections="[{ title: 'Phân tích doanh thu' }, { title: 'Rủi ro & Khuyến nghị' }]" />
+            <AvaInsightBanner module-id="ban-hang" :sections="[{ title: 'Phân tích doanh thu' }, { title: 'Rủi ro & Khuyến nghị' }]" />
 
             <div class="data-panel data-panel--master">
               <TableHeader

@@ -302,7 +302,7 @@ const showTK = ref(true)
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 48px;
+  height: var(--layout-page-header-h);
   padding: 0 16px;
   background: var(--bg-white);
   border-bottom: 1px solid var(--stroke-neutral-light);
@@ -444,35 +444,9 @@ const showTK = ref(true)
   color: var(--text-primary);
 }
 
-/* ── Inline accounting table ── */
-.ht-table {
-  border: 1px solid var(--stroke-neutral-light);
-  border-radius: var(--radius-default);
-  overflow: hidden;
-  font-size: 13px;
-}
-.ht-row {
-  display: flex;
-  align-items: stretch;
-  border-bottom: 1px solid var(--stroke-neutral-light);
-}
-.ht-row:last-child { border-bottom: none; }
-.ht-row--header { background: var(--bg-neutral-light); }
-.ht-row--footer { background: var(--bg-neutral-light); }
-.ht-row--body:hover { background: var(--bg-brand-light); }
-
-.ht-cell {
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  height: var(--input-height);
-  border-right: 1px solid var(--stroke-neutral-light);
-  flex-shrink: 0;
-  overflow: hidden;
-}
-.ht-cell:last-child { border-right: none; }
-
-/* Column widths */
+/* ── Inline accounting table ──
+   Khung dùng chung (.ht-table/.ht-row/.ht-cell) đã chuyển sang style.css global,
+   ở đây chỉ còn class độ rộng cột riêng của phiếu thu. */
 .ht-cell--stt      { width: 44px; justify-content: center; color: var(--text-secondary); font-size: 12px; }
 .ht-cell--dien-giai{ flex: 1; min-width: 0; }
 .ht-cell--tk       { width: 100px; }
@@ -481,21 +455,8 @@ const showTK = ref(true)
 .ht-cell--ten-dt   { width: 180px; }
 .ht-cell--del      { width: 44px; justify-content: center; }
 
-/* Header text */
-.ht-row--header .ht-cell {
-  font-size: 12px;
-  font-weight: var(--fw-medium);
-  color: var(--text-secondary);
-}
 .ht-row--header .ht-cell--stt,
 .ht-row--header .ht-cell--del { color: var(--text-hint); }
-
-/* Footer total */
-.ht-cell--total {
-  font-weight: var(--fw-semibold);
-  color: var(--text-primary);
-  font-feature-settings: 'lnum' 1, 'tnum' 1;
-}
 
 /* Inline inputs */
 .ht-input {

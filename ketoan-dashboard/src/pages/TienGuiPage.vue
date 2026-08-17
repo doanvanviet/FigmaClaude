@@ -31,7 +31,7 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
-            <AvaInsightBanner :sections="[{ title: 'Dòng tiền thuần' }, { title: 'Rủi ro & Khuyến nghị' }]" />
+            <AvaInsightBanner module-id="tien-gui" :sections="[{ title: 'Dòng tiền thuần' }, { title: 'Rủi ro & Khuyến nghị' }]" />
 
             <!-- KPI Row + toggle gắn liền nhau -->
             <div class="kpi-wrapper">
@@ -650,7 +650,7 @@ const detailRows = [
 .kpi-row { display: flex; gap: 12px; flex-shrink: 0; }
 .kpi-cep { display: flex; justify-content: center; flex-shrink: 0; margin-top: -1px; margin-bottom: 0; }
 .kpi-cep--pinned { position: absolute; top: 0; left: 0; right: 0; margin-top: 0; margin-bottom: 0; z-index: 10; }
-.kpi-card { position: relative; flex: 1; display: flex; flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; background: var(--bg-white); border-radius: 8px; }
+.kpi-card { position: relative; flex: 1; display: flex; flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; background: var(--neutral-50); border-radius: 8px; box-shadow: var(--shadow-card); }
 .kpi-card__reload { position: absolute; top: 6px; right: 8px; opacity: 0; transition: opacity 0.15s; }
 .kpi-card:hover .kpi-card__reload { opacity: 1; }
 .kpi-card__content { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }

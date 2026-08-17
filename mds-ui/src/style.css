@@ -968,7 +968,7 @@ body {
 .btn-split .btn:disabled + .btn-split__arrow { border-left-color: rgba(0,0,0,0.1) !important; }
 
 /* ── DataTable ── */
-.datatable { display: flex; flex-direction: column; width: 100%; overflow: hidden; background: var(--bg-white); }
+.datatable { display: flex; flex-direction: column; width: 100%; overflow: hidden; background: var(--neutral-50); }
 .dt-row { display: flex; align-items: stretch; min-width: 100%; flex-shrink: 0; }
 .dt-row--header {
   background: var(--dt-header-bg);
@@ -976,7 +976,7 @@ body {
   border-bottom: 1px solid var(--stroke-neutral);
   position: sticky; top: 0; z-index: 3;
 }
-.dt-row--body { background: var(--bg-white); border-bottom: 1px solid var(--stroke-neutral); cursor: pointer; }
+.dt-row--body { background: var(--neutral-50); border-bottom: 1px solid var(--stroke-neutral); cursor: pointer; }
 .dt-row--body:hover { background: var(--bg-brand-light); }
 .dt-row--selected { background: var(--bg-brand-light) !important; }
 .dt-row--active   { background: var(--bg-brand-light) !important; }
