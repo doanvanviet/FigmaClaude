@@ -46,8 +46,11 @@
       <!-- Right: icon group + divider + main buttons -->
       <div class="table-header__right">
         <div class="table-header__icon-group">
+          <BorderBeamButton class="btn-icon btn-icon--outline" title="Gợi ý AI" @click="$emit('show-ai')">
+            <TIcon name="sparkles" />
+          </BorderBeamButton>
           <button class="btn-icon btn-icon--outline" title="Làm mới"        @click="$emit('refresh')">       <TIcon name="refresh" /></button>
-          <button class="btn-icon btn-icon--outline" title="Xuất file"       @click="$emit('export')">        <TIcon name="file-export" /></button>
+          <button class="btn-icon btn-icon--outline" title="Xuất file"       @click="$emit('export')">        <slot name="export-icon"><TIcon name="file-export" /></slot></button>
           <button class="btn-icon btn-icon--outline" title="Thiết lập cột"   @click="$emit('col-settings')">  <TIcon name="settings" /></button>
           <button class="btn-icon btn-icon--outline" title="Bộ lọc"          @click="$emit('open-filter')">   <TIcon name="filter" /></button>
         </div>
@@ -65,6 +68,7 @@
 
 <script setup>
 import TIcon from './TIcon.vue'
+import BorderBeamButton from './BorderBeamButton.vue'
 
 defineProps({
   modelValue:         { type: String,  default: '' },
@@ -76,7 +80,7 @@ defineProps({
   selectedCount:      { type: Number,  default: 0 },
 })
 
-defineEmits(['update:modelValue', 'refresh', 'export', 'col-settings', 'open-filter', 'deselect-all'])
+defineEmits(['update:modelValue', 'show-ai', 'refresh', 'export', 'col-settings', 'open-filter', 'deselect-all'])
 </script>
 
 <style scoped>
@@ -88,7 +92,6 @@ defineEmits(['update:modelValue', 'refresh', 'export', 'col-settings', 'open-fil
   padding: 8px 16px;
   background: var(--bg-white);
   flex-shrink: 0;
-  min-height: 48px;
 }
 
 /* ── Normal mode ── */
@@ -101,6 +104,7 @@ defineEmits(['update:modelValue', 'refresh', 'export', 'col-settings', 'open-fil
 .table-header__icon-group {
   display: flex; align-items: center; gap: 8px;
 }
+/* Nút "Gợi ý AI" dùng component dùng chung <BorderBeamButton> — style xem ở .btn--border-beam trong style.css */
 .table-header__divider {
   width: 1px; height: 20px; background: var(--stroke-neutral-light); flex-shrink: 0;
 }

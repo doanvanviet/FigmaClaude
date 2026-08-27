@@ -1,0 +1,13 @@
+{
+  "name": "BugFinder",
+  "id": "1672523797487316017",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "permissions": ["teamlibrary"],
+  "networkAccess": {
+    "allowedDomains": ["https://generativelanguage.googleapis.com"]
+  }
+}

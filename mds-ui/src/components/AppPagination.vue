@@ -3,7 +3,7 @@
     <!-- Sum area -->
     <div class="pagination-bar__sums">
       <div
-        v-for="(sum, i) in sums" :key="i"
+        v-for="(sum, i) in displaySums" :key="i"
         class="pagination-bar__sum-item"
         :class="{ 'pagination-bar__sum-item--vertical': sumVertical }"
       >
@@ -19,7 +19,6 @@
       <AppCombobox
         :model-value="String(pageSize)"
         :options="pageSizeOptions.map(String)"
-        size="sm"
         style="width:80px"
         @update:model-value="onPageSizeChange"
       />
@@ -59,6 +58,9 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:currentPage', 'update:pageSize'])
+
+// Mặc định hiện "Tổng số: N" giống TablePaging khi cha không truyền sums riêng
+const displaySums = computed(() => props.sums.length ? props.sums : [{ label: 'Tổng số:', value: props.total }])
 
 const totalPages = computed(() => Math.max(1, Math.ceil(props.total / props.pageSize)))
 

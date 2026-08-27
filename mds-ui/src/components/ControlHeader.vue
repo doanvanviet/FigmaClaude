@@ -57,7 +57,7 @@
           <TIcon name="settings" />
         </button>
         <button class="btn-icon-white" title="MISA AI">
-          <IconMisaAI />
+          <slot name="ai-icon"><IconMisaAI /></slot>
         </button>
         <button class="btn-icon-white" title="AMIS Chat">
           <IconAmisChat />

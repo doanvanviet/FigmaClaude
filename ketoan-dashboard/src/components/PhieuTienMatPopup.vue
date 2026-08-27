@@ -299,7 +299,7 @@ const totalDisplay = computed(() =>
 /* ── Header ── */
 .ptm-hd {
   display: flex; align-items: center; justify-content: space-between;
-  height: var(--layout-page-header-h); padding: 0 16px; flex-shrink: 0;
+  height: 48px; padding: 0 16px; flex-shrink: 0;
   background: var(--bg-white);
   border-bottom: 1px solid var(--stroke-neutral-light);
   gap: 12px;
@@ -331,7 +331,7 @@ const totalDisplay = computed(() =>
 .field__label {
   display: block;
   font-size: 13px;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
   color: var(--text-primary);
   line-height: var(--text-body-lh);
   margin-bottom: 4px;
@@ -443,8 +443,8 @@ const totalDisplay = computed(() =>
 .ptm-ft {
   display: flex; align-items: center;
   height: 52px; padding: 0 16px; flex-shrink: 0;
-  background: var(--neutral-800);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  background: var(--neutral-100);
+  border-top: 1px solid var(--stroke-neutral-light);
   gap: 16px;
 }
 .ptm-ft__left   { flex: 1; display: flex; align-items: center; }
@@ -453,26 +453,26 @@ const totalDisplay = computed(() =>
 
 .ptm-ft__btn-ghost {
   height: var(--btn-height); min-width: 72px; padding: 0 12px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: transparent; color: #fff;
+  border: 1px solid var(--stroke-neutral);
+  background: transparent; color: var(--text-primary);
   border-radius: var(--radius-default);
   font-family: var(--font-family); font-size: 13px; font-weight: var(--fw-medium);
   cursor: pointer; transition: background 0.15s;
   white-space: nowrap;
 }
-.ptm-ft__btn-ghost:hover { background: rgba(255,255,255,0.10); }
+.ptm-ft__btn-ghost:hover { background: var(--bg-neutral-hover); }
 
 /* Toggle switch */
 .ptm-ft__toggle {
   display: flex; align-items: center; gap: 8px;
   cursor: pointer; user-select: none;
-  color: #fff; font-size: 13px;
+  color: var(--text-primary); font-size: 13px;
   font-family: var(--font-family);
 }
 .toggle-sw {
   width: 36px; height: 20px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.20);
+  background: var(--stroke-neutral);
   position: relative; flex-shrink: 0;
   transition: background 0.2s;
 }

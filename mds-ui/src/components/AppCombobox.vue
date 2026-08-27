@@ -1,12 +1,12 @@
 ﻿<template>
-  <div class="ibox" :class="boxClass" style="cursor:pointer">
+  <div class="ibox" :class="boxClass" :style="{ cursor: (state === 'readonly' || state === 'disabled' || disabled) ? 'default' : 'pointer' }">
     <TIcon v-if="iconLeft" :name="iconLeft" class="ibox__icon" />
 
     <!-- Single select -->
     <select v-if="!multiple"
       class="ibox__native ibox__native--select"
       :value="modelValue"
-      :disabled="disabled || state === 'disabled'"
+      :disabled="disabled || state === 'disabled' || state === 'readonly'"
       @change="$emit('update:modelValue', $event.target.value)"
     >
       <option value="" disabled :selected="!modelValue">{{ placeholder }}</option>
@@ -40,6 +40,7 @@
       </select>
     </template>
 
+    <TIcon v-if="iconRight" :name="iconRight" class="ibox__icon" :class="{ 'ibox__icon--brand': iconRight === 'plus' }" />
     <TIcon name="chevron-down" class="ibox__icon" />
   </div>
 </template>
@@ -56,6 +57,7 @@ const props = defineProps({
   state:       { type: String,  default: 'default' },
   outline:     { type: Boolean, default: true },
   iconLeft:    { type: String,  default: '' },
+  iconRight:   { type: String,  default: '' },
   size:        { type: String,  default: 'md' },
   disabled:    { type: Boolean, default: false },
   ghost:       { type: Boolean, default: false },
@@ -93,6 +95,7 @@ const boxClass = computed(() => ({
   'ibox--success':   props.state === 'success',
   'ibox--warning':   props.state === 'warning',
   'ibox--disabled':  props.state === 'disabled' || props.disabled,
+  'ibox--readonly':  props.state === 'readonly',
   'ibox--sm':        props.size === 'sm',
 }))
 </script>

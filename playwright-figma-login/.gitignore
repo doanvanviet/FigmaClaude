@@ -3,3 +3,6 @@ dist/
 .env
 playwright-report/
 test-results/
+dist-package-mac/
+figma-login-mac.zip
+figma-login.zip

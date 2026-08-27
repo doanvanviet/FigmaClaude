@@ -55,10 +55,10 @@ const rangeEnd   = computed(() => Math.min(props.page * props.pageSize, props.to
 
 <style scoped>
 .paging {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 48px; padding: 0 16px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 8px 16px; flex-shrink: 0;
   border-top: 1px solid var(--stroke-neutral-light);
-  background: var(--bg-white);
+  background: var(--neutral-50);
 }
 .paging__total-label { font-size: 13px; color: var(--text-secondary); font-weight: var(--fw-regular); }
 .paging__total-value { font-size: 13px; color: var(--text-primary);   font-weight: var(--fw-semibold); }

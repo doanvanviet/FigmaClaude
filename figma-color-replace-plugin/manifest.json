@@ -1,0 +1,12 @@
+{
+  "name": "Color Replacer",
+  "id": "1674303537781482171",
+  "api": "1.0.0",
+  "documentAccess": "dynamic-page",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}

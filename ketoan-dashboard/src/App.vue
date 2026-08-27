@@ -36,11 +36,13 @@ function handleDocClick(e) {
 }
 
 onMounted(() => {
-  applyTheme(currentTheme.value)
+  /* Mặc định riêng cho app Kế toán: theme xanh lá, header nền trắng, sidebar nền đen
+     — chỉ áp khi user chưa từng tự chỉnh (chưa có trong localStorage), không ghi đè lựa chọn đã lưu. */
+  applyTheme(localStorage.getItem('mds-theme') ?? 'green')
   applyDensity(currentDensity.value)
-  applyMode(currentMode.value)
+  applyMode(localStorage.getItem('mds-header-mode') ?? 'light')
   applyBgTint(currentBgTint.value)
-  applySidebarMode(currentSidebarMode.value)
+  applySidebarMode(localStorage.getItem('mds-sidebar-mode') ?? 'dark')
   document.addEventListener('click', handleDocClick, true)
 })
 

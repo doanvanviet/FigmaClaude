@@ -8,7 +8,9 @@
     "login": "ts-node src/figma-login.ts",
     "test": "playwright test",
     "build": "esbuild src/figma-login.ts --bundle --platform=node --outfile=dist/bundle.js --external:chromium-bidi --log-level=info",
-    "package": "npm run build && npx @yao-pkg/pkg dist/bundle.js --target node20-win-x64 --output dist/figma-login.exe"
+    "package": "npm run build && npx @yao-pkg/pkg dist/bundle.js --target node20-win-x64 --output dist/figma-login.exe",
+    "dist:win": "node package-dist.js",
+    "dist:mac": "node package-dist-mac.js"
   },
   "pkg": {
     "targets": [

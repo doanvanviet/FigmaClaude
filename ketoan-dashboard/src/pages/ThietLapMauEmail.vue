@@ -1,6 +1,7 @@
 ﻿<template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán">
+      <template #ai-icon><IconAvaKeToan /></template>
       <template #header-meta>
         <button class="header-company">
           Công ty cổ phần Đại Việt <TIcon name="chevron-down" />
@@ -76,6 +77,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppSidebar    from '@mds/components/AppSidebar.vue'
 import ControlHeader from '@mds/components/ControlHeader.vue'
+import IconAvaKeToan from '../components/IconAvaKeToan.vue'
 import TIcon         from '@mds/components/TIcon.vue'
 
 const router   = useRouter()

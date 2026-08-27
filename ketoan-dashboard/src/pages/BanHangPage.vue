@@ -1,6 +1,7 @@
 ﻿<template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán" app-tag="HKĐ">
+      <template #ai-icon><IconAvaKeToan /></template>
       <template #header-meta>
         <button class="header-company">
           Công ty cổ phần Đại Việt <TIcon name="chevron-down" />
@@ -32,7 +33,7 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
-            <AvaInsightBanner module-id="ban-hang" :sections="[{ title: 'Phân tích doanh thu' }, { title: 'Rủi ro & Khuyến nghị' }]" />
+            <AvaInsightBanner ref="avaBannerRef" module-id="ban-hang" />
 
             <div class="data-panel data-panel--master">
               <TableHeader
@@ -43,7 +44,12 @@
                 :bulk-action="selected.length > 0"
                 :selected-count="selected.length"
                 @deselect-all="selected = []"
+                @show-ai="avaBannerRef?.toggle()"
               >
+                <template #export-icon><IconExportSwap /></template>
+                <template #filters>
+                  <span class="filter-hint-label">Đầu năm tới hiện tại</span>
+                </template>
                 <template #bulk-buttons>
                   <button class="btn btn--outline btn--neutral">Lập hóa đơn</button>
                   <button class="btn btn--outline btn--neutral">Ghi sổ</button>
@@ -55,8 +61,8 @@
                   </DropdownMenu>
                 </template>
                 <template #main-buttons>
-                  <button class="btn btn--primary" @click="showForm = true"><TIcon name="plus" />Thêm</button>
-                  <button class="btn btn--ai-outline"><TIcon name="wand" />Thêm bằng AI</button>
+                  <button class="btn btn--primary" @click="openAddForm"><TIcon name="plus" />Thêm</button>
+                  <button class="btn btn--ai-outline"><IconAvaKeToan style="width:16px;height:16px" />Thêm bằng AI</button>
                   <DropdownMenu :items="moreItems" placement="bottom-end" :min-width="200">
                     <template #trigger="{ toggle }">
                       <button class="btn-icon btn-icon--outline" @click.stop="toggle"><TIcon name="dots" /></button>
@@ -97,6 +103,7 @@
                   :class="{ 'dt-row--selected': selected.includes(i), 'dt-row--active': activeRow === i, 'dt-row--unghi': !row.ghiSo, 'dt-row--warning': row.ttXH === 'Đã xuất 1 phần' }"
                   :style="{ minWidth: totalRowMinWidth + 'px' }"
                   @click="selectRow(i)"
+                  @dblclick="openRowDetail(row)"
                 >
                   <div class="dt-cell" style="width:44px;flex-shrink:0" @click.stop>
                     <div class="dt-cell-inner" style="justify-content:center;padding:0">
@@ -110,7 +117,7 @@
                   <!-- Số chứng từ -->
                   <div class="dt-cell" :style="cellStyle(columns[1])">
                     <div class="dt-cell-inner">
-                      <button class="dt-action-link">{{ row.soCT }}</button>
+                      <button class="dt-action-link" @click.stop="openRowDetail(row)">{{ row.soCT }}</button>
                     </div>
                   </div>
                   <!-- Số hóa đơn -->
@@ -218,7 +225,7 @@
                 <div class="dt-row dt-row--header" :style="{ minWidth: totalDetailMinWidth + 'px' }">
                   <div v-for="col in detailCols" :key="col.key"
                     class="dt-cell dt-cell--header" :style="detailCellStyle(col)">
-                    <div class="dt-cell-inner" :class="col.align === 'right' ? 'dt-cell-inner--right' : col.align === 'center' ? 'dt-cell-inner--center' : ''">
+                    <div class="dt-cell-inner" :class="col.key === 'stt' ? 'dt-cell-inner--stt' : col.align === 'right' ? 'dt-cell-inner--right' : col.align === 'center' ? 'dt-cell-inner--center' : ''">
                       <span class="dt-header-text">{{ col.label }}</span>
                     </div>
                     <div class="dt-col-divider"
@@ -304,10 +311,11 @@
 
               <!-- Detail footer -->
               <div class="dt-row dt-row--footer" :style="{ minWidth: totalDetailMinWidth + 'px' }">
-                <div class="dt-cell dt-cell--footer" :style="detailCellStyle(detailCols[0])">
+                <div class="dt-cell dt-cell--footer" :style="detailCellStyle(detailCols[0])"></div>
+                <div class="dt-cell dt-cell--footer" :style="detailCellStyle(detailCols[1])">
                   <div class="dt-cell-inner"><span class="dt-footer-text">Tổng</span></div>
                 </div>
-                <template v-for="col in detailCols.slice(1, 8)" :key="col.key">
+                <template v-for="col in detailCols.slice(2, 8)" :key="col.key">
                   <div class="dt-cell dt-cell--footer" :style="detailCellStyle(col)"></div>
                 </template>
                 <!-- Số lượng total -->
@@ -481,7 +489,7 @@
                     class="dt-cell dt-cell--header"
                     :style="fdtCellStyle(col)"
                   >
-                    <div class="dt-cell-inner" :class="col.align === 'right' ? 'dt-cell-inner--right' : col.align === 'center' ? 'dt-cell-inner--center' : ''">
+                    <div class="dt-cell-inner" :class="col.key === 'stt' ? 'dt-cell-inner--stt' : col.align === 'right' ? 'dt-cell-inner--right' : col.align === 'center' ? 'dt-cell-inner--center' : ''">
                       <span class="dt-header-text">{{ col.label }}</span>
                     </div>
                     <div v-if="col.key !== 'stt'" class="dt-col-divider"
@@ -688,11 +696,11 @@
     </div>
   </Teleport>
 
-  <BanHangForm v-if="showForm" @close="showForm = false" />
+  <BanHangForm v-if="showForm" :readonly="formReadonly" :initial-data="formInitialData" @close="showForm = false" />
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import ControlHeader       from '@mds/components/ControlHeader.vue'
 import AppSidebar          from '@mds/components/AppSidebar.vue'
@@ -704,6 +712,8 @@ import CollapseExpandPanel from '@mds/components/CollapseExpandPanel.vue'
 import TablePaging         from '@mds/components/TablePaging.vue'
 import BanHangForm         from '../components/BanHangForm.vue'
 import AvaInsightBanner    from '../components/AvaInsightBanner.vue'
+import IconAvaKeToan       from '../components/IconAvaKeToan.vue'
+import IconExportSwap      from '../components/IconExportSwap.vue'
 
 const router = useRouter()
 
@@ -753,6 +763,7 @@ const tabs = [
 ]
 const activeTab  = ref('ban-hang')
 const detailOpen = ref(false)
+watch(detailOpen, v => { v ? avaBannerRef.value?.hide() : avaBannerRef.value?.unhide() })
 
 /* ── Table state ── */
 const searchQuery = ref('')
@@ -812,6 +823,8 @@ function startPanelResize(e) {
   function onUp()     { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
   document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp)
 }
+
+const avaBannerRef = ref(null)
 
 /* ── Column resize (main) ── */
 const datatableRef     = ref(null)
@@ -956,6 +969,26 @@ const filteredRows = computed(() => {
 /* ── Add form state ── */
 const showAddForm = ref(false)
 const showForm    = ref(false)
+const formReadonly = ref(false)
+const formInitialData = ref(null)
+
+function openRowDetail(row) {
+  formReadonly.value = true
+  formInitialData.value = {
+    form: {
+      tenKH: row.kh,
+      soChungTu: row.soCT,
+      ngayHachToan: row.ngayHT,
+    },
+  }
+  showForm.value = true
+}
+
+function openAddForm() {
+  formReadonly.value = false
+  formInitialData.value = null
+  showForm.value = true
+}
 const formTab     = ref('thu-chi-tien')
 const formTabs    = [
   { id: 'quy-trinh',        label: 'Quy trình' },
@@ -1082,7 +1115,7 @@ const detailRows = [
 .dt-row--unghi .dt-text.dt-text--status.text-success  { color: var(--text-success); }
 .dt-row--unghi .dt-text.dt-text--status.text-warning  { color: var(--text-warning); }
 .dt-row--unghi .dt-text.dt-text--status.text-secondary { color: var(--text-secondary); }
-.dt-row--unghi .dt-action-link { color: var(--text-link); }
+.dt-row--unghi .dt-action-link { color: #245fdf; }
 
 /* Tab badge (e.g. MS) */
 .tab-badge {
@@ -1103,7 +1136,7 @@ const detailRows = [
   white-space: nowrap;
 }
 
-.content-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative; }
+.content-wrapper { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 12px 16px; position: relative; }
 .table-panel     { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 
 .data-panel--master {
@@ -1118,6 +1151,8 @@ const detailRows = [
 
 .datatable         { flex: 1; min-height: 0; overflow-y: auto; }
 .datatable--detail { flex: 1; min-height: 0; overflow-y: auto; height: 210px; }
+/* Thanh phân trang là phần tử cuối cùng trong panel chi tiết — bo góc dưới để khớp với data-panel--detail */
+.data-panel--detail :deep(.paging) { border-radius: 0 0 8px 8px; overflow: hidden; }
 
 /* Panel resizer */
 .panel-resizer { height: 8px; flex-shrink: 0; cursor: ns-resize; display: flex; align-items: center; justify-content: center; }

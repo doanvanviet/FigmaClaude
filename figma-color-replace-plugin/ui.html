@@ -1,0 +1,412 @@
+<style>
+  :root {
+    --text-primary: #18181b;
+    --text-secondary: #71717a;
+    --border: #e4e4e7;
+    --bg: #ffffff;
+    --accent: #18a0fb;
+    --danger: #eb4444;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    color: var(--text-primary);
+    background: var(--bg);
+  }
+  .field { margin-bottom: 12px; }
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .hint {
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    background: #eef7ff;
+    color: var(--text-secondary);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .pairsList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pairItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .color-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0 0 0 4px;
+    height: 28px;
+  }
+  .color-box.invalid { border-color: var(--danger); }
+  .color-box.picking { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .color-box input[type="color"] {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .color-box input[type="text"] {
+    flex: 1;
+    width: 0;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    color: var(--text-primary);
+    background: transparent;
+  }
+  .pairItem .arrow { color: var(--text-secondary); flex-shrink: 0; }
+  .pairItem .pickBtn {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .pairItem .pickBtn:hover { border-color: var(--accent); background: #eef7ff; }
+  .pairItem .removeRow {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .pairItem .removeRow:hover { background: #f4f4f5; color: var(--danger); }
+  .addRow {
+    margin-top: 8px;
+    height: 28px;
+    padding: 0 12px;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .addRow:hover { border-color: var(--accent); color: var(--accent); }
+  .seg {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .seg button {
+    flex: 1;
+    border: none;
+    background: var(--bg);
+    padding: 6px 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .seg button.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .checks { display: flex; gap: 16px; }
+  .checks label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 400;
+    margin-bottom: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+  }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+  button.primary {
+    flex: 1;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.primary:disabled { opacity: 0.5; cursor: default; }
+  button.secondary {
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .status {
+    margin-top: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    background: #f4f4f5;
+    color: var(--text-primary);
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-line;
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.error { background: #fdecec; color: var(--danger); }
+</style>
+
+<div class="hint">Select an element on the canvas, then click the 🎯 button next to the "Old color" field to grab its color.</div>
+
+<div class="field">
+  <label>Old color &rarr; New color</label>
+  <div class="pairsList" id="pairsList"></div>
+  <button type="button" class="addRow" id="addRowBtn">+ Add color pair</button>
+</div>
+
+<div class="field">
+  <label>Scope</label>
+  <div class="seg" id="scopeSeg">
+    <button type="button" data-value="page">Page</button>
+    <button type="button" data-value="selection" class="active">Selection</button>
+  </div>
+</div>
+
+<div class="field">
+  <label>Replace on</label>
+  <div class="checks">
+    <label><input type="checkbox" id="fillCheck" checked /> Fill</label>
+    <label><input type="checkbox" id="strokeCheck" checked /> Stroke</label>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="primary" id="runBtn">Replace colors</button>
+  <button class="secondary" id="closeBtn">Close</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<script>
+  var scopeSeg = document.getElementById("scopeSeg");
+  var scope = "selection";
+  scopeSeg.addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    scope = btn.getAttribute("data-value");
+    scopeSeg.querySelectorAll("button").forEach(function (b) {
+      b.classList.toggle("active", b === btn);
+    });
+  });
+
+  function normalizeHex(v) {
+    var h = String(v || "").trim().replace(/^#/, "");
+    if (h.length === 3) h = h.split("").map(function (c) { return c + c; }).join("");
+    if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+    return "#" + h.toUpperCase();
+  }
+
+  var pairsList = document.getElementById("pairsList");
+  var activeOldBox = null;
+
+  function setActiveOldBox(entry) {
+    if (activeOldBox && activeOldBox.box) activeOldBox.box.classList.remove("picking");
+    activeOldBox = entry;
+    if (activeOldBox && activeOldBox.box) activeOldBox.box.classList.add("picking");
+  }
+
+  function makeColorBox(defaultHex, kind) {
+    var box = document.createElement("div");
+    box.className = "color-box";
+    var swatch = document.createElement("input");
+    swatch.type = "color";
+    swatch.value = defaultHex;
+    var text = document.createElement("input");
+    text.type = "text";
+    text.placeholder = "#RRGGBB";
+    text.value = defaultHex.toUpperCase();
+    text.addEventListener("input", function () {
+      var h = normalizeHex(text.value);
+      box.classList.remove("invalid");
+      if (h) swatch.value = h;
+    });
+    text.addEventListener("focus", function () {
+      text.select();
+    });
+    swatch.addEventListener("input", function () {
+      text.value = swatch.value.toUpperCase();
+      box.classList.remove("invalid");
+    });
+
+    var entry = { box: box, text: text, swatch: swatch };
+    if (kind === "old") {
+      var arm = function () { setActiveOldBox(entry); };
+      text.addEventListener("focus", arm);
+      swatch.addEventListener("focus", arm);
+      box.addEventListener("click", arm);
+    }
+
+    box.appendChild(swatch);
+    box.appendChild(text);
+    box._entry = entry;
+    return box;
+  }
+
+  function addRow(oldHex, newHex) {
+    var row = document.createElement("div");
+    row.className = "pairItem";
+
+    var oldBox = makeColorBox(oldHex || "#ff0000", "old");
+
+    var pickBtn = document.createElement("button");
+    pickBtn.type = "button";
+    pickBtn.className = "pickBtn";
+    pickBtn.textContent = "🎯";
+    pickBtn.title = "Grab color from the current selection";
+    pickBtn.addEventListener("click", function () {
+      setActiveOldBox(oldBox._entry);
+      parent.postMessage({ pluginMessage: { type: "grabColor" } }, "*");
+    });
+
+    var arrow = document.createElement("span");
+    arrow.className = "arrow";
+    arrow.textContent = "→";
+    var newBox = makeColorBox(newHex || "#00ff00", "new");
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "removeRow";
+    removeBtn.textContent = "×";
+    removeBtn.title = "Remove";
+    removeBtn.addEventListener("click", function () {
+      if (activeOldBox && activeOldBox.box === oldBox) activeOldBox = null;
+      row.remove();
+    });
+
+    row.appendChild(oldBox);
+    row.appendChild(pickBtn);
+    row.appendChild(arrow);
+    row.appendChild(newBox);
+    row.appendChild(removeBtn);
+    pairsList.appendChild(row);
+  }
+
+  document.getElementById("addRowBtn").addEventListener("click", function () {
+    addRow();
+  });
+
+  addRow("#ff0000", "#00ff00");
+
+  function collectPairs() {
+    var rows = pairsList.querySelectorAll(".pairItem");
+    var result = [];
+    var hasInvalid = false;
+    rows.forEach(function (row) {
+      var boxes = row.querySelectorAll(".color-box");
+      var oldText = boxes[0].querySelector("input[type=text]");
+      var newText = boxes[1].querySelector("input[type=text]");
+      var oldHex = normalizeHex(oldText.value);
+      var newHex = normalizeHex(newText.value);
+      boxes[0].classList.toggle("invalid", !oldHex);
+      boxes[1].classList.toggle("invalid", !newHex);
+      if (!oldHex || !newHex) {
+        hasInvalid = true;
+        return;
+      }
+      result.push({ old: oldHex, new: newHex });
+    });
+    return { pairs: result, hasInvalid: hasInvalid };
+  }
+
+  var statusEl = document.getElementById("status");
+  function showStatus(text, isError) {
+    statusEl.textContent = text;
+    statusEl.classList.add("show");
+    statusEl.classList.toggle("error", !!isError);
+  }
+
+  var runBtn = document.getElementById("runBtn");
+  runBtn.addEventListener("click", function () {
+    var fill = document.getElementById("fillCheck").checked;
+    var stroke = document.getElementById("strokeCheck").checked;
+
+    if (!fill && !stroke) {
+      showStatus("Select at least Fill or Stroke.", true);
+      return;
+    }
+
+    var collected = collectPairs();
+    if (collected.hasInvalid) {
+      showStatus("Some color codes are invalid — check the boxes outlined in red.", true);
+      return;
+    }
+    if (!collected.pairs.length) {
+      showStatus("Add at least one color pair.", true);
+      return;
+    }
+
+    runBtn.disabled = true;
+    showStatus("Working...");
+    parent.postMessage({
+      pluginMessage: {
+        type: "replace",
+        pairs: collected.pairs,
+        scope: scope,
+        fill: fill,
+        stroke: stroke
+      }
+    }, "*");
+  });
+
+  document.getElementById("closeBtn").addEventListener("click", function () {
+    parent.postMessage({ pluginMessage: { type: "close" } }, "*");
+  });
+
+  window.onmessage = function (event) {
+    var msg = event.data.pluginMessage;
+    if (!msg) return;
+
+    if (msg.type === "pickedColor") {
+      if (msg.hex && activeOldBox) {
+        activeOldBox.text.value = msg.hex;
+        activeOldBox.swatch.value = msg.hex;
+        activeOldBox.box.classList.remove("invalid");
+      }
+      return;
+    }
+
+    if (msg.type !== "result") return;
+    runBtn.disabled = false;
+
+    if (msg.error) {
+      showStatus(msg.error, true);
+      return;
+    }
+    showStatus(
+      "Scanned " + msg.nodesScanned + " nodes · Changed " + msg.nodesChanged + " nodes\n" +
+      "Fill: " + msg.fillHits + " · Stroke: " + msg.strokeHits + " · " + msg.ms + "ms"
+    );
+  };
+</script>

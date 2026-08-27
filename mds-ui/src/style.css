@@ -790,6 +790,49 @@ body {
 }
 .btn--ai-text:hover::before { background: rgba(20, 130, 255, 0.06); }
 
+/* ── Border Beam (dùng qua component BorderBeamButton.vue) ──
+   Điểm nhấn cho các nút/chức năng AI: viền thật (do class .btn/.btn-icon--outline quy định,
+   giữ nguyên xám mặc định) + 1 đốm gradient nhỏ chạy quanh viền theo offset-path.
+   Kỹ thuật gốc: magicui.design/docs/components/border-beam.
+   Icon bên trong (nếu có, dùng <TIcon>) được tô luôn gradient AI qua #ai-icon-gradient
+   (định nghĩa được BorderBeamButton.vue tự inject 1 lần vào document, không cần setup gì thêm). */
+.btn--border-beam {
+  position: relative;
+  isolation: isolate;
+}
+.btn--border-beam svg * { stroke: url(#ai-icon-gradient) !important; }
+.btn--border-beam svg { animation: border-beam-icon-pulse 1.1s ease-in-out infinite; transform-origin: center; }
+@keyframes border-beam-icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+.border-beam-mask {
+  position: absolute;
+  inset: -1px; /* bù đúng 1px viền của nút để ring khớp lên border-box thật, không lệch vào trong */
+  padding: 1px;
+  border-radius: inherit;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.border-beam {
+  position: absolute;
+  top: 0; left: 0;
+  width: 22px; height: 22px;
+  background: linear-gradient(to left, #1482ff 0%, #cf11ff 55%, transparent 100%);
+  offset-path: rect(0 auto auto 0 round var(--radius-default));
+  offset-rotate: auto;
+  offset-distance: 0%;
+  animation: border-beam-move 1.1s ease-in-out infinite;
+}
+@keyframes border-beam-move {
+  to { offset-distance: 100%; }
+}
+
 /* ── Pagination ── */
 .pagination-bar {
   display: flex; align-items: center;
@@ -807,15 +850,14 @@ body {
 .pagination-bar__controls { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
 .pagination-bar__label { font-size: 13px; color: var(--text-primary); white-space: nowrap; }
 .pagination-bar__range { font-size: 13px; font-weight: var(--fw-semibold); color: var(--text-primary); white-space: nowrap; min-width: 40px; text-align: right; }
-.pagination-bar__nav { display: flex; align-items: center; border: 1px solid var(--stroke-neutral); border-radius: var(--radius-default); overflow: hidden; }
+.pagination-bar__nav { display: flex; align-items: center; gap: 2px; }
 .pagination-bar__nav-btn {
   display: flex; align-items: center; justify-content: center;
-  width: var(--btn-height); height: var(--btn-height); border: none; background: transparent;
+  width: calc(var(--btn-height) - 4px); height: calc(var(--btn-height) - 4px); border: none; background: transparent;
+  border-radius: var(--radius-default);
   cursor: pointer; color: var(--icon-neutral); font-size: 16px;
   transition: background 0.1s, color 0.1s;
-  border-right: 1px solid var(--stroke-neutral-light);
 }
-.pagination-bar__nav-btn:last-child { border-right: none; }
 .pagination-bar__nav-btn:hover:not(:disabled) { background: var(--bg-neutral-hover); color: var(--text-primary); }
 .pagination-bar__nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
@@ -830,6 +872,7 @@ body {
 .btn-icon:hover        { background: var(--bg-neutral-hover); }
 .btn-icon--sm          { width: calc(var(--btn-height) - 4px); height: calc(var(--btn-height) - 4px); }
 .btn-icon--outline     { border-color: var(--stroke-neutral); background: var(--bg-white); }
+.btn-icon--outline .ti { font-size: 20px; }
 .btn-icon--danger      { color: var(--icon-danger); }
 .btn-icon--danger:hover{ background: var(--bg-danger-light); }
 
@@ -990,6 +1033,11 @@ body {
   height: var(--dt-row-height); flex-shrink: 0; overflow: hidden;
   padding: 0 4px; position: relative;
 }
+/* Bảng editable: dòng cao bằng chiều cao control chuẩn (--btn-height) + 2px trên + 2px dưới,
+   để input/select trong ô nhét vừa đúng control chuẩn thay vì bị nén thấp hơn. */
+.datatable--editable { --dt-row-height: calc(var(--btn-height) + 4px); }
+.datatable--editable .dt-input,
+.datatable--editable .dt-select { height: var(--btn-height); flex-shrink: 0; }
 .dt-cell-inner {
   display: flex; align-items: center;
   width: 100%; height: calc(var(--dt-row-height) - 4px); padding: 0 12px; overflow: hidden; gap: 8px;
@@ -1001,6 +1049,8 @@ body {
 .dt-cell--header { background: var(--dt-header-bg); }
 .dt-cell--footer { background: var(--dt-footer-bg); }
 .dt-cell--header .dt-cell-inner { font-size: 13px; font-weight: var(--fw-bold); color: var(--text-primary); white-space: nowrap; padding-right: 20px; }
+/* Cột số thứ tự (#) quá hẹp cho padding-right 20px của header chung — về lại 12px đều 2 bên */
+.dt-cell--header .dt-cell-inner--stt { justify-content: center; padding: 0 12px; }
 .dt-cell--footer .dt-cell-inner { font-size: 13px; color: var(--text-primary); font-weight: var(--fw-bold); font-feature-settings: 'lnum' 1, 'tnum' 1; }
 .dt-cell--header:not(:last-child) { border-right: 1px solid var(--stroke-neutral); }
 .dt-row--body .dt-cell:not(:last-child) { border-right: 1px dotted var(--stroke-neutral); }
@@ -1114,13 +1164,12 @@ body {
 /* Full-height column boundary indicator on divider hover */
 .datatable { position: relative; overflow-x: auto; }
 
-/* Scrollbars hidden by default, shown on hover */
-.datatable { scrollbar-width: thin; scrollbar-color: transparent transparent; }
-.datatable:hover { scrollbar-color: rgba(0,0,0,0.18) transparent; }
-.datatable::-webkit-scrollbar { width: 6px; height: 6px; }
-.datatable::-webkit-scrollbar-track { background: transparent; }
-.datatable::-webkit-scrollbar-thumb { background: transparent; border-radius: 3px; }
-.datatable:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); }
+/* Không tự định nghĩa ::-webkit-scrollbar / scrollbar-width ở đây nữa —
+   để trình duyệt dùng đúng scrollbar mặc định của hệ điều hành. Trên macOS với
+   "Show scroll bars: When scrolling" (mặc định), scrollbar sẽ tự là overlay:
+   đè lên nội dung, không chiếm chỗ, ẩn khi không cuộn — không cần CSS/JS gì thêm.
+   Nếu tự định nghĩa scrollbar tùy biến, Chrome sẽ chuyển sang scrollbar "classic"
+   (luôn chiếm chỗ cố định) và mất hẳn hành vi overlay này. */
 .col-hover-line {
   position: absolute; top: 0; bottom: 0; width: 1px;
   background: var(--stroke-neutral-light);
@@ -1133,7 +1182,7 @@ body {
 /* Sticky overlay action column — zero-width sticky anchor, row-actions floats absolutely */
 .dt-cell--actions {
   position: sticky; right: 0; z-index: 5;
-  width: 0; flex-shrink: 0;
+  width: 0; flex-shrink: 0; padding: 0;
   overflow: visible;
   pointer-events: none;
 }
@@ -1361,8 +1410,8 @@ body {
 .ibox--error:focus-within   { box-shadow: 0 0 0 3px rgba(240,68,56,0.12) !important; }
 .ibox--success { border-color: var(--stroke-success) !important; }
 .ibox--warning { border-color: var(--stroke-warning) !important; }
-.ibox--disabled { background: var(--bg-neutral-light); border-color: var(--stroke-neutral-light); cursor: not-allowed; pointer-events: none; opacity: 0.7; }
-.ibox--readonly { background: var(--bg-neutral-light); border-color: transparent; cursor: default; }
+.ibox--disabled { background: var(--bg-neutral-light); border-color: var(--stroke-neutral); cursor: not-allowed; pointer-events: none; opacity: 0.7; }
+.ibox--readonly { background: var(--bg-neutral-light); border-color: var(--stroke-neutral); cursor: default; }
 .ibox--sm { height: calc(var(--input-height) - 4px); padding: 0 6px 0 10px; gap: 6px; }
 .ibox--area { height: auto; align-items: flex-start; padding-top: 6px; padding-bottom: 6px; }
 
@@ -1390,6 +1439,8 @@ body {
 .ibox__icon--action:hover { background: var(--bg-neutral-hover); color: var(--text-primary); }
 .ibox__icon--clear { cursor: pointer; border-radius: 4px; padding: 1px; }
 .ibox__icon--clear:hover { background: var(--bg-neutral-hover); }
+.ibox__icon--brand { color: var(--icon-brand); cursor: pointer; }
+.ibox__icon--brand:hover { color: var(--bg-brand-pressed); }
 
 /* Numberbox stepper */
 .ibox__stepper { display: flex; flex-shrink: 0; border-left: 1px solid var(--stroke-neutral-light); margin-right: -8px; }

@@ -3,15 +3,15 @@
   <header class="global-header" :class="{ 'global-header--white': currentMode === 'light' }">
     <!-- Left -->
     <div class="header-left">
-      <button class="btn-icon-white"><i class="ti ti-grid-dots"></i></button>
+      <button class="btn-icon-white"><TIcon name="grid-dots" /></button>
       <div class="app-logo-box">
-        <i class="ti ti-calculator"></i>
+        <TIcon name="calculator" />
       </div>
       <span class="app-name-header">{{ appName }}</span>
       <div class="divider-v-header"></div>
       <slot name="header-meta">
         <button class="header-company">
-          Công ty mẫu <i class="ti ti-chevron-down"></i>
+          Công ty mẫu <TIcon name="chevron-down" />
         </button>
         <span class="header-year-badge">
           <span class="year-dot"></span>
@@ -25,7 +25,7 @@
       <slot name="header-search">
         <div class="search-popover-wrap" ref="searchWrapRef">
           <div class="search-box-header" @click="openSearch">
-            <i class="ti ti-search"></i>
+            <TIcon name="search" />
             <input
               ref="searchInputRef"
               v-model="searchQuery"
@@ -43,7 +43,7 @@
     <div class="header-right">
       <slot name="header-actions" />
       <button class="btn-icon-white" title="Thiết lập màu sắc và hiển thị" @click="openSettings">
-        <i class="ti ti-settings"></i>
+        <TIcon name="settings" :stroke-width="2" />
       </button>
       <button class="btn-icon-white" title="MISA AI">
         <IconMisaAI />
@@ -53,14 +53,14 @@
         <span class="header-badge">20</span>
       </button>
       <button class="btn-icon-white" title="Thông báo" style="position:relative">
-        <i class="ti ti-bell"></i>
+        <TIcon name="bell" />
         <span class="header-badge">9</span>
       </button>
       <button class="btn-icon-white" title="Trợ giúp">
-        <i class="ti ti-help-circle"></i>
+        <TIcon name="help-circle" />
       </button>
       <button class="btn-icon-white" title="Thêm tùy chọn">
-        <i class="ti ti-dots-circle-horizontal"></i>
+        <TIcon name="dots-circle-horizontal" />
       </button>
       <div class="header-avatar">VT</div>
     </div>
@@ -81,7 +81,7 @@
           <p class="search-pop-label">Gần đây</p>
           <div class="search-pop-recents">
             <button v-for="r in recentKeywords" :key="r" class="search-recent-item" @mousedown.prevent="selectKeyword(r)">
-              <i class="ti ti-history"></i>
+              <TIcon name="history" />
               <span>{{ r }}</span>
             </button>
           </div>
@@ -113,7 +113,7 @@
             <!-- Header -->
             <div class="settings-dialog__header">
               <span class="h2">Thiết lập màu sắc và hiển thị</span>
-              <button class="btn-icon" @click="cancelSettings"><i class="ti ti-x"></i></button>
+              <button class="btn-icon" @click="cancelSettings"><TIcon name="x" /></button>
             </div>
 
             <!-- Tabs -->
@@ -197,7 +197,7 @@
                         class="color-swatch__check"
                         :style="{ background: c.main }"
                       >
-                        <i class="ti ti-check"></i>
+                        <TIcon name="check" />
                       </div>
                       <div class="color-swatch__block-left"  :style="{ background: c.light }"></div>
                       <div class="color-swatch__block-right" :style="{ background: c.gradient || c.main }"></div>
@@ -236,7 +236,7 @@
                         >{{ t }}</div>
                         <div style="flex:1"></div>
                         <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--text-brand);padding-bottom:6px" :style="{color: previewColor.main}">
-                          <i class="ti ti-player-play" style="font-size:9px"></i> Bắt đầu sử dụng
+                          <TIcon name="player-play" style="font-size:9px" /> Bắt đầu sử dụng
                         </div>
                       </div>
                       <!-- Mini Body -->
@@ -334,7 +334,7 @@
               <!-- ── Tab: Thiết lập hiển thị ── -->
               <template v-else-if="activeTab === 'display'">
                 <div class="settings-placeholder">
-                  <i class="ti ti-layout-dashboard" style="font-size:48px;color:var(--text-hint)"></i>
+                  <TIcon name="layout-dashboard" style="font-size:48px;color:var(--text-hint)" />
                   <p class="text-secondary" style="margin-top:12px">Đang phát triển...</p>
                 </div>
               </template>
@@ -342,7 +342,7 @@
               <!-- ── Tab placeholders ── -->
               <template v-else>
                 <div class="settings-placeholder">
-                  <i class="ti ti-tool" style="font-size:48px;color:var(--text-hint)"></i>
+                  <TIcon name="tool" style="font-size:48px;color:var(--text-hint)" />
                   <p class="text-secondary" style="margin-top:12px">Đang phát triển...</p>
                 </div>
               </template>
@@ -364,6 +364,7 @@
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { COLORS, currentTheme, applyTheme, currentMode, applyMode, currentBgTint, applyBgTint, currentSidebarMode, applySidebarMode } from '@mds/theme.js'
 import IconMisaAI from '@mds/components/IconMisaAI.vue'
+import TIcon      from '@mds/components/TIcon.vue'
 import amisChatSrc from '@mds/assets/icon-amis-chat.png'
 
 const props = defineProps({

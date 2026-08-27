@@ -1,6 +1,5 @@
 <template>
   <div class="ibox" :class="boxClass">
-    <TIcon :name="iconName" class="ibox__icon" />
     <input
       class="ibox__native ibox__native--date"
       :type="inputType"
@@ -10,6 +9,7 @@
       :readonly="readonly || state === 'readonly'"
       @change="$emit('update:modelValue', $event.target.value)"
     />
+    <TIcon :name="iconName" class="ibox__icon" />
   </div>
 </template>
 

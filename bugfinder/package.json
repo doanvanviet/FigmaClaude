@@ -1,0 +1,16 @@
+{
+  "name": "bugfinder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BugFinder - Figma plugin kiem tra chinh ta va Design System (font, mau, kich thuoc, gap, shadow) cho ban thiet ke, goi y sua loi bang Gemini API.",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.99.0",
+    "esbuild": "^0.23.1",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,6 +1,7 @@
 <template>
   <div class="app-shell">
     <ControlHeader app-name="Kế toán" app-tag="HKĐ">
+      <template #ai-icon><IconAvaKeToan /></template>
       <template #header-meta>
         <button class="header-company">
           Công ty cổ phần Đại Việt <TIcon name="chevron-down" />
@@ -31,49 +32,43 @@
 
         <div class="content-wrapper">
           <div class="table-panel">
-            <AvaInsightBanner module-id="tien-gui" :sections="[{ title: 'Dòng tiền thuần' }, { title: 'Rủi ro & Khuyến nghị' }]" />
+            <AvaInsightBanner ref="avaBannerRef" module-id="tien-gui" />
 
             <!-- KPI Row + toggle gắn liền nhau -->
             <div class="kpi-wrapper">
               <div v-if="kpiOpen" class="kpi-row">
-                <div class="kpi-card">
-                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                  <div class="kpi-card__icon kpi-card__icon--success"><TIcon name="trending-up" /></div>
-                  <div class="kpi-card__content">
-                    <span class="kpi-card__label">Tổng thu đầu năm đến hiện tại</span>
-                    <div class="kpi-card__bottom">
-                      <span class="kpi-card__value kpi-card__value--success">122.411.049.228</span>
-                      <span class="kpi-card__time" title="Số liệu tính đến: 13h51">
-                        <TIcon name="clock" /><span>13:51</span>
-                      </span>
+                <div class="kpi-stat kpi-stat--success">
+                  <span class="kpi-stat__icon kpi-stat__icon--success"><TIcon name="trending-up" /></span>
+                  <div class="kpi-stat__info">
+                    <span class="kpi-stat__label">Tổng thu đầu năm đến hiện tại</span>
+                    <div class="kpi-stat__value-row">
+                      <span class="kpi-stat__value kpi-stat__value--success">122.411.049.228</span>
+                      <span class="kpi-stat__time" title="Dữ liệu tính đến 13:51"><TIcon name="clock" /><span>13:51</span></span>
                     </div>
                   </div>
+                  <button class="kpi-stat__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
                 </div>
-                <div class="kpi-card">
-                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                  <div class="kpi-card__icon kpi-card__icon--warning"><TIcon name="trending-down" /></div>
-                  <div class="kpi-card__content">
-                    <span class="kpi-card__label">Tổng chi đầu năm đến hiện tại</span>
-                    <div class="kpi-card__bottom">
-                      <span class="kpi-card__value kpi-card__value--warning">11.120.566.816</span>
-                      <span class="kpi-card__time" title="Số liệu tính đến: 13h51">
-                        <TIcon name="clock" /><span>13:51</span>
-                      </span>
+                <div class="kpi-stat kpi-stat--warning">
+                  <span class="kpi-stat__icon kpi-stat__icon--warning"><TIcon name="trending-down" /></span>
+                  <div class="kpi-stat__info">
+                    <span class="kpi-stat__label">Tổng chi đầu năm đến hiện tại</span>
+                    <div class="kpi-stat__value-row">
+                      <span class="kpi-stat__value kpi-stat__value--warning">11.120.566.816</span>
+                      <span class="kpi-stat__time" title="Dữ liệu tính đến 13:51"><TIcon name="clock" /><span>13:51</span></span>
                     </div>
                   </div>
+                  <button class="kpi-stat__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
                 </div>
-                <div class="kpi-card">
-                  <button class="kpi-card__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
-                  <div class="kpi-card__icon kpi-card__icon--brand"><TIcon name="building-bank" /></div>
-                  <div class="kpi-card__content">
-                    <span class="kpi-card__label">Số dư tiền gửi đến ngày &lt;25/05/2026&gt;</span>
-                    <div class="kpi-card__bottom">
-                      <span class="kpi-card__value kpi-card__value--brand">165.518.221.676</span>
-                      <span class="kpi-card__time" title="Số liệu tính đến: 13h51">
-                        <TIcon name="clock" /><span>13:51</span>
-                      </span>
+                <div class="kpi-stat kpi-stat--brand">
+                  <span class="kpi-stat__icon kpi-stat__icon--brand"><TIcon name="building-bank" /></span>
+                  <div class="kpi-stat__info">
+                    <span class="kpi-stat__label">Số dư tiền gửi đến ngày &lt;25/05/2026&gt;</span>
+                    <div class="kpi-stat__value-row">
+                      <span class="kpi-stat__value kpi-stat__value--brand">165.518.221.676</span>
+                      <span class="kpi-stat__time" title="Dữ liệu tính đến 13:51"><TIcon name="clock" /><span>13:51</span></span>
                     </div>
                   </div>
+                  <button class="kpi-stat__reload btn-icon btn-icon--sm"><TIcon name="refresh" /></button>
                 </div>
               </div>
               <div :class="['kpi-cep', !kpiOpen && 'kpi-cep--pinned']">
@@ -92,12 +87,35 @@
             <TableHeader
               v-model="searchQuery"
               search-placeholder="Tìm kiếm"
-              :search-width="200"
+              :search-width="260"
               :main-function-button="true"
               :bulk-action="selected.length > 0"
               :selected-count="selected.length"
               @deselect-all="selected = []"
+              @show-ai="avaBannerRef?.toggle()"
             >
+              <template #export-icon><IconExportSwap /></template>
+              <template #filters>
+                <span class="filter-hint-label">Đầu năm tới hiện tại</span>
+                <div class="ibox quick-filter" style="width:200px;cursor:pointer;gap:4px">
+                  <span style="font-size: 13px;color:var(--text-primary);white-space:nowrap;flex-shrink:0">Lý do thu/chi:</span>
+                  <select class="ibox__native ibox__native--select" v-model="lyDo">
+                    <option value="all">Tất cả</option>
+                    <option value="thu">Thu</option>
+                    <option value="chi">Chi</option>
+                  </select>
+                  <TIcon name="chevron-down" class="ibox__icon" style="font-size:14px;pointer-events:none" />
+                </div>
+                <div class="ibox quick-filter" style="width:200px;cursor:pointer;gap:4px">
+                  <span style="font-size: 13px;color:var(--text-primary);white-space:nowrap;flex-shrink:0">Loại chứng từ:</span>
+                  <select class="ibox__native ibox__native--select" v-model="loaiChungTu">
+                    <option value="all">Tất cả</option>
+                    <option value="thu">Phiếu thu</option>
+                    <option value="chi">Phiếu chi</option>
+                  </select>
+                  <TIcon name="chevron-down" class="ibox__icon" style="font-size:14px;pointer-events:none" />
+                </div>
+              </template>
               <template #bulk-buttons>
                 <button class="btn btn--outline btn--neutral">In chứng từ</button>
                 <button class="btn btn--outline btn--neutral">Sao chép</button>
@@ -118,12 +136,12 @@
                   <button class="btn btn--primary btn-split__arrow"><TIcon name="chevron-down" /></button>
                 </div>
                 <button class="btn btn--ai">
-                  <IconMisaAI />Thêm bằng AI
+                  <IconAvaKeToan style="width:16px;height:16px" />Thêm bằng AI
                 </button>
                 <DropdownMenu :items="utilityItems" placement="bottom-end" :min-width="180">
                   <template #trigger="{ toggle }">
-                    <button class="btn-icon btn-icon--outline" title="Tiện ích" @click.stop="toggle">
-                      <TIcon name="dots" />
+                    <button class="btn btn--outline btn--neutral" @click.stop="toggle">
+                      Tiện ích
                     </button>
                   </template>
                 </DropdownMenu>
@@ -265,7 +283,7 @@
                   <!-- Detail header -->
                   <div class="dt-row dt-row--header" :style="{ minWidth: totalDetailMinWidth + 'px' }">
                     <div v-for="col in detailCols" :key="col.key" class="dt-cell dt-cell--header" :style="detailCellStyle(col)">
-                      <div class="dt-cell-inner">
+                      <div class="dt-cell-inner" :class="col.key === 'stt' ? 'dt-cell-inner--stt' : ''">
                         <span class="dt-header-text">{{ col.label }}</span>
                       </div>
                       <div class="dt-col-divider"
@@ -342,14 +360,15 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import ControlHeader from '@mds/components/ControlHeader.vue'
 import AppSidebar    from '@mds/components/AppSidebar.vue'
 import TIcon         from '@mds/components/TIcon.vue'
 import TableHeader   from '@mds/components/TableHeader.vue'
 import DropdownMenu  from '@mds/components/DropdownMenu.vue'
-import IconMisaAI    from '@mds/components/IconMisaAI.vue'
+import IconAvaKeToan from '../components/IconAvaKeToan.vue'
+import IconExportSwap from '../components/IconExportSwap.vue'
 import AppCheckbox          from '@mds/components/AppCheckbox.vue'
 import CollapseExpandPanel  from '@mds/components/CollapseExpandPanel.vue'
 import TablePaging          from '@mds/components/TablePaging.vue'
@@ -397,9 +416,12 @@ const tabs = [
 const activeTab  = ref('thu-chi-tien')
 const kpiOpen    = ref(true)
 const detailOpen = ref(false)
+watch(detailOpen, v => { v ? avaBannerRef.value?.hide() : avaBannerRef.value?.unhide() })
 
 /* ── Table state ── */
-const searchQuery = ref('')
+const searchQuery  = ref('')
+const lyDo         = ref('all')
+const loaiChungTu  = ref('all')
 const pageSize    = ref(20)
 const currentPage = ref(1)
 const detailPage  = ref(1)
@@ -512,6 +534,8 @@ function detailCellStyle(col) {
 }
 
 /* ── Column resize (main) ── */
+const avaBannerRef = ref(null)
+
 const datatableRef     = ref(null)
 const hoveredColKey    = ref(null)
 const colHoverLineLeft = ref(0)
@@ -630,7 +654,7 @@ const detailRows = [
 .sub-nav__scroll::-webkit-scrollbar { display: none; }
 
 .content-wrapper {
-  flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 16px; position: relative;
+  flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 12px 16px; position: relative;
 }
 .table-panel {
   flex: 1; min-height: 0; display: flex; flex-direction: column;
@@ -646,26 +670,31 @@ const detailRows = [
 }
 
 /* KPI */
-.kpi-wrapper { display: flex; flex-direction: column; flex-shrink: 0; }
-.kpi-row { display: flex; gap: 12px; flex-shrink: 0; }
+.kpi-wrapper { position: relative; display: flex; flex-direction: column; flex-shrink: 0; }
+.kpi-row { display: flex; gap: 8px; flex-shrink: 0; }
 .kpi-cep { display: flex; justify-content: center; flex-shrink: 0; margin-top: -1px; margin-bottom: 0; }
+.kpi-cep :deep(.cep) { height: 12px; }
+.kpi-cep :deep(.cep__icon) { font-size: 12px; }
 .kpi-cep--pinned { position: absolute; top: 0; left: 0; right: 0; margin-top: 0; margin-bottom: 0; z-index: 10; }
-.kpi-card { position: relative; flex: 1; display: flex; flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; background: var(--neutral-50); border-radius: 8px; box-shadow: var(--shadow-card); }
-.kpi-card__reload { position: absolute; top: 6px; right: 8px; opacity: 0; transition: opacity 0.15s; }
-.kpi-card:hover .kpi-card__reload { opacity: 1; }
-.kpi-card__content { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.kpi-card__label { font-size: 12px; font-weight: var(--fw-medium); color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.kpi-card__bottom { display: flex; align-items: center; gap: 8px; }
-.kpi-card__value { font-size: 18px; font-weight: var(--fw-semibold); line-height: 26px; }
-.kpi-card__value--success { color: var(--text-success); }
-.kpi-card__value--warning  { color: var(--text-warning); }
-.kpi-card__value--brand    { color: var(--text-brand); }
-.kpi-card__time { display: flex; align-items: center; gap: 3px; font-size: 11px; color: var(--text-secondary); white-space: nowrap; cursor: default; }
-.kpi-card__time .t-icon { color: var(--icon-neutral); }
-.kpi-card__icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.kpi-card__icon--success { background: var(--bg-success-light); color: var(--text-success); }
-.kpi-card__icon--warning  { background: var(--bg-warning-light); color: var(--text-warning); }
-.kpi-card__icon--brand    { background: var(--bg-brand-light);   color: var(--text-brand); }
+/* Gộp 3 card riêng thành 1 thanh — gọn hơn, bớt diện tích trắng so với 3 card box-shadow riêng */
+.kpi-stat  { position: relative; flex: 1; display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; min-width: 0; background: var(--neutral-50); border: 1px solid var(--stroke-neutral-light); border-left: 3px solid transparent; border-radius: 8px; }
+.kpi-stat--success { border-left-color: var(--stroke-success); }
+.kpi-stat--warning  { border-left-color: var(--stroke-warning); }
+.kpi-stat--brand    { border-left-color: var(--stroke-brand); background: var(--bg-white); }
+.kpi-stat__reload { position: absolute; top: 4px; right: 4px; opacity: 0; transition: opacity 0.15s; }
+.kpi-stat:hover .kpi-stat__reload { opacity: 1; }
+.kpi-stat__icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.kpi-stat__icon--success { background: var(--bg-success-light); color: var(--text-success); }
+.kpi-stat__icon--warning  { background: var(--bg-warning-light); color: var(--text-warning); }
+.kpi-stat__icon--brand    { background: var(--bg-brand-light);   color: var(--text-brand); }
+.kpi-stat__info  { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
+.kpi-stat__label { font-size: 12px; line-height: 14px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kpi-stat__value-row { display: flex; align-items: baseline; gap: 8px; }
+.kpi-stat__time  { display: flex; align-items: center; gap: 3px; font-size: 10px; line-height: 12px; color: var(--text-hint); white-space: nowrap; cursor: default; }
+.kpi-stat__value { font-size: 15px; font-weight: var(--fw-semibold); white-space: nowrap; }
+.kpi-stat__value--success { color: var(--text-success); }
+.kpi-stat__value--warning  { color: var(--text-warning); }
+.kpi-stat__value--brand    { color: var(--text-brand); }
 
 /* Datatable */
 .datatable { flex: 1; min-height: 0; overflow-y: auto; }
@@ -697,5 +726,7 @@ const detailRows = [
 }
 .detail-panel__tabs .sub-nav-tab { height: 36px; }
 .datatable--detail { flex: 1; min-height: 0; overflow-y: auto; height: 230px; }
+/* Thanh phân trang là phần tử cuối cùng trong panel chi tiết — bo góc dưới để khớp với data-panel--detail */
+.data-panel--detail :deep(.paging) { border-radius: 0 0 8px 8px; overflow: hidden; }
 
 </style>

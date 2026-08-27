@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 12px;
+        color: var(--figma-color-text, #1e1e1e);
+        background: var(--figma-color-bg, #fff);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+      .hidden {
+        display: none !important;
+      }
+      #configView,
+      #resultsView {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+      }
+      .results-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+        flex-shrink: 0;
+      }
+      .section {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+        flex-shrink: 0;
+      }
+      .section.api-key-section {
+        padding: 6px 12px;
+      }
+      .api-key-section .label-row {
+        margin-bottom: 2px;
+      }
+      .api-row {
+        display: flex;
+        gap: 6px;
+      }
+      .api-compact {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+      }
+      .api-compact-text {
+        font-size: 12px;
+        color: #1a9c4c;
+      }
+      input[type="password"],
+      input[type="text"] {
+        flex: 1;
+        padding: 6px 8px;
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 6px;
+        font-size: 12px;
+        background: var(--figma-color-bg, #fff);
+        color: inherit;
+      }
+      .api-key-section input[type="password"] {
+        padding: 4px 8px;
+      }
+      .api-key-section .api-row button {
+        padding: 4px 10px;
+      }
+      label.small,
+      p.small {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 11px;
+        opacity: 0.75;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      button.primary {
+        background: #18a0fb;
+        color: #fff;
+      }
+      button.primary.webapp-mode {
+        background: #7c3aed;
+        color: #fff;
+      }
+      button.secondary {
+        background: var(--figma-color-bg-secondary, #f0f0f0);
+        color: inherit;
+      }
+      button.ghost {
+        background: transparent;
+        color: #18a0fb;
+        padding: 4px 6px;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .label-row {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+      .label-row label.small {
+        margin-bottom: 0;
+      }
+      .help-icon {
+        width: 14px;
+        height: 14px;
+        padding: 0;
+        border-radius: 50%;
+        background: var(--figma-color-bg-secondary, #e6e6e6);
+        color: inherit;
+        font-size: 10px;
+        line-height: 14px;
+        text-align: center;
+        font-weight: 700;
+      }
+      .tooltip-box {
+        display: none;
+        position: absolute;
+        top: 18px;
+        left: 0;
+        z-index: 10;
+        width: 260px;
+        background: var(--figma-color-bg, #fff);
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        padding: 8px 10px;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .tooltip-box.show {
+        display: block;
+      }
+      .tooltip-box ol {
+        margin: 4px 0 0;
+        padding-left: 16px;
+      }
+      .tooltip-box a {
+        color: #18a0fb;
+      }
+      .actions-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .actions-col {
+        display: flex;
+        gap: 8px;
+      }
+      .config-tabs {
+        display: flex;
+        gap: 6px;
+        padding: 10px 12px 0;
+        flex-shrink: 0;
+      }
+      .config-tab {
+        flex: 1;
+        padding: 8px;
+        border-radius: 6px;
+        background: var(--figma-color-bg-secondary, #f0f0f0);
+        color: inherit;
+        border: 2px solid transparent;
+        font-weight: 500;
+        font-size: 12px;
+      }
+      .config-tab.active[data-tab="website"] {
+        border-color: #18a0fb;
+        background: rgba(24, 160, 251, 0.12);
+        color: #0d8ce0;
+        font-weight: 600;
+      }
+      .config-tab.active[data-tab="webapp"] {
+        border-color: #7c3aed;
+        background: rgba(124, 58, 237, 0.12);
+        color: #7c3aed;
+        font-weight: 600;
+      }
+      .results-mode-bar {
+        font-size: 11px;
+        font-weight: 600;
+        text-align: center;
+        padding: 6px 12px;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+        flex-shrink: 0;
+      }
+      .results-mode-bar.website {
+        color: #0d8ce0;
+        background: rgba(24, 160, 251, 0.08);
+      }
+      .results-mode-bar.webapp {
+        color: #7c3aed;
+        background: rgba(124, 58, 237, 0.08);
+      }
+      button.big {
+        flex: 1;
+        height: 40px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .selection-empty {
+        border: 1px dashed var(--figma-color-border, #d0d0d0);
+        border-radius: 8px;
+        padding: 16px 8px;
+        text-align: center;
+        font-size: 11px;
+        opacity: 0.6;
+        margin-bottom: 10px;
+      }
+      .selection-info {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        word-break: break-word;
+      }
+      .selection-info #selectionName {
+        color: #0d8ce0;
+      }
+      .status {
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .list {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 8px 12px 16px;
+      }
+      .empty {
+        text-align: center;
+        opacity: 0.6;
+        margin-top: 40px;
+        line-height: 1.5;
+      }
+      .node-card {
+        border: 1px solid var(--figma-color-border, #e6e6e6);
+        border-radius: 8px;
+        margin-bottom: 10px;
+        overflow: visible;
+      }
+      .node-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 10px;
+        background: var(--figma-color-bg-secondary, #f7f7f7);
+        cursor: pointer;
+      }
+      .node-name {
+        font-weight: 600;
+        cursor: pointer;
+        color: #0d8ce0;
+      }
+      .node-header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .collapse-icon {
+        display: inline-block;
+        width: 14px;
+        text-align: center;
+        opacity: 0.6;
+        transition: transform 0.15s ease;
+      }
+      .collapse-icon.collapsed {
+        transform: rotate(-90deg);
+      }
+      .issue-list.hidden {
+        display: none;
+      }
+      .filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+        flex-shrink: 0;
+      }
+      .filter-tab {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--figma-color-bg-secondary, #f0f0f0);
+        color: inherit;
+        font-size: 11px;
+        font-weight: 500;
+        border: 1px solid transparent;
+      }
+      .filter-tab.active {
+        background: rgba(24, 160, 251, 0.12);
+        border-color: #18a0fb;
+        color: #0d8ce0;
+      }
+      .issue {
+        position: relative;
+        padding: 8px 40px 8px 10px;
+        border-top: 1px solid var(--figma-color-border, #eee);
+        cursor: pointer;
+      }
+      .issue:hover {
+        background: var(--figma-color-bg-secondary, #f7f7f7);
+      }
+      .issue.active-issue {
+        background: rgba(24, 160, 251, 0.08);
+        box-shadow: inset 0 0 0 1.5px #18a0fb;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-right: 6px;
+        background: #eee;
+        color: #555;
+      }
+      .badge.ai {
+        background: #eaf6ff;
+        color: #0d8ce0;
+      }
+      .diff {
+        margin-top: 4px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+      }
+      .diff .old {
+        color: #d1453b;
+        text-decoration: line-through;
+      }
+      .diff .new {
+        color: #1a9c4c;
+      }
+      .whitespace-diff .context-char {
+        color: var(--figma-color-text, #1e1e1e);
+        font-weight: 600;
+      }
+      .message {
+        margin-top: 3px;
+        opacity: 0.85;
+      }
+      .issue-actions {
+        margin-top: 6px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .issue-menu-wrap {
+        position: absolute;
+        top: 5px;
+        right: 6px;
+        z-index: 3;
+      }
+      .issue-menu-trigger {
+        width: 26px;
+        height: 24px;
+        padding: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: inherit;
+        font-size: 12px;
+        line-height: 24px;
+        letter-spacing: 1px;
+        opacity: 0.65;
+      }
+      .issue-menu-trigger:hover {
+        background: var(--figma-color-bg-tertiary, #e8e8e8);
+        opacity: 1;
+      }
+      .issue-menu {
+        display: none;
+        position: absolute;
+        top: 26px;
+        right: 0;
+        min-width: 116px;
+        padding: 4px;
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 6px;
+        background: var(--figma-color-bg, #fff);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+      }
+      .issue-menu.open {
+        display: block;
+      }
+      .issue-menu-delete {
+        width: 100%;
+        padding: 6px 8px;
+        border-radius: 4px;
+        background: transparent;
+        color: #d1453b;
+        text-align: left;
+        white-space: nowrap;
+      }
+      .issue-menu-delete:hover {
+        background: rgba(209, 69, 59, 0.1);
+      }
+      .rules-panel {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      .rules-group-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        opacity: 0.6;
+        margin: 10px 0 4px;
+      }
+      .rules-group-title:first-child {
+        margin-top: 0;
+      }
+      .rules-group-title input[type="checkbox"] {
+        margin: 0;
+      }
+      .rules-group-arrow {
+        display: inline-block;
+        width: 12px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .rules-group-label-text {
+        cursor: pointer;
+        user-select: none;
+      }
+      .rule-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 4px 0;
+      }
+      .rule-row input[type="checkbox"] {
+        margin-top: 2px;
+      }
+      .rule-row:has(input[type="checkbox"]:disabled) {
+        opacity: 0.45;
+      }
+      .rule-row:has(input[type="checkbox"]:disabled) .rule-row-text {
+        cursor: default;
+      }
+      .rule-row-text {
+        display: flex;
+        flex: 1 1 0;
+        min-width: 0;
+        flex-direction: column;
+        cursor: pointer;
+      }
+      .rule-row-label {
+        font-weight: 500;
+      }
+      .rule-row-desc {
+        font-size: 10.5px;
+        opacity: 0.65;
+        margin-top: 1px;
+      }
+      .rule-row-value {
+        flex-basis: 100%;
+        margin-left: 20px;
+        margin-top: 4px;
+      }
+      .rule-row-value input {
+        width: 100%;
+        padding: 4px 6px;
+        font-size: 11px;
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 4px;
+        background: var(--figma-color-bg, #fff);
+        color: inherit;
+      }
+      .rule-row-value label {
+        display: block;
+        font-size: 10px;
+        opacity: 0.6;
+        margin-bottom: 2px;
+      }
+      .color-library-picker {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 0 12px;
+        margin-bottom: 4px;
+        border-bottom: 1px solid var(--figma-color-border, #e5e5e5);
+      }
+      .color-library-picker label {
+        font-size: 11px;
+        font-weight: 500;
+        opacity: 0.8;
+      }
+      .color-library-picker select {
+        padding: 4px 8px;
+        font-size: 11px;
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 4px;
+        background: var(--figma-color-bg, #fff);
+        color: inherit;
+      }
+      .color-library-status {
+        font-size: 10.5px;
+        opacity: 0.65;
+      }
+      .custom-rules-block {
+        margin-top: 4px;
+        padding-top: 8px;
+        border-top: 1px solid var(--figma-color-border, #eee);
+      }
+      textarea#customRules,
+      textarea#ignorePatterns {
+        width: 100%;
+        min-height: 64px;
+        resize: vertical;
+        padding: 6px 8px;
+        border: 1px solid var(--figma-color-border, #d0d0d0);
+        border-radius: 6px;
+        font-size: 11px;
+        font-family: inherit;
+        background: var(--figma-color-bg, #fff);
+        color: inherit;
+        margin-top: 4px;
+      }
+      .custom-rules-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 6px;
+      }
+      .top-tabs {
+        display: flex;
+        gap: 6px;
+        padding: 10px 12px 0;
+        flex-shrink: 0;
+        border-bottom: 1px solid var(--figma-color-border, #e6e6e6);
+      }
+      .top-tab {
+        flex: 1;
+        padding: 8px;
+        border-radius: 6px 6px 0 0;
+        background: transparent;
+        color: inherit;
+        opacity: 0.6;
+        border: none;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        font-size: 12px;
+      }
+      .top-tab.active {
+        opacity: 1;
+        border-bottom-color: #18a0fb;
+        color: #0d8ce0;
+        font-weight: 600;
+      }
+      .lang-switcher {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex: 0 0 auto;
+        align-self: center;
+      }
+      .lang-btn {
+        flex: 0 0 auto;
+        padding: 3px 5px;
+        border-radius: 5px;
+        background: transparent;
+        border: 1px solid transparent;
+        font-size: 14px;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .lang-btn.active {
+        opacity: 1;
+        border-color: var(--figma-color-border, #d0d0d0);
+        background: var(--figma-color-bg-secondary, #f0f0f0);
+      }
+      #compareView {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+      }
+      .compare-results-section {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+      }
+      .compare-results {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 12px 12px;
+      }
+      .compare-row {
+        border: 1px solid var(--figma-color-border, #e6e6e6);
+        border-radius: 8px;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+      }
+      .compare-pair {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .compare-side {
+        display: flex;
+        flex-direction: column;
+      }
+      .compare-use-btn {
+        align-self: flex-end;
+        font-size: 11px;
+        padding: 2px 6px;
+        margin-top: 2px;
+      }
+      .compare-side-label {
+        display: block;
+        font-size: 10px;
+        opacity: 0.6;
+        margin-bottom: 2px;
+      }
+      .compare-side-text {
+        font-size: 12px;
+        padding: 6px 8px;
+        border-radius: 6px;
+        background: var(--figma-color-bg-secondary, #f7f7f7);
+        cursor: pointer;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .compare-side-text:hover {
+        background: rgba(24, 160, 251, 0.12);
+      }
+      .compare-side-missing .compare-side-text {
+        cursor: default;
+        font-style: italic;
+        opacity: 0.6;
+      }
+      .diff-highlight {
+        background: rgba(255, 176, 0, 0.4);
+        border-radius: 2px;
+        padding: 0 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-tabs">
+      <button class="top-tab active" type="button" data-top-tab="review">Review</button>
+      <button class="top-tab" type="button" data-top-tab="compare">So sánh Text</button>
+      <div id="langSwitcher" class="lang-switcher">
+        <button class="lang-btn active" type="button" data-locale="vi">🇻🇳</button>
+        <button class="lang-btn" type="button" data-locale="en">🇬🇧</button>
+      </div>
+    </div>
+
+    <div id="configView">
+      <div class="section api-key-section">
+        <div class="label-row">
+          <label class="small" for="apiKey">Gemini API key</label>
+          <button id="apiKeyHelpBtn" class="help-icon" type="button" aria-label="Hướng dẫn lấy API key">?</button>
+          <div id="apiKeyTooltip" class="tooltip-box">
+            Lấy API key miễn phí tại
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a>:
+            <ol>
+              <li>Đăng nhập bằng tài khoản Google.</li>
+              <li>Bấm <b>Create API key</b>.</li>
+              <li>Chọn "Create API key in new project" (hoặc project có sẵn).</li>
+              <li>Copy key và dán vào ô bên cạnh.</li>
+            </ol>
+          </div>
+          <span id="apiKeyCompact" class="api-compact hidden">
+            <span class="api-compact-text">✓ Đã lưu</span>
+            <button id="editApiKeyBtn" class="ghost" type="button">Sửa</button>
+          </span>
+        </div>
+        <div id="apiKeyEditRow" class="api-row">
+          <input id="apiKey" type="password" placeholder="Dán API key vào đây..." />
+          <button id="saveKeyBtn" class="secondary">Lưu</button>
+        </div>
+      </div>
+
+      <div class="config-tabs">
+        <button class="config-tab active" type="button" data-tab="website">Review Website</button>
+        <button class="config-tab" type="button" data-tab="webapp">Review Web App</button>
+      </div>
+
+      <div id="rulesPanel" class="rules-panel">
+        <div id="rulesGroups"></div>
+        <div class="custom-rules-block">
+          <label class="small" id="customRulesLabel" for="customRules"
+            >Rule tùy chỉnh (mỗi dòng 1 rule, áp dụng cho cả 2 ngôn ngữ, cần API key)</label
+          >
+          <textarea
+            id="customRules"
+            placeholder="Ví dụ: Không dùng từ &quot;oke&quot;, phải viết &quot;OK&quot;&#10;Tên sản phẩm &quot;Acme Cloud&quot; phải viết đúng hoa thường"
+          ></textarea>
+          <div class="custom-rules-actions">
+            <button id="saveCustomRulesBtn" class="secondary" type="button">Lưu rule tùy chỉnh</button>
+          </div>
+        </div>
+
+        <div class="custom-rules-block">
+          <label class="small" id="ignorePatternsLabel" for="ignorePatterns"
+            >Rule bỏ qua (mỗi dòng 1 từ khóa — khớp trực tiếp theo tên layer có chứa từ khóa đó, không phân biệt hoa/thường)</label
+          >
+          <textarea
+            id="ignorePatterns"
+            placeholder="Ví dụ: Icon Swap&#10;Các icon trang trí không cần theo chuẩn&#10;Layer minh họa, ảnh nền"
+          ></textarea>
+          <div class="custom-rules-actions">
+            <button id="saveIgnorePatternsBtn" class="secondary" type="button">Lưu rule bỏ qua</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div id="selectionEmpty" class="selection-empty">Chọn 1 Frame để review</div>
+        <div id="selectionInfo" class="selection-info hidden">
+          <span id="selectionPrefix"></span> <span id="selectionName"></span>
+        </div>
+        <div class="actions-col">
+          <button id="runReviewBtn" class="primary big" disabled>Review Website</button>
+        </div>
+        <div class="actions-row">
+          <span class="status-text status"></span>
+        </div>
+      </div>
+    </div>
+
+    <div id="resultsView" class="hidden">
+      <div id="resultsModeBar" class="results-mode-bar"></div>
+      <div class="results-header">
+        <button id="backBtn" class="ghost" type="button">← Quay lại</button>
+        <span class="status-text status"></span>
+        <button id="toggleAllBtn" class="ghost" type="button">▾ Thu gọn tất cả</button>
+      </div>
+      <div id="filterTabs" class="filter-tabs"></div>
+      <div id="list" class="list"></div>
+    </div>
+
+    <div id="compareView" class="hidden">
+      <div id="comparePickerSection" class="section">
+        <div id="compareSelectionEmpty" class="selection-empty">Chọn 2 Frame để so sánh</div>
+        <div id="compareSelectionInfo" class="selection-info hidden">
+          <span id="comparePrefix"></span> <span id="compareSelectionNames"></span>
+        </div>
+        <div class="actions-col">
+          <button id="runCompareBtn" class="primary big" type="button" disabled>So sánh</button>
+        </div>
+      </div>
+      <div id="compareResultsSection" class="hidden compare-results-section">
+        <div class="results-header">
+          <button id="compareBackBtn" class="ghost" type="button">← Quay lại</button>
+          <span id="compareStatus" class="status"></span>
+        </div>
+        <div id="compareResults" class="compare-results"></div>
+      </div>
+    </div>
+
+    <!--UI_SCRIPT-->
+  </body>
+</html>

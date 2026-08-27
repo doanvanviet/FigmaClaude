@@ -2,6 +2,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  --mi-bg-dashboard-inside: url('https://actapp.misacdn.net/dn/g3/assets/images/ava/bg-dashboard-inside.jpg');
   --text-primary:         #10141b;
   --text-secondary:       #6b707a;
   --text-hint:            #9da2ac;
@@ -191,6 +192,94 @@
   --icon-brand: #ea580c; --stroke-brand: #ea580c;
   --bg-brand-pressed: #b54209; --bg-brand-disable: #f4aa86;
   --dt-row-selected-bg: #FCE8DD;
+}
+
+/* ── Nền = "Màu đang chọn" (data-bg-tint="color") — riêng app Kế toán ──
+   Thay cho color-mix() chung ở mds-ui: giữ đúng Hue của --bg-brand từng theme,
+   ép về 3 mốc S/L cố định — nền chung S2.5%/L91% (đã pha xám gần hết cỡ — ở L91% với
+   S dưới ~5%, đa số hue "lạnh" (blue/blue-gray/cyan/indigo) đã làm tròn về cùng 1 mã hex
+   8-bit rồi nên giảm S thêm không còn thấy khác biệt, chỉ purple/pink/red/orange còn dư
+   biên độ để xám thêm), header S24%/L88%
+   (tăng S từ 18% vì bị chê xỉn, rồi nâng L từ 86% lên 88% vì bị chê hơi đen — riêng
+   header KHÔNG đổi theo lần chỉnh nền chung/footer này), footer S5%/L92.5% (SÁNG hơn
+   nền chung ~1.5% L có chủ đích, không phải đậm hơn, để tách biệt nhẹ mà vẫn nhạt).
+   --stroke-brand-light vẫn giữ S55%/L72% (dùng cho viền). */
+:root[data-bg-tint="color"] {
+  --bg-page:      #E7E8E9;
+  --dt-header-bg: #DEE2EB;
+  --dt-footer-bg: #EBECED;
+  --stroke-brand-light: #90A9DF;
+  --sub-nav-bg:   #EEEFEF;
+}
+:root[data-theme="green"][data-bg-tint="color"] {
+  --bg-page:      #E7E9E8;
+  --dt-header-bg: #D8E7E1;
+  --dt-footer-bg: #EBEDEC;
+  --stroke-brand-light: #90DFBF;
+  --sub-nav-bg:   #EEEFEF;
+}
+:root[data-theme="blue-gray"][data-bg-tint="color"] {
+  --bg-page:      #E7E7E9;
+  --dt-header-bg: #DFE1EC;
+  --dt-footer-bg: #EBEBED;
+  --stroke-brand-light: #909CDF;
+  --sub-nav-bg:   #EEEEEF;
+}
+:root[data-theme="teal"][data-bg-tint="color"] {
+  --bg-page:      #E7E9E9;
+  --dt-header-bg: #D7E7E5;
+  --dt-footer-bg: #EBEDED;
+  --stroke-brand-light: #90DFD6;
+  --sub-nav-bg:   #EEEFEF;
+}
+:root[data-theme="cyan"][data-bg-tint="color"] {
+  --bg-page:      #E7E9E9;
+  --dt-header-bg: #D9E5E8;
+  --dt-footer-bg: #EBECED;
+  --stroke-brand-light: #90CEDF;
+  --sub-nav-bg:   #EEEFEF;
+}
+:root[data-theme="indigo"][data-bg-tint="color"] {
+  --bg-page:      #E7E7E9;
+  --dt-header-bg: #E0E1EC;
+  --dt-footer-bg: #EBEBED;
+  --stroke-brand-light: #9099DF;
+  --sub-nav-bg:   #EEEEEF;
+}
+:root[data-theme="purple"][data-bg-tint="color"] {
+  --bg-page:      #E8E7E9;
+  --dt-header-bg: #E3DFEC;
+  --dt-footer-bg: #ECEBED;
+  --stroke-brand-light: #A990DF;
+  --sub-nav-bg:   #EEEEEF;
+}
+/* pink/red/orange là hue "nóng" — cùng S/L số học vẫn rực hơn các hue lạnh do HSL
+   không đều về cảm nhận, nên 3 theme này hạ thêm ~35% S so với công thức chung. */
+:root[data-theme="pink"][data-bg-tint="color"] {
+  --bg-page:      #E9E7E8;
+  --dt-header-bg: #E7DFE4;
+  --dt-footer-bg: #ECEBEC;
+  --stroke-brand-light: #DF90BE;
+  --sub-nav-bg:   #EFEEEF;
+}
+:root[data-theme="red"][data-bg-tint="color"] {
+  --bg-page:      #E9E7E8;
+  --dt-header-bg: #E7DFE1;
+  --dt-footer-bg: #ECEBEC;
+  --stroke-brand-light: #DF90A6;
+  --sub-nav-bg:   #EFEEEF;
+}
+:root[data-theme="orange"][data-bg-tint="color"] {
+  --bg-page:      #E9E8E7;
+  --dt-header-bg: #E6E0DE;
+  --dt-footer-bg: #ECECEB;
+  --sub-nav-bg:   #EFEFEE;
+  --stroke-brand-light: #DFAB90;
+}
+
+/* Table Header border-bottom → Stroke Brand Light khi Nền = "Màu đang chọn" */
+:root[data-bg-tint="color"] .dt-row--header {
+  border-bottom-color: var(--stroke-brand-light);
 }
 
 
@@ -547,20 +636,21 @@ body {
 /* ── Sub-nav tabs ── */
 .sub-nav {
   display: flex; align-items: flex-end;
-  height: 44px; padding: 0 16px;
+  height: 40px; padding: 0 16px;
   background: var(--bg-neutral-light);
   border-bottom: 1px solid var(--stroke-neutral);
   flex-shrink: 0; gap: 0;
   justify-content: space-between;
   overflow: hidden;
 }
-/* Khi Nền = "Màu đang chọn": ngả nhẹ sang tone brand, giữ nguyên khi Nền = "Màu xám"
-   Base sáng hơn --bg-page (F2F2F4 thay vì EDEEF2) để tab luôn sáng hơn nền trang, nhưng vẫn pha brand nên không trắng tinh */
+/* Khi Nền = "Màu đang chọn": dùng mã hex cố định --sub-nav-bg (tính theo cùng công thức
+   giữ Hue của từng theme, khai báo cùng khối với --bg-page/--dt-header-bg phía trên) */
 :root[data-bg-tint="color"] .sub-nav {
-  background: color-mix(in srgb, var(--bg-brand) 3%, #F2F2F4);
+  background: var(--sub-nav-bg);
 }
-/* Chỉ override height so với mds-ui (48px → 44px) */
-.sub-nav-tab { height: 44px; }
+/* Chỉ override height so với mds-ui (48px → 40px) */
+.sub-nav-tab { height: 32px; }
+.sub-nav-tab.active { background: var(--bg-white); border-radius: 6px 6px 0 0; }
 
 /* Nền dòng được chọn/active trong bảng — đậm hơn bg-brand-light mặc định của mds-ui vì trên nền neutral-50 mới nhìn quá mờ
    Mã màu cố định theo từng theme (--dt-row-selected-bg khai báo ở :root và từng khối data-theme) */
@@ -612,7 +702,7 @@ body {
 /* ── Content Wrapper ── */
 .content-wrapper {
   flex: 1; overflow-y: auto; overflow-x: hidden;
-  padding: var(--card-col-gap);
+  padding: 12px var(--card-col-gap);
   display: flex; flex-direction: column; gap: var(--card-col-gap);
 }
 
@@ -677,7 +767,7 @@ body {
 }
 .btn-icon:hover        { background: var(--bg-neutral-hover); }
 .btn-icon--sm          { width: calc(var(--btn-height) - 4px); height: calc(var(--btn-height) - 4px); }
-.btn-icon--outline     { border-color: var(--stroke-neutral); }
+.btn-icon--outline     { border-color: var(--stroke-neutral); background: var(--bg-white); }
 .btn-icon--danger      { color: var(--icon-danger); }
 .btn-icon--danger:hover{ background: var(--bg-danger-light); }
 
@@ -726,3 +816,13 @@ body {
 .badge--danger  { background: var(--bg-danger-light);  color: var(--text-danger); }
 .badge--warning { background: var(--bg-warning-light); color: var(--text-warning); }
 .badge--brand   { background: var(--bg-brand-light);   color: var(--text-brand); }
+
+.filter-hint-label { font-size: 13px; font-weight: var(--fw-regular); color: var(--text-primary); white-space: nowrap; }
+
+/* Cột Số chứng từ: luôn màu Link default (#245fdf), không đổi theo theme đang chọn */
+.dt-action-link { color: #245fdf; }
+
+/* Màn hẹp (vd 1366px): ẩn các bộ lọc nhanh để nhường chỗ cho ô tìm kiếm, không đủ chỗ để hiện đủ chữ */
+@media (max-width: 1400px) {
+  .quick-filter { display: none; }
+}

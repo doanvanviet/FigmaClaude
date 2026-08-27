@@ -19,7 +19,7 @@
     <span v-else-if="clearable && modelValue" class="ibox__icon ibox__icon--clear" @click="$emit('update:modelValue', ''); $emit('clear')">
       <TIcon name="x" />
     </span>
-    <TIcon v-else-if="iconRight" :name="iconRight" class="ibox__icon" />
+    <TIcon v-else-if="iconRight" :name="iconRight" class="ibox__icon" :class="{ 'ibox__icon--brand': iconRight === 'plus' }" />
   </div>
 </template>
 

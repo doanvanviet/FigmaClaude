@@ -144,7 +144,7 @@ function onChange(e) {
 /* Disabled box */
 .app-cb--disabled .app-cb__box {
   background: var(--bg-neutral-light);
-  border-color: var(--stroke-neutral-light);
+  border-color: var(--stroke-neutral);
 }
 
 .app-cb__icon {

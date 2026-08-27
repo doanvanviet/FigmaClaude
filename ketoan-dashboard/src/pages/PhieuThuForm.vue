@@ -241,7 +241,6 @@ const showTK = ref(true)
             <button class="btn btn--outline btn--neutral" type="button" @click="clearAllRows">Xóa hết dòng</button>
           </div>
           <div class="ht-controls__right">
-            <span class="ht-record-count">Tổng số: {{ hachToanRows.length }} bản ghi</span>
             <TablePaging :total="hachToanRows.length" v-model:page="page" v-model:page-size="pageSize" :page-size-options="[20, 50]" />
           </div>
         </div>
@@ -294,7 +293,7 @@ const showTK = ref(true)
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  background: var(--bg-white);
+  background: var(--bg-page);
 }
 
 /* ── Form bar ── */
@@ -302,7 +301,7 @@ const showTK = ref(true)
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--layout-page-header-h);
+  height: 48px;
   padding: 0 16px;
   background: var(--bg-white);
   border-bottom: 1px solid var(--stroke-neutral-light);
@@ -350,7 +349,7 @@ const showTK = ref(true)
 .field__label {
   display: block;
   font-size: 13px;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-semibold);
   color: var(--text-primary);
   line-height: var(--text-body-lh);
   margin-bottom: 4px;
@@ -537,14 +536,14 @@ const showTK = ref(true)
   align-items: center;
   height: 52px;
   padding: 0 16px;
-  background: var(--neutral-800);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  background: var(--neutral-100);
+  border-top: 1px solid var(--stroke-neutral-light);
   flex-shrink: 0;
   gap: 16px;
 }
 .form-footer__hints {
   font-size: 12px;
-  color: rgba(255,255,255,0.5);
+  color: var(--text-secondary);
   white-space: nowrap;
   flex: 1;
 }
@@ -558,35 +557,35 @@ const showTK = ref(true)
   flex-shrink: 0;
 }
 
-/* Hủy button on dark */
+/* Hủy button */
 .form-footer__btn-huy {
   height: var(--btn-height);
   min-width: 72px;
   padding: 0 var(--btn-px);
   font-size: 13px; font-weight: var(--fw-medium);
   border-radius: var(--radius-default);
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid var(--stroke-neutral);
   background: transparent;
-  color: var(--text-white);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background 0.15s;
 }
-.form-footer__btn-huy:hover { background: rgba(255,255,255,0.1); }
+.form-footer__btn-huy:hover { background: var(--bg-neutral-hover); }
 
-/* Cất button on dark */
+/* Cất button */
 .form-footer__btn-cat {
   height: var(--btn-height);
   min-width: 72px;
   padding: 0 var(--btn-px);
   font-size: 13px; font-weight: var(--fw-medium);
   border-radius: var(--radius-default);
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid var(--stroke-neutral);
   background: transparent;
-  color: var(--text-white);
+  color: var(--text-primary);
   cursor: pointer;
   transition: background 0.15s;
 }
-.form-footer__btn-cat:hover { background: rgba(255,255,255,0.1); }
+.form-footer__btn-cat:hover { background: var(--bg-neutral-hover); }
 
 /* Toggle switch */
 .form-footer__toggle {
@@ -595,13 +594,13 @@ const showTK = ref(true)
   gap: 8px;
   cursor: pointer;
   font-size: 13px;
-  color: var(--text-white);
+  color: var(--text-primary);
   user-select: none;
 }
 .toggle-sw {
   width: 36px; height: 20px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.2);
+  background: var(--stroke-neutral);
   position: relative;
   flex-shrink: 0;
   transition: background 0.2s;
